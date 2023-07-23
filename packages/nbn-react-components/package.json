@@ -1,14 +1,14 @@
 {
-  "name": "nbn-react-components",
+  "name": "@nbn-project-hub/nbn-react-components",
   "version": "0.0.0",
   "type": "module",
-  "main": "./dist/nbn-react-components.umd.cjs",
-  "module": "./dist/nbn-react-components.js",
+  "main": "./dist/nbn-react-components.es.js",
+  "module": "./dist/nbn-react-components.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/my-lib.js",
-      "require": "./dist/my-lib.umd.cjs"
+      "import": "./dist/nbn-react-components.es.js",
+      "require": "./dist/nbn-react-components.umd.js"
     }
   },
   "scripts": {

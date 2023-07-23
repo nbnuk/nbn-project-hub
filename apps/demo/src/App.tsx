@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import {Button} from 'nbn-react-components'
+import {Button} from '@nbn-project-hub/nbn-react-components'
 import './App.css';
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Button label="Goddam" onClick={()=>alert('boo')}/>
+        <Button label="Goddam"/>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>

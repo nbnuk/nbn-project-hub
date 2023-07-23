@@ -1,5 +1,5 @@
 {
-  "name": "nbn-js-lib",
+  "name": "@nbn-project-hub/nbn-js-lib",
   "private": true,
   "version": "0.0.0",
   "type": "module",
