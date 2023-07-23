@@ -4,6 +4,7 @@
   "workspaces": [
     "packages/nbn-js-lib",
     "packages/nbn-react-components",
+    "packages/nbn-maps",
     "apps/*"
   ],
   "scripts": {

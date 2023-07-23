@@ -2501,6 +2501,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@nbn-project-hub/nbn-maps@workspace:packages/nbn-maps":
+  version: 0.0.0-use.local
+  resolution: "@nbn-project-hub/nbn-maps@workspace:packages/nbn-maps"
+  dependencies:
+    vite: ^4.4.5
+  languageName: unknown
+  linkType: soft
+
 "@nbn-project-hub/nbn-react-components@workspace:^, @nbn-project-hub/nbn-react-components@workspace:packages/nbn-react-components":
   version: 0.0.0-use.local
   resolution: "@nbn-project-hub/nbn-react-components@workspace:packages/nbn-react-components"
