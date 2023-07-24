@@ -2664,6 +2664,16 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@nbn-project-hub/nbn-maps@workspace:packages/nbn-maps"
   dependencies:
+    "@storybook/addon-essentials": ^7.1.0
+    "@storybook/addon-interactions": ^7.1.0
+    "@storybook/addon-links": ^7.1.0
+    "@storybook/blocks": ^7.1.0
+    "@storybook/html": ^7.1.0
+    "@storybook/html-vite": ^7.1.0
+    "@storybook/testing-library": ^0.2.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    storybook: ^7.1.0
     vite: ^4.4.5
   languageName: unknown
   linkType: soft
@@ -3269,6 +3279,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/addons@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@storybook/addons@npm:7.1.0"
+  dependencies:
+    "@storybook/manager-api": 7.1.0
+    "@storybook/preview-api": 7.1.0
+    "@storybook/types": 7.1.0
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 7447cb0a87d63bc47fad6041578939ebde82f139414f96a85d4d4dfd4a5cda274cdfd57164837464858c1632d87a07ee15e6ae36d2cf9b3ef2d120970843796b
+  languageName: node
+  linkType: hard
+
 "@storybook/blocks@npm:7.1.0, @storybook/blocks@npm:^7.1.0":
   version: 7.1.0
   resolution: "@storybook/blocks@npm:7.1.0"
@@ -3438,6 +3462,16 @@ __metadata:
     getstorybook: ./bin/index.js
     sb: ./bin/index.js
   checksum: e9bf8e1c812ecba89009728684858ebee08c3a0a7199ef035bc94f34959eba7ecad8c44a2caeedc248bf8db2de70ed371294225028a29b11285dfb3baf56eda1
+  languageName: node
+  linkType: hard
+
+"@storybook/client-api@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@storybook/client-api@npm:7.1.0"
+  dependencies:
+    "@storybook/client-logger": 7.1.0
+    "@storybook/preview-api": 7.1.0
+  checksum: 44ef6ae70564a5d36972038ce311e8c659d147b95f220f47e22073cc28d9de5c5251db23857042573728ecdb62728eada55b62bc5b26638a26204db7af228c39
   languageName: node
   linkType: hard
 
@@ -3661,6 +3695,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@storybook/html-vite@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@storybook/html-vite@npm:7.1.0"
+  dependencies:
+    "@storybook/addons": 7.1.0
+    "@storybook/builder-vite": 7.1.0
+    "@storybook/channel-postmessage": 7.1.0
+    "@storybook/client-api": 7.1.0
+    "@storybook/core-server": 7.1.0
+    "@storybook/html": 7.1.0
+    "@storybook/node-logger": 7.1.0
+    "@storybook/preview-web": 7.1.0
+    magic-string: ^0.30.0
+  checksum: f8a87e74196aca4a5446b1358b2f176ab478116d1cb6714d748c7f09e00e3085ccc417ec2bd6c5d8f9874029b4a4bcf7440841cd9221c69059538ee3a598ba5f
+  languageName: node
+  linkType: hard
+
+"@storybook/html@npm:7.1.0, @storybook/html@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "@storybook/html@npm:7.1.0"
+  dependencies:
+    "@storybook/core-client": 7.1.0
+    "@storybook/docs-tools": 7.1.0
+    "@storybook/global": ^5.0.0
+    "@storybook/preview-api": 7.1.0
+    "@storybook/types": 7.1.0
+    ts-dedent: ^2.0.0
+  peerDependencies:
+    "@babel/core": "*"
+  checksum: fc4bbb8a521226794fc806a3071c096abf9afd1cee50d97bf521e23b2c0dafce2bca49719e4a5763e1dc3c59c6c6ebc791f5766ffdc42f747577a641f6c74569
+  languageName: node
+  linkType: hard
+
 "@storybook/instrumenter@npm:7.1.0":
   version: 7.1.0
   resolution: "@storybook/instrumenter@npm:7.1.0"
@@ -3766,6 +3833,16 @@ __metadata:
     ts-dedent: ^2.0.0
     util-deprecate: ^1.0.2
   checksum: 43682ead532bcf3ad4c0a79c8beeb9b13fb213b5a93b8f4130bd80a0ba7fb8aee48f28a978b7bb99cfe7843fa0e78b9a69c4d21b855ec7cf0e3a6b938f79b7da
+  languageName: node
+  linkType: hard
+
+"@storybook/preview-web@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@storybook/preview-web@npm:7.1.0"
+  dependencies:
+    "@storybook/client-logger": 7.1.0
+    "@storybook/preview-api": 7.1.0
+  checksum: dba76052143c7ad5ea96f9ecfdadbeb7a928a64419f905d15000244c7466d58458adcf307d875d1e9cc346424950bb90600713ef5a049bf2b840b0fc4ca1a2d4
   languageName: node
   linkType: hard
 
