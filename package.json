@@ -11,8 +11,9 @@
     "start:demo": "yarn workspace @nbn-project-hub/demo start",
     "build:demo": "yarn build:nbn-react-components && yarn workspace @nbn-project-hub/demo build",
     "build:nbn-react-components": "yarn workspace @nbn-project-hub/nbn-react-components build",
+    "storybook:nbn-react-components": "yarn workspace @nbn-project-hub/nbn-react-components storybook",
     "storybook:maps": "yarn workspace @nbn-project-hub/nbn-maps storybook",
-    "storybook:nbn-react-components": "yarn workspace @nbn-project-hub/nbn-react-components storybook"
+    "build:maps": "yarn workspace @nbn-project-hub/nbn-maps build"
   },
   "devDependencies": {
     "typescript": "^5.1.6",
