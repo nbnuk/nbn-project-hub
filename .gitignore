@@ -1,4 +1,6 @@
 **/node_modules
+**/dist
+.DS_STORE
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
