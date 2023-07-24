@@ -1,5 +1,3 @@
-document.querySelector('#map').innerHTML = render()
+import { renderMap } from './LeafletMap'
 
-export function render() {
-  return `!!!!MAP!!!!`
-}
+document.querySelector('#map').innerHTML = renderMap({apiUrl:"Moths"})
