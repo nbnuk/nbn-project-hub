@@ -5,7 +5,7 @@ This is a yarn mono repo. React components are to be created here: packages/nbn-
 
 Kanban board: https://github.com/orgs/nbnuk/projects/5
 
-(The Python project is looking for suggestions https://github.com/orgs/nbnuk/projects/6 )
+Note: the NBN Atlas Python project is looking for suggestions https://github.com/orgs/nbnuk/projects/6
 
 ## About Storybook
 
