@@ -1,22 +1,11 @@
 # nbn-project-hub
 
 ## Introduction
-This is the first implementation of a truly open source, community driven NBN Trust monorepo
+This is a yarn mono repo. React components are to be created here: packages/nbn-react-components
 
-A project has been created specifically for maps. It is called nbn-maps
-https://github.com/nbnuk/nbn-project-hub/tree/master/packages/nbn-maps/client/src
+Kanban board: https://github.com/orgs/nbnuk/projects/5
 
-Clone the repo and ignore everything except what is in the folder nbn-maps (which is a vanilla javascript project)
-
-At the moment, nbn-maps is just a skeleton project. It is ready for the real map implementation to be added to it.
-
-1. Read about storybook (see below - it's quite simple)
-2. Clone this repo
-3. Create a branch off develop (this will be your working branch)
-3. Run the nbn-map storybook (see below) 
-4. Play around with the code in nbn-maps and I think you'll start to get some ideas!
-
-
+Note: the NBN Atlas Python project is looking for suggestions https://github.com/orgs/nbnuk/projects/6
 
 ## About Storybook
 
@@ -27,7 +16,10 @@ https://storybook.js.org/docs/react/get-started/why-storybook
 Examples of companies using storybook:
 https://v4-0-10--storybooks.netlify.app/examples/
 
-## To run nbn-maps storybook:
+## Instructions
+Coming soon. A good start is to read about storybook. The old instructions below might also help get you started.
+
+### Old instructions - how to run nbn-maps storybook:
 ```
 yarn storybook:maps
 ```
