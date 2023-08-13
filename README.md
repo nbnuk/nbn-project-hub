@@ -7,7 +7,7 @@ Kanban board: https://github.com/orgs/nbnuk/projects/5
 
 Note: the NBN Atlas Python project is looking for suggestions https://github.com/orgs/nbnuk/projects/6
 
-Check out the **Wiki** for useful instructions e.g. how to use the React components in a legacy website https://github.com/nbnuk/nbn-project-hub/wiki
+:exclamation::exclamation:Check out the **Wiki** for useful instructions e.g. how to use the React components in a legacy website https://github.com/nbnuk/nbn-project-hub/wiki
 
 ## How to contribute
 1. Fork the repo
