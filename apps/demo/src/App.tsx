@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
-import {Button} from '@nbn-project-hub/nbn-react-components'
+import {Button} from '@nbnuk/nbn-react-components'
 import './App.css';
 
 function App() {

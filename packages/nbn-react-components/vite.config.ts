@@ -14,18 +14,22 @@ export default defineConfig({
         sourcemap: true,
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'nbn-react-components',
+            name: 'nbnReactComponents',
             formats: ['es', 'umd'],
-            fileName: (format) => `nbn-react-components.${format}.js`,
+            fileName: (format) => `nbnReactComponents.${format}.js`,
         },
         rollupOptions: {
-            external: ['react', 'react-dom'],
+            external: ['react', 'react-dom', 'styled-components'],
             output: {
                 globals: {
                     react: 'React',
-                    'react-dom': 'ReactDOM'
+                    'react-dom': 'ReactDOM',
+                    'styled-components': 'styled',
                 },
             },
         },
     },
+    define: {
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+      }
 });
