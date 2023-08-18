@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect } from 'react';
 import { MapManager } from './manager';
 
 // -----------------------------------------------------------------------------
@@ -11,7 +11,7 @@ interface MapProps {
 // -----------------------------------------------------------------------------
 const elementId = 'map';
 
-export default function Map(props: MapProps) {
+export default function Map({species, year, pointColour}: MapProps) {
 
     const mapStyles = {
         overflow: 'hidden',
@@ -19,17 +19,15 @@ export default function Map(props: MapProps) {
         height: '100vh',
     };
     // this useEffect hook runs when the component is first mounted:    
-    React.useEffect(() => { 
+    useEffect(() => { 
             const mapManager = new MapManager(elementId);
-            mapManager.showSpecies(props.species, props.year, 
-                                    props.pointColour);
+            mapManager.showSpecies(species, year, 
+                                    pointColour);
         }, 
-        [props.species, props.year, props.pointColour]
+        [species, year, pointColour]
     );
     return (
-        <React.Fragment>
-            <div id={elementId} style={mapStyles}></div>
-        </React.Fragment>
+        <div id={elementId} style={mapStyles}></div>
     );
 }
 
