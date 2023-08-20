@@ -3,7 +3,7 @@
 ## Introduction
 This is a yarn mono repo.
 
-Kanban board: https://github.com/orgs/nbnuk/projects/5
+React component library project board: https://github.com/orgs/nbnuk/projects/5
 
 Note: the NBN Atlas Python project is looking for suggestions https://github.com/orgs/nbnuk/projects/6
 
