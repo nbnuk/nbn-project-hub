@@ -28,7 +28,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "jest"
+    "test": "jest",
+    "docs": "npx typedoc --out docs src/components/SimpleMap/*.ts"
   },
   "peerDependencies": {
     "react": "^18.2.0",
