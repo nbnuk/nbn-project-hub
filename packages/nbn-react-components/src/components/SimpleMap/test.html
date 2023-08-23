@@ -20,14 +20,21 @@
     <div id="map-container"></div>
     <!-- Render the React component -->
     <script>
+        //   const Button = window.nbnReactComponents.Button;
         const simpleMap = window.nbnReactComponents.SimpleMap;
           ReactDOM.render(        
             React.createElement(simpleMap, 
               { elementId: 'map-container', 
-                tvk: 'NBNSYS0000027783',
-                bl: 'TL512637',
-                tr: 'TG392674' }
-              ),
+                tvk: 'NHMSYS0001387317',
+                b0from: '1600',
+                b0to: '1987',
+                b1from: '1988',
+                b1to: '1997',
+                b2from: '1998',
+                b2to: '2025',
+
+              }
+            ),
             document.getElementById('map-container')
           );
         

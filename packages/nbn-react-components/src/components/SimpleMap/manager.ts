@@ -15,6 +15,7 @@ export class MapManager {
     private ctrlLayer: L.Control.Layers | null;
     private map: L.Map;
     private params: Params;
+    private wmsLayers: Map<string, L.TileLayer.WMS>;
 
     // -------------------------------------------------------------------------
     
@@ -23,6 +24,7 @@ export class MapManager {
         this.params = new Params(props);
         this.baseMaps = {};
         this.ctrlLayer = null;
+        this.wmsLayers = new Map<string, L.TileLayer.WMS>();
         this.initBaseMaps();  // call before map initialisation
         this.map = L.map(this.params.elementId, {
             center: [54.59,-1.45],
@@ -68,14 +70,24 @@ export class MapManager {
         
         this.ctrlLayer.expand();                    
     }
+    // -------------------------------------------------------------------------
+    
+    initWmsLayers(): void {
+        this.wmsLayers = this.params.getWmsLayers();
+        for (const [title, layer] of this.wmsLayers) {
+            this.ctrlLayer?.addOverlay(layer, title);
+        }        
+        // Select first entry in legend
+        const entry = this.wmsLayers.entries().next().value;
+        selectOverlayLayer(this.map, entry[1], entry[0]);
+    }
 
     // -------------------------------------------------------------------------
 
     show(): void {
         this.initMap();
-        const layer = this.params.getWmsLayer();
-        this.ctrlLayer?.addOverlay(layer, this.params.tvk);
-        selectOverlayLayer(this?.map, layer, this.params.tvk);
+        this.initWmsLayers();
+
         if (this.params.bounds !== null ) {
             this.map.fitBounds(this.params.bounds)
         }

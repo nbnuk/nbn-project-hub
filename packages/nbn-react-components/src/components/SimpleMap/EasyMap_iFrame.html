@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Map iFrame Demo</title>
+    <style>
+      h1 {
+        font-family: sans-serif;
+        font-size: 1rem;
+        text-align: center;
+      }
+      main {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      article {
+        padding: 10px;
+      }      
+      iframe {
+	      border: 0px;
+        width: 400px;
+        height: 800px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <article>
+        <h1>Simple TVK</h1>
+        <iframe src="http://localhost/kpm/nbn-project-hub/EasyMap.html?tvk=NHMSYS0001387317"
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on Grid References</h1>
+        <iframe src="http://localhost/kpm/nbn-project-hub/EasyMap.html?tvk=NHMSYS0001387317&bl=TL512637&tr=TG392674" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on Northing/Eastings</h1>
+        <iframe src="http://localhost/kpm/nbn-project-hub/EasyMap.html?tvk=NBNSYS0000027783&blCoord=551248,263773&trCoord=639251,367412" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Three-Layer Date Ranges</h1>
+        <iframe src="http://localhost/kpm/nbn-project-hub/EasyMap.html?tvk=NHMSYS0001387317&b0from=1600&b0to=1987&b1from=1988&b1to=1997&b2from=1998&b2to=2025" 
+          scrolling="no"></iframe>
+      </article>      
+    </main>
+  </body>
+</html>

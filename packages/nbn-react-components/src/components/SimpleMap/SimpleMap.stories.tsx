@@ -7,7 +7,7 @@ import { default as SimpleMap } from './SimpleMap';
 const meta = {
     title: 'Map Family / SimpleMap',
     component: SimpleMap,
-    tags: ['autodocs'],
+    // tags: ['autodocs'],
 
   } satisfies Meta<typeof SimpleMap>;
   
@@ -19,7 +19,15 @@ export const TVK: Story = {
     args: {
         elementId: 'map',
         tvk: 'NBNSYS0000027783',
+    },
+};
 
+export const Zoom_GridRef: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NBNSYS0000027783',
+        bl: 'TL512637',
+        tr: 'TG392674',        
     },
 };
 
@@ -32,12 +40,17 @@ export const Zoom_NorthingEasting: Story = {
     },    
 };
 
-export const Zoom_GridRef: Story = {
+export const DateBands: Story = {
     args: {
         elementId: 'map',
-        tvk: 'NBNSYS0000027783',
-        bl: 'TL512637',
-        tr: 'TG392674',        
-    },
+        tvk: 'NHMSYS0001387317',
+        b0from: '1600',
+        b0to: '1987',
+        b1from: '1988',
+        b1to: '1997',
+        b2from: '1998',
+        b2to: '2025',      
+    },    
 };
+
 
