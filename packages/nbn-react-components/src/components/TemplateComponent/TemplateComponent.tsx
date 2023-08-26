@@ -1,3 +1,4 @@
+import '../../index.css'
 export interface TemplateComponentProps {
  
   /**
@@ -14,7 +15,13 @@ export const TemplateComponent = ({
   label
 }: TemplateComponentProps) => {
   return (
-    <p>Hello. {label}</p>
+    <div role="alert" className="rounded border-s-4 border-slate-500  p-4">
+ 
+  <p className="mt-2 text-sm">
+  Hello. {label}
+  </p>
+</div>
+    
   );
 };
 

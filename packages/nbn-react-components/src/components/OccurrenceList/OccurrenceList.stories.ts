@@ -1,4 +1,4 @@
-import type {  StoryObj } from '@storybook/react';
+import type {  StoryObj, Meta } from '@storybook/react';
 
 import { OccurrenceList } from './OccurrenceList';
 
@@ -14,7 +14,7 @@ const meta = {
  // tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    backgroundColor: { control: 'color' },
+    // backgroundColor: { control: 'color' },
   },
 } satisfies Meta<typeof OccurrenceList>;
 
@@ -24,12 +24,12 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {
   args: {
-    label: 'OccurrenceList Primary',
+    apiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    label: 'OccurrenceList Secondary',
+    apiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=species:%22Lutra%20lutra%22',
   },
 };

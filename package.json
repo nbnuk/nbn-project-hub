@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.0.3",
-    "leaflet": "^1.9.4"
+    "leaflet": "^1.9.4",
+    "swr": "^2.2.1"
   }
 }
