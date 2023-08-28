@@ -69,5 +69,9 @@
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
   },
-  "prepack": "json -f package.json -I -e \"delete this.devDependencies;\""
+  "prepack": "json -f package.json -I -e \"delete this.devDependencies;\"",
+  "dependencies": {
+    "date-fns": "^2.30.0",
+    "zod": "^3.22.2"
+  }
 }

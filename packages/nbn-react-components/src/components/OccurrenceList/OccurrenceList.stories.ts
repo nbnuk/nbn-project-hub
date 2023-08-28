@@ -24,12 +24,12 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {
   args: {
-    apiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*',
+    occurrenceSearchApiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    apiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=species:%22Lutra%20lutra%22',
+    occurrenceSearchApiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=species:%22Lutra%20lutra%22',
   },
 };
