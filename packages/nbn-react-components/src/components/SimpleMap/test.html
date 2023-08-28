@@ -17,27 +17,27 @@
 </head>
 <body>
     <!-- Placeholder for React component -->
+    <!-- <div id="map-container" style="height:600px;width:300px;"></div> -->
     <div id="map-container"></div>
     <!-- Render the React component -->
     <script>
-        //   const Button = window.nbnReactComponents.Button;
         const simpleMap = window.nbnReactComponents.SimpleMap;
           ReactDOM.render(        
             React.createElement(simpleMap, 
               { elementId: 'map-container', 
-                tvk: 'NHMSYS0001387317',
-                b0from: '1600',
-                b0to: '1987',
-                b1from: '1988',
-                b1to: '1997',
-                b2from: '1998',
-                b2to: '2025',
+                tvk: 'NHMSYS0000344177',
+                w: "400",
+                h: "400",
+                // res: '10km'
 
               }
             ),
             document.getElementById('map-container')
           );
-        
+          const h = 600;
+          const w = parseInt(h / 1.2);
+          document.getElementById("map-container").style.width = `${w}px`;
+          document.getElementById("map-container").style.height = `${h}px`;
         </script>
 </body>
 </html>

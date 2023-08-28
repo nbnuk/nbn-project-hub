@@ -6,17 +6,17 @@ import { ISimpleMapProps } from './params';
 
 export default function SimpleMap(props: ISimpleMapProps) {
 
+    // https://github.com/okonet/react-container-dimensions
     const mapStyles = {
-        overflow: 'hidden',
-        width: props.w || '100%',
-        height: props.h || '100vh',
+        width: props.w ? `${props.w}px` : '350px',
+        height: props.h ? `${props.h}px` : '350px',
     };
     useEffect(() => { 
             const mapManager = new MapManager(props);
             mapManager.show();
         }, 
         [props]
-    );
+    )
     return (
         <div id={props.elementId} style={mapStyles}></div>
     );

@@ -11,6 +11,7 @@ export const Colour = {
     gold: 'FFD700',
     green: '008000',
     greenyellow: 'ADFF2F',
+    yellow: 'FFFF00',
     hotpink: 'FF69B4',
     lightblue: 'ADD8E6',
     // specific colours
@@ -27,7 +28,7 @@ WKT files produced using:
 2. https://geojson-to-wkt-converter.onrender.com/ to convert GeoJSON to WKT.
 */
 
-const PathBase = 'https://map2.record-lrc-dev.co.uk/data';
+const PathBase = 'https://simplemap.record-lrc-dev.co.uk/assets/maps';
 
 export const Path = {
     // boundary GeoJSON files

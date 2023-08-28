@@ -4,7 +4,9 @@ import * as bigr from 'brc-atlas-bigr';
 import * as L from 'leaflet';
 import { default as proj4 } from 'proj4';
 
-import { Colour, WmsType } from './const';
+import { Colour } from './const';
+
+import Boundaries from './assets/VC_boundaries.json';
 
 // -----------------------------------------------------------------------------
 
@@ -31,11 +33,11 @@ export interface ISimpleMapProps {
     cachedays?: number;
     ds?: string;
     gd?: string;
-    h?: number;
-    w?: number;
+    h?: string;
+    w?: string;
     retina?: number;
     res?: string;
-    vc?: number;
+    vc?: string;
     zoom?: string;
 }
 
@@ -64,8 +66,17 @@ export class Params {
     public b2from: string;
     public b2to: string;
     public b2fill: string;
+    public bg: string;
+    public ds: string;
+    public h: string;
+    public w: string;
+    public res: string;
+    public vc: string;
+    public zoom: string;
     // calculated members
     public bounds: L.LatLngBounds | null;
+    public druidurl: string;
+    public map_grid_size: string
     public rangeurl0: string;
     public rangeurl1: string;
     public rangeurl2: string;
@@ -105,11 +116,7 @@ export class Params {
             this.blCoord = '';
             this.trCoord = '';
         }
-        // Warn if multiple boundary parameters have been supplied
-        if (this.bl !== '' && this.blCoord !== '') {
-            console.warn('Both [bl,tr] and [blCoord,trCoord] parameters ' + 
-                'supplied. Will only use [bl,tr]')
-        }
+
         // b0from, b0to, b0fill: Lower data layer
         let db = this.getDateBand('b0from', this.props.b0from, 'b0to', this.props.b0to);
         this.b0from = db[0];
@@ -128,14 +135,88 @@ export class Params {
         this.b2to = db[1];
         this.rangeurl2 = db[2];
         this.b2fill = this.sanitiseFill('b2fill', this.props.b2fill, '00FFFF');
-        
+        // bg
+        this.bg = this.sanitiseParamList('bg', this.props.bg, ['vc']); 
+        // ds
+        this.ds = this.sanitiseParam('ds', this.props.ds, /[^a-zA-Z0-9,]/g);
+        if (this.ds.length > 0) {
+            this.druidurl = '+AND+(data_resource_uid:' + 
+                    this.ds.split(',').join('+OR+data_resource_uid:') + 
+                    ')';
+        } else {
+            this.druidurl = '';
+        }
+        // h, w
+        this.h = this.sanitiseParam('h', this.props.h, /[^0-9]/g);
+        this.w = this.sanitiseParam('w', this.props.w, /[^0-9]/g);
+        // res
+        this.res = this.sanitiseParamList('res', this.props.res, 
+            ['50km', '10km', '2km', '1km', '100m']); 
+        if (this.res !== '') {
+            this.map_grid_size = `fixed_${this.res}`;
+        } else {
+            this.map_grid_size = 'fixed_10km';
+        }
+        // vc
+        this.vc = this.sanitiseParam('vc', this.props.vc, /[^a-zA-Z0-9]/g); 
+        if (this.vc !== '') {
+            this.calcBoundary('vc', this.vc);
+        }
+        // zoom
+        this.zoom = this.sanitiseParamList('zoom', this.props.zoom, ['england',
+            'scotland', 'wales', 'highland', 'sco-mainland', 'outer-heb', 'uk']); 
+        if (this.zoom !== '') {
+                this.calcBoundary('zoom', this.zoom);
+        }        
         // Skipped parameters
         this.skipParam('gd', this.props.gd);
         this.skipParam('b0bord', this.props.b0bord);
         this.skipParam('b1bord', this.props.b1bord);
         this.skipParam('b2bord', this.props.b2bord);
+        this.skipParam('cachedays', this.props.cachedays);
+        this.skipParam('retina', this.props.retina);
+        // Final data integrity checks...
+        
+        const bcount =  (this.bl.length > 0 ? 1 : 0) +
+                        (this.blCoord.length > 0 ? 1 : 0) +
+                        (this.vc.length > 0 ? 1 : 0) +
+                        (this.zoom.length > 0 ? 1 : 0);
+        if (bcount === 0) {
+            // Set default view as none specified
+            this.calcBoundary('default', 'uk');
+        }
+        else if (bcount > 1) {
+            // Warn if multiple boundary parameters have been supplied
+            console.warn("Multiple boundary parameters have been supplied. " +
+                "Only one of '[bl,tr]', '[blCoord,trCoord]', 'vc', or 'zoom' " +
+                "will be used.");
+        }        
 
     }
+    // -------------------------------------------------------------------------
+    /** Set the boundary coords for a specified boundary ID (e.g. VC 39)
+     * 
+     * @param {string} name - Name of parameter.
+     * @param boundary_id - Value of parameter.
+     */
+    calcBoundary(name: string, boundary_id: string): void {
+        const idl = boundary_id.toLocaleLowerCase();
+        let found = false;
+        // Iterate through list of boundary regions to find matching ID.
+        for (const boundary of Boundaries)         {
+            if (boundary.id == idl) {
+                const lll = L.latLng(boundary.llat, boundary.llon);
+                const ull = L.latLng(boundary.ulat, boundary.ulon);
+                this.bounds = L.latLngBounds(lll, ull); 
+                found = true;
+                break;               
+            }
+        }
+        if (!found) {
+            console.error(`Parameter '${name} contains an invalid value: ` +
+                        `${boundary_id}. It will be ignored.`);
+        }
+    }    
     // -------------------------------------------------------------------------
     /** Check that a pair of parameters are both defined or both undefined. 
      * 
@@ -155,6 +236,7 @@ export class Params {
         const ok: boolean = (param1 !== undefined) && (param2 !== undefined);
         return ok;
     }
+
     // -------------------------------------------------------------------------
     /** Generate the NBN API query string representing the interval between two 
      * years.
@@ -239,8 +321,23 @@ export class Params {
      * @param {string} fill - Hex string representing colour (e.g. 'FFFF000').
      * @returns {L.TileLayer.WMS} - Generated TileLayer object.
      */
-    getWmsLayer(range: string = '', fill: string = Colour.green): L.TileLayer.WMS {
+    getWmsLayer(range: string = '', fill: string = Colour.yellow): L.TileLayer.WMS {
 
+        // const wmsType: string = WmsType.point
+        // const env = `&ENV=${wmsType};color:${fill};gridres:${this.map_grid_size}`;
+        const env = `&ENV=colourmode:osgrid;gridlabels:false;opacity:0.8;` + 
+                    `color:${fill};gridres:${this.map_grid_size}`;
+        const queryUrl = this.getWmsQueryUrl(range) + env;
+        console.debug(queryUrl);
+        const tileLayer  = L.tileLayer.wms(queryUrl, {
+            layers: 'ALA:occurrences',
+            format: 'image/png',
+            uppercase: true,
+        });	 
+
+        return tileLayer;
+
+        /*
         const queryUrl = this.getWmsQueryUrl(range);
         console.debug(queryUrl);
         const wmsType: string = WmsType.point
@@ -256,62 +353,87 @@ export class Params {
         });	 
 
         return tileLayer;
+        */        
     }
     // -------------------------------------------------------------------------
 
-    getWmsLayers(): Map<string, L.TileLayer.WMS> {
+    getWmsLayers(): {[k: string]: L.TileLayer.WMS} {
 
-        const wmsLayers = new Map<string, L.TileLayer.WMS>();
+        const wmsLayers: {[k: string]: L.TileLayer.WMS} = {};
 
         const hasDateBands: boolean = (this.rangeurl0.length > 0) ||
                                       (this.rangeurl1.length > 0) ||
                                       (this.rangeurl2.length > 0);
         if (hasDateBands) {
+            // Split data into one or more date bands
             if (this.rangeurl0.length > 0) {
-                wmsLayers.set(this.getDateBandTitle(this.b0from, this.b0to), 
-                    this.getWmsLayer(this.rangeurl0, this.b0fill));
+                wmsLayers[this.getDateBandTitle(this.b0from, this.b0to)] = 
+                    this.getWmsLayer(this.rangeurl0, this.b0fill);
             }
             if (this.rangeurl1.length > 0) {
-                wmsLayers.set(this.getDateBandTitle(this.b1from, this.b1to), 
-                    this.getWmsLayer(this.rangeurl1, this.b1fill));
+                wmsLayers[this.getDateBandTitle(this.b1from, this.b1to)] = 
+                    this.getWmsLayer(this.rangeurl1, this.b1fill);
             }
             if (this.rangeurl2.length > 0) {
-                wmsLayers.set(this.getDateBandTitle(this.b2from, this.b2to), 
-                    this.getWmsLayer(this.rangeurl2, this.b2fill));
+                wmsLayers[this.getDateBandTitle(this.b2from, this.b2to)] = 
+                    this.getWmsLayer(this.rangeurl2, this.b2fill);
             }                        
         } else {
-            wmsLayers.set(this.tvk, this.getWmsLayer(''));
+            // Show all data in a single layer
+            wmsLayers[this.tvk] = this.getWmsLayer();
         }
         return wmsLayers;
+
     }
     // -------------------------------------------------------------------------
 
-    getWmsQueryUrl(range: string): string {
+    getWmsQueryUrl(range: string = ''): string {
 
         const url = `https://records-ws.nbnatlas.org/ogc/wms/reflect?q=*:*` +
-                    `&fq=lsid:${this.tvk}${range}`;
+                    `&fq=lsid:${this.tvk}${range}${this.druidurl}`;
         return url;
-    }     
+    }
     // -------------------------------------------------------------------------
-
-    sanitiseParam(name: string, param: string|undefined, filter: RegExp, ): string {
+    
+    sanitiseParam(name: string, param: string|undefined, filter: RegExp): string {
         let clean = '';
         if (param !== undefined) {
             clean = param.replace(filter, '');
             if (clean !== param) {
                 console.warn(`Parameter '${name}' contains invalid characters. ` +
-                            `Using the value '${clean}' instead`);
+                             `Using the value '${clean}' instead`);
             }
         }
         return clean;
     }
     // -------------------------------------------------------------------------
-
-    skipParam(name: string, param: string|undefined): void {
+    /** Check whether a supplied parameter matches an entry in a given list of
+     * acceptable values.
+     * 
+     * @param {string} name - Name of parameter.
+     * @param {string|undefined} param - Value of parameter.
+     * @param {string[]} list - Array of acceptable values.
+     * @returns {string} - Matching value or empty string if no match/undefined.
+     */
+    sanitiseParamList(name: string, param: string|undefined, list: string[]): string {
+        
+        let rv = '';
         if (param !== undefined) {
-            console.warn(`Parameter '${name}' is not implemented`);
+            const clean = this.sanitiseParam(name, param, /[^a-zA-Z0-9-]/g)
+                              .toLowerCase();
+            for (let i=0; i < list.length; i++) {
+                if (clean === list[i]) {
+                    rv = list[i];
+                    break;
+                }   
+            }
+            if (rv === '') {
+                console.warn(`Parameter '${name}' has the unrecognised value ` +
+                    `of '${clean}'. Acceptable values are: ${list.join(', ')}`);
+            }
         }
-    }
+        return rv;
+    }         
     // -------------------------------------------------------------------------
 
     sanitiseFill(name: string, param: string|undefined, preset: string): string {
@@ -344,6 +466,19 @@ export class Params {
             p = '';
         }  
         return p;            
+    }
+    // -------------------------------------------------------------------------
+
+    showVCs(): boolean {
+        return this.bg === 'vc';
+    }
+    // -------------------------------------------------------------------------
+
+    skipParam(name: string, param: number|string|undefined): void {
+        if (param !== undefined) {
+            console.warn(`Parameter '${name}' is not implemented. It will be ` +
+                `ignored.`);
+        }
     }
     // -------------------------------------------------------------------------
     

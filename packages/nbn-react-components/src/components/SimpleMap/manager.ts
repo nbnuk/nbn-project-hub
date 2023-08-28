@@ -2,9 +2,10 @@
 
 import * as L from 'leaflet';
 
+import { Path } from './const';
 import { ISimpleMapProps, Params } from './params';
 import { getWmsLayer } from './queries';
-import { selectOverlayLayer } from './utils';
+import * as utils from './utils';
 
 
 // -----------------------------------------------------------------------------
@@ -12,19 +13,24 @@ import { selectOverlayLayer } from './utils';
 export class MapManager {
 
     private baseMaps: {[k: string]: L.TileLayer};
+    private overlayMaps: {[k: string]: L.GeoJSON};
+    private wmsLayers: {[k: string]: L.TileLayer.WMS};
+
     private ctrlLayer: L.Control.Layers | null;
     private map: L.Map;
     private params: Params;
-    private wmsLayers: Map<string, L.TileLayer.WMS>;
 
     // -------------------------------------------------------------------------
     
     constructor(props: ISimpleMapProps) {
 
         this.params = new Params(props);
+
         this.baseMaps = {};
+        this.overlayMaps = {};
+        this.wmsLayers = {};
+
         this.ctrlLayer = null;
-        this.wmsLayers = new Map<string, L.TileLayer.WMS>();
         this.initBaseMaps();  // call before map initialisation
         this.map = L.map(this.params.elementId, {
             center: [54.59,-1.45],
@@ -33,12 +39,23 @@ export class MapManager {
         });          
     }
     // -------------------------------------------------------------------------
+    // add 'static' boundary line layers
+
+    addBoundaryOverlays() {
+        
+        const name = 'VCs';
+        if (this.params.showVCs() ) {
+            this.ctrlLayer?.addOverlay(this.overlayMaps[name], name);
+            utils.selectOverlayLayer(this.map, this.overlayMaps[name], name);
+        }
+    }
+    // -------------------------------------------------------------------------
     
     initBaseMaps(): void {
 
         this.baseMaps = {};
         this.baseMaps['Carto'] = L.tileLayer(
-            'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', 
+            'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', 
             // @ts-ignore: TileLayerOptions interface does not have a styleId       
             { styleId: 22677 });
         this.baseMaps['OpenStreetMap'] = L.tileLayer(
@@ -48,9 +65,61 @@ export class MapManager {
             'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', 
             { maxZoom: 17 });
         this.baseMaps['Satellite'] = L.tileLayer(
-            'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
-            { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });
+            'https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
+            { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });         
     }
+        // -------------------------------------------------------------------------
+    
+        initBoundaries() {
+        
+            const borderStyle = {
+                color: '#7C7CD3',
+                weight: 1,
+                opacity: 0.6,
+                fillOpacity: 0,
+            }; 
+            const boundaryStyle = {
+                color: '#7C7CD3',
+                fillColor: "white",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 1,
+            };     
+                
+            let tlBoundary: L.GeoJSON, 
+                tlGrid: L.GeoJSON, 
+                tlCountry: L.GeoJSON, 
+                tlVc: L.GeoJSON; 
+            const pBoundary= fetch(Path.gj_boundary)
+                .then(response => response.json()).then(data => {
+                    tlBoundary = L.geoJSON(data, {style: boundaryStyle })
+                });      
+            const pGrid = fetch(Path.gj_grid)
+                .then(response => response.json()).then(data => {
+                    tlGrid = L.geoJSON(data, {style: borderStyle})
+            });
+            const pCountry = fetch(Path.gj_country)
+                .then(response => response.json()).then(data => {
+                    tlCountry = L.geoJSON(data, {style: borderStyle})
+            });
+            const pVc = fetch(Path.gj_vc_all)
+                .then(response => response.json()).then(data => {
+                    tlVc = L.geoJSON(data, {style: borderStyle})
+            });
+            Promise.allSettled([pBoundary, pGrid, pCountry, pVc]).then(() => {
+                this.overlayMaps.Boundary = tlBoundary;
+                this.overlayMaps.Grid = tlGrid;
+                this.overlayMaps.Country = tlCountry;
+                this.overlayMaps.VCs = tlVc;
+                this.addBoundaryOverlays();
+                // this.lgStatic = L.layerGroup([this.tlGrid, this.tlCountry, this.tlVc]);
+            })
+            .catch(err => {
+                console.error(`Unable to load boundaries. ${err}`);
+            });              
+        }
+
+        
     // -------------------------------------------------------------------------
     
     initMap(): void {
@@ -74,12 +143,12 @@ export class MapManager {
     
     initWmsLayers(): void {
         this.wmsLayers = this.params.getWmsLayers();
-        for (const [title, layer] of this.wmsLayers) {
+        for (const [title, layer] of Object.entries(this.wmsLayers)) {
             this.ctrlLayer?.addOverlay(layer, title);
         }        
         // Select first entry in legend
-        const entry = this.wmsLayers.entries().next().value;
-        selectOverlayLayer(this.map, entry[1], entry[0]);
+        const key = Object.keys(this.wmsLayers)[0];
+        utils.selectOverlayLayer(this.map, this.wmsLayers[key], key);
     }
 
     // -------------------------------------------------------------------------
@@ -87,9 +156,12 @@ export class MapManager {
     show(): void {
         this.initMap();
         this.initWmsLayers();
-
+        if (this.params.showVCs()) {
+            // Only load boundaries if
+            this.initBoundaries();
+        }
         if (this.params.bounds !== null ) {
-            this.map.fitBounds(this.params.bounds)
+            this.map.fitBounds(this.params.bounds);
         }
     }
     // -------------------------------------------------------------------------
@@ -102,7 +174,7 @@ export class MapManager {
         this.initMap();
         const layer = getWmsLayer(name, year, colour);
         this.ctrlLayer?.addOverlay(layer, name);
-        selectOverlayLayer(this?.map, layer, name);
+        utils.selectOverlayLayer(this?.map, layer, name);
     }
     // -------------------------------------------------------------------------
 

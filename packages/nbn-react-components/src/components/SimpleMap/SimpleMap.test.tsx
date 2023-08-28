@@ -1,9 +1,13 @@
 
+import { enableFetchMocks } from 'jest-fetch-mock';
+enableFetchMocks();
+
 import { render, screen } from '@testing-library/react';
 import SimpleMap from './SimpleMap';
 
 const logSpyWarn = jest.spyOn(console, 'warn');
 const logSpyError = jest.spyOn(console, 'error');
+
 
 // Tests: tvk
 test('tvk - basic', () => {
@@ -137,6 +141,22 @@ test('b0from, b0to, b1from, b1to, b2from, bt2to - basic', () => {
   expect(linkElement3).toBeInTheDocument();
 });
 
+// Tests: bg
+/* TODO: Jest Fetch not supported...
+See: 
+https://www.leighhalliday.com/mock-fetch-jest
+https://bobbyhadz.com/blog/javascript-referenceerror-fetch-is-not-defined
+*/
+/*
+test('bg - basic', () => {
+  render( <SimpleMap elementId={'map'} 
+            tvk={'NBNSYS0000027783'} 
+            bg={'vc'}
+          /> );
+  const linkElement = screen.getByText(/VCs/i);
+  expect(linkElement).toBeInTheDocument();
+});
+*/
 // Tests: skipped parameters
 test('skipped parameters - basic', () => {
   render( <SimpleMap elementId={'map'} 
@@ -146,9 +166,9 @@ test('skipped parameters - basic', () => {
             b1bord={'FF0000'}
             b2bord={'FF0000'}
           /> );
-  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'gd' is not implemented");  
-  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'b0bord' is not implemented");  
-  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'b1bord' is not implemented");  
-  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'b2bord' is not implemented");  
+  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'gd' is not implemented. It will be ignored.");  
+  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'b0bord' is not implemented. It will be ignored.");  
+  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'b1bord' is not implemented. It will be ignored.");  
+  expect(logSpyWarn).toHaveBeenCalledWith("Parameter 'b2bord' is not implemented. It will be ignored.");  
 });
 

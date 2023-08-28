@@ -40,6 +40,23 @@ export const Zoom_NorthingEasting: Story = {
     },    
 };
 
+export const Zoom_VC: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NHMSYS0001387317',
+        bg: 'vc',
+        vc: '39',
+    },    
+};
+
+export const Zoom_Region: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NHMSYS0001387317',
+        zoom: 'outer-heb',
+    },    
+};
+
 export const DateBands: Story = {
     args: {
         elementId: 'map',
@@ -53,4 +70,35 @@ export const DateBands: Story = {
     },    
 };
 
+export const VC_Boundaries: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NBNSYS0000027783',
+        bg: 'vc',
+    },    
+};
 
+export const DataSources: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NHMSYS0001387317',
+        ds: 'dr867,dr855',
+    },    
+};
+
+export const GridSize_2km: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NHMSYS0001387317',
+        ds: 'dr867,dr855',
+        res: '2km',
+    },    
+};
+
+export const ImageSize: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NBNSYS0000027783',
+        h: '600',
+    },       
+};

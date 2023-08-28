@@ -1,6 +1,6 @@
 // -----------------------------------------------------------------------------
 
-import { Layer, Map } from 'leaflet';
+import * as L from 'leaflet';
 
 // -----------------------------------------------------------------------------
 // Swap x & y values in array of arrays of form [[x, y]...]
@@ -14,10 +14,11 @@ export function exchangeArrayValues(array: []): [] {
     }   
     return array;
 }
+
 // -----------------------------------------------------------------------------
 // Select a base layer which has already been added to a control.
 
-export function selectBaseLayer(map: Map, layer: Layer, name: string): void {
+export function selectBaseLayer(map: L.Map, layer: L.Layer, name: string): void {
     // display the layer
     layer.addTo(map);
     // find the associated radio button and set its 'checked' property to true
@@ -37,7 +38,7 @@ export function selectBaseLayer(map: Map, layer: Layer, name: string): void {
 // -----------------------------------------------------------------------------
 // Select an overlay layer which has already been added to a control.
 
-export function selectOverlayLayer(map: Map, layer: Layer, name: string): void {
+export function selectOverlayLayer(map: L.Map, layer: L.Layer, name: string): void {
     // display the layer
     layer.addTo(map);
     // find the associated checkbox  and set its 'checked' property to true
