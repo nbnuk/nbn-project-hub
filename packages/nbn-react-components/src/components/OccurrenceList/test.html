@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Load React and ReactDOM from CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <link rel="stylesheet" href="../../../dist/style.css" />
+    <!-- Load the UMD build of your React component library -->
+    <script src="../../../dist/nbnReactComponents.umd.js"></script>
+ 
+    <title>Legacy Web Page with React Component</title>
+</head>
+<body>
+  <h1 class="text-3xl text-blue-700">Testing</h1>
+    <!-- Placeholder for React component -->
+    <div id="map-container"></div>
+    <!-- Render the React component -->
+    <script>
+        //   const Button = window.nbnReactComponents.Button;
+        const OccurrenceList = window.nbnReactComponents.OccurrenceList;
+          ReactDOM.render(
+        
+        //     React.createElement(Button, { label: 'Click Me' }),
+        React.createElement(OccurrenceList, { apiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=species:%22Lutra%20lutra%22' }),
+        
+            document.getElementById('map-container')
+        
+          );
+        
+        </script>
+</body>
+</html>
