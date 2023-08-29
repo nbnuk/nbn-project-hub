@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 describe('OccurrenceList', () => {
  
- 
-  // Other tests can be placed here...
+  it('should do something', () => {
+    
+  });
 });

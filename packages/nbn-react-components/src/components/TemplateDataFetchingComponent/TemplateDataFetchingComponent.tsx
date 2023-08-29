@@ -4,7 +4,7 @@ import { fetcher } from '../../lib/fetcher';
 import '../../index.css'
 
 /**
- * TemplateComponent: A starter template for creating a new component.
+ * TemplateDataFetchingComponent: A starter template for creating a new component.
  * This template includes the essential libraries and patterns 
  * used in our application such as useSWR for data fetching, 
  * zod for schema validation and type inference, and tailwindcss for styling.
@@ -18,8 +18,9 @@ import '../../index.css'
 // Define the schema for a single data item
 export const DataSchema = z.object({
   id: z.number(),
+  userId: z.number(),
   title: z.string(),
-  body: z.string(),
+  completed: z.boolean()
 });
 
 // Define the schema for a list of data items
@@ -33,12 +34,12 @@ export type DataList = z.TypeOf<typeof DataListSchema>;
 const dataListFetcher = (url:string) => fetcher(url, DataListSchema);
 
 // Define the props for the component
-export interface DataListProps { 
+export interface TemplateDataFetchingComponentProps { 
   apiURL: string;
 }
 
 // Define the component
-export const TemplateComponent = ({ apiURL }: DataListProps) => {
+export const TemplateDataFetchingComponent = ({ apiURL }: TemplateDataFetchingComponentProps) => {
 
   // Fetch, cache, and revalidate the data list from the API using useSWR
   // data: the data list fetched from the API
@@ -58,12 +59,12 @@ export const TemplateComponent = ({ apiURL }: DataListProps) => {
     <div>
       {data?.map((dataItem: Data) => (
         <div key={dataItem.id}>
-          <h2>{dataItem.title}</h2>
-          <p>{dataItem.body}</p>
+          <h2>{dataItem.userId}</h2>
+          <p>{dataItem.title}</p>
         </div>
       ))}
     </div>
   );
 };
 
-export default TemplateComponent;
+export default TemplateDataFetchingComponent;

@@ -1,4 +1,4 @@
 export { default as Button} from './Button'
-export { default as TemplateComponent} from './TemplateComponent'
+export { default as TemplateDataFetchingComponent} from './TemplateDataFetchingComponent'
 export { default as Map} from './Map'
 export { default as OccurrenceList} from './OccurrenceList'

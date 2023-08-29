@@ -13,10 +13,6 @@ export async function fetcher<T>(url: string, schema: ZodSchema<T>): Promise<T> 
   
     const json = await response.json();
   
-    if (json.status !== 'OK') {
-      throw new Error('Network response was not ok');
-    }
-  
     const parsed = schema.safeParse(json);
   
     if (parsed.success) {
