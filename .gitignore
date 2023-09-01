@@ -2,6 +2,7 @@
 **/dist
 **/storybook-static
 **/tsconfig.tsbuildinfo
+**/coverage
 .DS_STORE
 .yarn/*
 !.yarn/patches
