@@ -1,3 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import * as L from 'leaflet';
+import 'leaflet-easyprint';
 
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks();

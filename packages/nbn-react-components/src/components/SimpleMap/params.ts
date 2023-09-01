@@ -176,7 +176,6 @@ export class Params {
         this.skipParam('cachedays', this.props.cachedays);
         this.skipParam('retina', this.props.retina);
         // Final data integrity checks...
-        
         const bcount =  (this.bl.length > 0 ? 1 : 0) +
                         (this.blCoord.length > 0 ? 1 : 0) +
                         (this.vc.length > 0 ? 1 : 0) +

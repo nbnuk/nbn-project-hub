@@ -8811,6 +8811,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dom-to-image@npm:^2.5.2":
+  version: 2.6.0
+  resolution: "dom-to-image@npm:2.6.0"
+  checksum: 0d1f450b776d36f3ec982783d2a3898baaa3697f135ed0a9c70085db6bc5ac6def02f5ed7affc6acb92ef4fb3248905fabec915fed541994383d317260f784a2
+  languageName: node
+  linkType: hard
+
 "domelementtype@npm:1":
   version: 1.3.1
   resolution: "domelementtype@npm:1.3.1"
@@ -10021,6 +10028,13 @@ __metadata:
   peerDependencies:
     webpack: ^4.0.0 || ^5.0.0
   checksum: faf43eecf233f4897b0150aaa874eeeac214e4f9de49738a9e0ef734a30b5260059e85b7edadf852b98e415f875bd5f12587768a93fd52aaf2e479ecf95fab20
+  languageName: node
+  linkType: hard
+
+"file-saver@npm:^1.3.3":
+  version: 1.3.8
+  resolution: "file-saver@npm:1.3.8"
+  checksum: b2b7bef6b0f9eafe16526734db48f371da94773c34450bac99bf1d49f6b2c9e1294d58dd1a81f7abd9eeae717d99c91f7ae250025cd3cf460a35f497a27a8318
   languageName: node
   linkType: hard
 
@@ -13143,6 +13157,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"leaflet-easyprint@npm:^2.1.9":
+  version: 2.1.9
+  resolution: "leaflet-easyprint@npm:2.1.9"
+  dependencies:
+    dom-to-image: ^2.5.2
+    file-saver: ^1.3.3
+  checksum: a02e10882624c04012a74a2c06e9109748deebf1dd920aaf8640d5475e6e4cd3a03ca464272253175b4970c480f26190ad3dd69817c8a70143ba28181e871bc1
+  languageName: node
+  linkType: hard
+
 "leaflet@npm:^1.9.4":
   version: 1.9.4
   resolution: "leaflet@npm:1.9.4"
@@ -13902,6 +13926,7 @@ __metadata:
     jest-fetch-mock: ^3.0.3
     json: ^11.0.0
     leaflet: ^1.9.4
+    leaflet-easyprint: ^2.1.9
     proj4: ^2.9.0
     ts-jest: ^29.1.1
     typedoc: ^0.24.8

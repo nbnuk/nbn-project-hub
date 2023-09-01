@@ -1,12 +1,12 @@
 // -----------------------------------------------------------------------------
 
 import * as L from 'leaflet';
+import 'leaflet-easyprint';
 
 import { Path } from './const';
 import { ISimpleMapProps, Params } from './params';
 import { getWmsLayer } from './queries';
 import * as utils from './utils';
-
 
 // -----------------------------------------------------------------------------
 
@@ -35,6 +35,7 @@ export class MapManager {
         this.map = L.map(this.params.elementId, {
             center: [54.59,-1.45],
             zoom: 6,
+            zoomSnap: 0,
             layers: [this.baseMaps['Carto']]
         });          
     }
@@ -56,17 +57,21 @@ export class MapManager {
         this.baseMaps = {};
         this.baseMaps['Carto'] = L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', 
-            // @ts-ignore: TileLayerOptions interface does not have a styleId       
-            { styleId: 22677 });
+            { maxZoom: 20,
+              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="https://carto.com/attributions">CARTO' });
         this.baseMaps['OpenStreetMap'] = L.tileLayer(
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png', 
-            { maxZoom: 19 });
+            { maxZoom: 20,
+              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
         this.baseMaps['OpenTopoMap'] = L.tileLayer(
             'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', 
-            { maxZoom: 17 });
+            { maxZoom: 20,
+              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="https://opentopomap.org">OpenTopoMap</a>' });
         this.baseMaps['Satellite'] = L.tileLayer(
             'https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
-            { maxZoom: 20, subdomains:['mt0','mt1','mt2','mt3'] });         
+            { maxZoom: 20, 
+              subdomains:['mt0','mt1','mt2','mt3'],
+              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="https://mapsplatform.google.com/">powered by Google</a>' });         
     }
         // -------------------------------------------------------------------------
     
@@ -137,7 +142,13 @@ export class MapManager {
             .layers(this.baseMaps)
             .addTo(this.map);    
         
-        this.ctrlLayer.expand();                    
+        this.ctrlLayer.expand();    
+        // @ts-ignore: easyPrint function added by leaflet-easyprint module
+        L.easyPrint({
+            title: 'Print map',
+            position: 'bottomright',
+            sizeModes: ['A4Portrait', 'A4Landscape']
+        }).addTo(this.map);                        
     }
     // -------------------------------------------------------------------------
     
