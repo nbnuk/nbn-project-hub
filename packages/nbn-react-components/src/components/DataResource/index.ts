@@ -1,1 +1,1 @@
-export {default} from './SimpleDataResourceComponent'
+export {default} from './SimpleDataResourceList'

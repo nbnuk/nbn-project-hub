@@ -2,12 +2,13 @@ import { useDataResource } from '../../lib/advanced/hooks/useDataResource';
 import { validateOccurrenceSearchApiUrl } from '../../lib/apiUrl';
 
 
-export interface SimpleDataResourceComponentProps { 
+export interface SimpleDataResourceListProps { 
   apiOccurrenceSearchURL: string;
+  width?: string
 }
 
 
-export const SimpleDataResourceComponent = ({ apiOccurrenceSearchURL }: SimpleDataResourceComponentProps) => {
+export const SimpleDataResourceList = ({ apiOccurrenceSearchURL, width = 'auto' }: SimpleDataResourceListProps) => {
 
   // Validate the occurrence search API URL
   const validatedApiUrl = validateOccurrenceSearchApiUrl(apiOccurrenceSearchURL);
@@ -23,17 +24,22 @@ export const SimpleDataResourceComponent = ({ apiOccurrenceSearchURL }: SimpleDa
   if (isValidating) return <div>Loading...</div>
 
   // Render the data resources
-  return (
-    <div>
-      {dataResources?.map(dataResource => (
-        <div key={dataResource.uid} className="pb-3" >
-          <h2>{dataResource.name}</h2>
-          <p>urn: {dataResource.urn}</p>
-          <p>count: {dataResource.count}</p>
-        </div>
-      ))}
+  return (<>
+  <div className="container mx-auto p-4" style={{width}}>
+      <ul>
+        {dataResources?.map(dataResource => (
+          <li key={dataResource.uid} className="mb-2">
+            <div className="font-bold">
+              <a href={dataResource.urn} className="text-blue-500">{dataResource.name}</a>
+            </div>
+            <div className="text-gray-700">Records: {dataResource.count}</div>
+          </li>
+        ))}
+      </ul>
     </div>
-  );
+    </>
+);
+
 };
 
-export default SimpleDataResourceComponent;
+export default SimpleDataResourceList;

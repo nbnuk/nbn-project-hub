@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import SimpleDataResourceComponent from './SimpleDataResourceComponent';
+import SimpleDataResourceList from './SimpleDataResourceList';
 import { useDataResource } from '../../lib/advanced/hooks/useDataResource';
 
 jest.mock('../../lib/advanced/hooks/useDataResource');
@@ -14,7 +14,7 @@ test('renders data when useSWR returns data', () => {
     isValidating: false,
   });
 
-  const { getByText } = render(<SimpleDataResourceComponent apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
+  const { getByText } = render(<SimpleDataResourceList apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
 console.log(getByText);
   expect(getByText('data resource 1')).toBeInTheDocument();
   expect(getByText('urn: https://registry.nbnatlas.org/ws/dataResource/dr2909')).toBeInTheDocument();
@@ -30,7 +30,7 @@ test('renders error when useSWR returns error', () => {
     isValidating: false,
   });
 
-  const { getByText } = render(<SimpleDataResourceComponent apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
+  const { getByText } = render(<SimpleDataResourceList apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
 
   expect(getByText('Error: Test error')).toBeInTheDocument();
 });
@@ -43,7 +43,7 @@ test('renders loading when useSWR is validating', () => {
     isValidating: true,
   });
 
-  const { getByText } = render(<SimpleDataResourceComponent apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
+  const { getByText } = render(<SimpleDataResourceList apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
 
   expect(getByText('Loading...')).toBeInTheDocument();
 });
