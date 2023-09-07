@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import { MapManager } from './manager';
 import { ISimpleMapProps } from './params';
 

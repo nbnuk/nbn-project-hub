@@ -1,10 +1,9 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import * as L from 'leaflet';
-import 'leaflet-easyprint';
 
 import { enableFetchMocks } from 'jest-fetch-mock';
 enableFetchMocks();
+
+import * as L from 'leaflet';
+import 'leaflet-easyprint';
 
 import { render, screen } from '@testing-library/react';
 import SimpleMap from './SimpleMap';
@@ -12,6 +11,11 @@ import SimpleMap from './SimpleMap';
 const logSpyWarn = jest.spyOn(console, 'warn');
 const logSpyError = jest.spyOn(console, 'error');
 
+// Kludge to force Leaflet code to be included for the benefit of easyprint.
+// Without a call to L, easyprint isn't able to resolve and will error.
+if (L.Browser.ielt9) {
+  alert('Dummy message');
+}
 
 // Tests: tvk
 test('tvk - basic', () => {

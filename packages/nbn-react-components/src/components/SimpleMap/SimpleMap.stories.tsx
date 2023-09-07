@@ -102,3 +102,11 @@ export const ImageSize: Story = {
         h: '600',
     },       
 };
+
+export const NotInteractive: Story = {
+    args: {
+        elementId: 'map',
+        tvk: 'NBNSYS0000027783',
+        interactive: '0'
+    },       
+};

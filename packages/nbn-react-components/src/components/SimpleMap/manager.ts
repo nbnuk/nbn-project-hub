@@ -5,13 +5,19 @@ import 'leaflet-easyprint';
 
 import { Path } from './const';
 import { ISimpleMapProps, Params } from './params';
-import { getWmsLayer } from './queries';
 import * as utils from './utils';
 
 // -----------------------------------------------------------------------------
 
 export class MapManager {
+    // Define layer names
+    private readonly laySimple = 'Simple';
+    private readonly layRoad = 'Road';
+    private readonly layTerrain = 'Terrain';
+    private readonly laySatellite = 'Satellite';
+    private readonly layVCs = 'VCs';
 
+    // Layer arrays
     private baseMaps: {[k: string]: L.TileLayer};
     private overlayMaps: {[k: string]: L.GeoJSON};
     private wmsLayers: {[k: string]: L.TileLayer.WMS};
@@ -32,11 +38,19 @@ export class MapManager {
 
         this.ctrlLayer = null;
         this.initBaseMaps();  // call before map initialisation
+        const interactive = this.params.showInteractive();
         this.map = L.map(this.params.elementId, {
             center: [54.59,-1.45],
             zoom: 6,
             zoomSnap: 0,
-            layers: [this.baseMaps['Carto']]
+            boxZoom: interactive,         // nav
+            doubleClickZoom: interactive, // nav
+            dragging: interactive,        // nav
+            keyboard: interactive,        // nav
+            scrollWheelZoom: interactive, // nav
+            touchZoom: interactive,       // nav
+            zoomControl: interactive,     // nav
+            layers: [this.baseMaps[this.laySimple]]
         });          
     }
     // -------------------------------------------------------------------------
@@ -44,7 +58,7 @@ export class MapManager {
 
     addBoundaryOverlays() {
         
-        const name = 'VCs';
+        const name = this.layVCs;
         if (this.params.showVCs() ) {
             this.ctrlLayer?.addOverlay(this.overlayMaps[name], name);
             utils.selectOverlayLayer(this.map, this.overlayMaps[name], name);
@@ -53,25 +67,30 @@ export class MapManager {
     // -------------------------------------------------------------------------
     
     initBaseMaps(): void {
-
+        const nbn_attrib = '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | ';
         this.baseMaps = {};
-        this.baseMaps['Carto'] = L.tileLayer(
+        this.baseMaps[this.laySimple] = L.tileLayer(
             'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', 
             { maxZoom: 20,
-              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="https://carto.com/attributions">CARTO' });
-        this.baseMaps['OpenStreetMap'] = L.tileLayer(
+              attribution: nbn_attrib +
+                '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | ' +
+                '<a href="https://carto.com/attributions">CartoDB' });
+        this.baseMaps[this.layRoad] = L.tileLayer(
             'https://tile.openstreetmap.org/{z}/{x}/{y}.png', 
             { maxZoom: 20,
-              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
-        this.baseMaps['OpenTopoMap'] = L.tileLayer(
+              attribution: nbn_attrib +
+              '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
+        this.baseMaps[this.layTerrain] = L.tileLayer(
             'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', 
             { maxZoom: 20,
-              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="https://opentopomap.org">OpenTopoMap</a>' });
-        this.baseMaps['Satellite'] = L.tileLayer(
+              attribution: nbn_attrib +
+              '<a href="https://opentopomap.org">OpenTopoMap</a>' });
+        this.baseMaps[this.laySatellite] = L.tileLayer(
             'https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
             { maxZoom: 20, 
               subdomains:['mt0','mt1','mt2','mt3'],
-              attribution: '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | <a href="https://mapsplatform.google.com/">powered by Google</a>' });         
+              attribution: nbn_attrib + 
+              '<a href="https://mapsplatform.google.com/">powered by Google</a>' });         
     }
         // -------------------------------------------------------------------------
     
@@ -168,24 +187,12 @@ export class MapManager {
         this.initMap();
         this.initWmsLayers();
         if (this.params.showVCs()) {
-            // Only load boundaries if
+            // Only load boundaries if necessary
             this.initBoundaries();
         }
         if (this.params.bounds !== null ) {
             this.map.fitBounds(this.params.bounds);
         }
-    }
-    // -------------------------------------------------------------------------
-
-    showSpecies(name: string, year: number, colour: string|null = null): void {
-
-        if (year < 1600 || year > 3000) {
-            return;
-        }
-        this.initMap();
-        const layer = getWmsLayer(name, year, colour);
-        this.ctrlLayer?.addOverlay(layer, name);
-        utils.selectOverlayLayer(this?.map, layer, name);
     }
     // -------------------------------------------------------------------------
 

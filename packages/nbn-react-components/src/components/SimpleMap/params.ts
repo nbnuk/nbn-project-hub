@@ -11,34 +11,75 @@ import Boundaries from './assets/VC_boundaries.json';
 // -----------------------------------------------------------------------------
 
 export interface ISimpleMapProps {
+    /** HTML ID of map element. */
     elementId: string;
+    /** Taxon version key representing the observed species to be mapped. */
     tvk: string;
+    /** Grid reference representing bottom-left corner of a bounding box. 
+     * Use with tr parameter. */
     bl?: string;
+    /** Grid reference representing top-right corner of a bounding box. 
+     * Use with bl parameter. */
     tr?: string;
+    /** Northing,Easting pair representing bottom-left corner of a bounding box. 
+     * Use with trCoord parameter. */
     blCoord?: string;
+    /** Northing,Easting pair representing top-right corner of a bounding box. 
+     * Use with blCoord parameter. */
     trCoord?: string;
+    /** Start year for the lower date layer (inclusive). */
     b0from?: string;
+    /** End year for the lower date layer (inclusive). */
     b0to?: string;
+    /** Fill colour for lower date layer. */
     b0fill?: string;
+    /** Border colour for lower date layer (skipped). */
     b0bord?: string;
+    /** Start year for the lower date layer (inclusive). */
     b1from?: string;
+    /** End year for the middle date layer (inclusive). */
     b1to?: string;
+    /** Fill colour for middle date layer. */
     b1fill?: string;
+    /** Border colour for middle date layer (skipped). */
     b1bord?: string;
+    /** Start year for the middle date layer (inclusive). */
     b2from?: string;
+    /** End year for the upper date layer (inclusive). */
     b2to?: string;
+    /** Fill colour for upper date layer. */
     b2fill?: string;
+    /** Border colour for upper date layer (skipped). */
     b2bord?: string;
+    /** Display Vice County boundaries.*/
     bg?: string;
+    /**  Number of days after which a new image will be generated instead of 
+     * cached version (skipped). */
     cachedays?: number;
+    /** Comma-separated list of datasetkeys of the datasets to be shown on 
+     * the map. If none specified all available datasets are shown. */
     ds?: string;
+    /** Specifies a grid to overlay the map (skipped). */
     gd?: string;
+    /** Height, in pixels, of the map. If neither height nor width specified 
+     * the height is 350. */
     h?: string;
+    /** Width, in pixels, of the map. If neither height nor width specified 
+     * the width is 350. */
     w?: string;
+    /** Doubles the resolution of the map (skipped). */
     retina?: number;
+    /**  Size of the grid squares to show on the map. If not specified the 
+     * resolution is 10km */
     res?: string;
+    /** Number of the vice-county. Zooms the map to the particular vice-county 
+     * as specified. */
     vc?: string;
+    /** Focuses the map upon the named area (e.g.: uk, england, scotland, wales, 
+     * highland, sco-mainland, outer-heb) */
     zoom?: string;
+    /** Disables map interactive controls if set to 0. */
+    interactive?: string;
 }
 
 // -----------------------------------------------------------------------------
@@ -49,41 +90,45 @@ export class Params {
     readonly CRS_EPSG_4326 = '+proj=longlat +datum=WGS84 +no_defs +type=crs';
 
     // supplied members
-    public props: ISimpleMapProps;
+    private props: ISimpleMapProps;
     // derived members
     public elementId: string;
-    public tvk: string;
-    public bl: string;
-    public tr: string;
-    public blCoord: string;
-    public trCoord: string;
-    public b0from: string;
-    public b0to: string;
-    public b0fill: string;
-    public b1from: string;
-    public b1to: string;
-    public b1fill: string;
-    public b2from: string;
-    public b2to: string;
-    public b2fill: string;
-    public bg: string;
-    public ds: string;
+    private tvk: string;
+    private bl: string;
+    private tr: string;
+    private blCoord: string;
+    private trCoord: string;
+    private b0from: string;
+    private b0to: string;
+    private b0fill: string;
+    private b1from: string;
+    private b1to: string;
+    private b1fill: string;
+    private b2from: string;
+    private b2to: string;
+    private b2fill: string;
+    private bg: string;
+    private ds: string;
     public h: string;
     public w: string;
-    public res: string;
-    public vc: string;
-    public zoom: string;
+    private res: string;
+    private vc: string;
+    private zoom: string;
+    private interactive: string;
     // calculated members
     public bounds: L.LatLngBounds | null;
-    public druidurl: string;
-    public map_grid_size: string
-    public rangeurl0: string;
-    public rangeurl1: string;
-    public rangeurl2: string;
+    private druidurl: string;
+    private map_grid_size: string
+    private rangeurl0: string;
+    private rangeurl1: string;
+    private rangeurl2: string;
 
 
     // -------------------------------------------------------------------------
-    
+    /** Constructor.
+     * 
+     * @param {ISimpleMapProps} props - Configuration parameters.
+     */
     constructor(props: ISimpleMapProps){
         this.props = props;
         this.bounds = null;
@@ -103,7 +148,7 @@ export class Params {
             this.bl = '';
             this.tr = '';
         }
-        // blCoord, trCoord: Northing, Easting bonundary
+        // blCoord, trCoord: Northing, Easting boundary
         if (this.checkPairParams('blCoord', this.props.blCoord, 'trCoord', this.props.trCoord)) {
             this.blCoord = this.sanitiseParam('blCoord', this.props.blCoord, /[^0-9,]/g); 
             this.trCoord = this.sanitiseParam('trCoord', this.props.trCoord, /[^0-9,]/g); 
@@ -167,7 +212,9 @@ export class Params {
             'scotland', 'wales', 'highland', 'sco-mainland', 'outer-heb', 'uk']); 
         if (this.zoom !== '') {
                 this.calcBoundary('zoom', this.zoom);
-        }        
+        }     
+        // interactive   
+        this.interactive = this.sanitiseParam('interactive', this.props.interactive, /[^0-1]/g);
         // Skipped parameters
         this.skipParam('gd', this.props.gd);
         this.skipParam('b0bord', this.props.b0bord);
@@ -190,13 +237,12 @@ export class Params {
                 "Only one of '[bl,tr]', '[blCoord,trCoord]', 'vc', or 'zoom' " +
                 "will be used.");
         }        
-
     }
     // -------------------------------------------------------------------------
     /** Set the boundary coords for a specified boundary ID (e.g. VC 39)
      * 
      * @param {string} name - Name of parameter.
-     * @param boundary_id - Value of parameter.
+     * @param {string} boundary_id - Value of parameter.
      */
     calcBoundary(name: string, boundary_id: string): void {
         const idl = boundary_id.toLocaleLowerCase();
@@ -334,28 +380,13 @@ export class Params {
             uppercase: true,
         });	 
 
-        return tileLayer;
-
-        /*
-        const queryUrl = this.getWmsQueryUrl(range);
-        console.debug(queryUrl);
-        const wmsType: string = WmsType.point
-        const env = `${wmsType};color:${fill}`;
-        const tileLayer  = L.tileLayer.wms(queryUrl, {
-            layers: 'ALA:occurrences',
-            format: 'image/png',
-            uppercase: true,
-            // @ts-ignore: WMSOptions does not have these NBN-specific members
-            color: fill,
-            outline:'true',
-            ENV: env
-        });	 
-
-        return tileLayer;
-        */        
+        return tileLayer;      
     }
     // -------------------------------------------------------------------------
-
+    /** Generate an associative array of map tile layers.
+     * 
+     * @returns {[k: string]: L.TileLayer.WMS} - Array of tile layers.
+     */
     getWmsLayers(): {[k: string]: L.TileLayer.WMS} {
 
         const wmsLayers: {[k: string]: L.TileLayer.WMS} = {};
@@ -385,7 +416,11 @@ export class Params {
 
     }
     // -------------------------------------------------------------------------
-
+    /** Generate the NBN API query URL.
+     * 
+     * @param {string} range - Date range for query, if applicable.
+     * @returns {string} - The query URL.
+     */
     getWmsQueryUrl(range: string = ''): string {
 
         const url = `https://records-ws.nbnatlas.org/ogc/wms/reflect?q=*:*` +
@@ -393,7 +428,35 @@ export class Params {
         return url;
     }
     // -------------------------------------------------------------------------
-    
+    /** Sanitise a colour string as provided by a caller parameter.
+     * 
+     * @param {string} name - Name of parameter.
+     * @param {string|undefined} param - Value of parameter.
+     * @param {string} preset - Default value if invalid or not defined.
+     * @returns {string} - Sanitised colour string.
+     */
+    sanitiseFill(name: string, param: string|undefined, preset: string): string {
+        const p = param || preset;
+        let fill = p.toUpperCase().replace(/[^A-F0-9]/g, '');
+        try {
+            if (fill.length !== 6) {
+                throw new Error('Invalid fill format');          
+            }
+        }
+        catch (err) {
+            console.error(`Invalid fill format for '${name}': ${p}`);
+            fill = preset;
+        }  
+        return fill;          
+    }
+    // -------------------------------------------------------------------------
+    /** Sanitise a generic string as provided by a caller parameter.
+     * 
+     * @param {string} name - Name of parameter.
+     * @param {string|undefined} param - Value of parameter.
+     * @param {string} filter - Regex filter to be applied to string.
+     * @returns {string} - Sanitised string.
+     */
     sanitiseParam(name: string, param: string|undefined, filter: RegExp): string {
         let clean = '';
         if (param !== undefined) {
@@ -434,23 +497,12 @@ export class Params {
         return rv;
     }         
     // -------------------------------------------------------------------------
-
-    sanitiseFill(name: string, param: string|undefined, preset: string): string {
-        const p = param || preset;
-        let fill = p.toUpperCase().replace(/[^A-F0-9]/g, '');
-        try {
-            if (fill.length !== 6) {
-                throw new Error('Invalid fill format');          
-            }
-        }
-        catch (err) {
-            console.error(`Invalid fill format for '${name}': ${p}`);
-            fill = preset;
-        }  
-        return fill;          
-    }
-    // -------------------------------------------------------------------------
-
+    /** Sanitise a year string as provided by a caller parameter.
+     * 
+     * @param {string} name - Name of parameter.
+     * @param {string|undefined} param - Value of parameter.
+     * @returns {string} - Sanitised year string.
+     */
     sanitiseYear(name: string, param: string|undefined): string {
 
         let p = param || '';
@@ -467,12 +519,27 @@ export class Params {
         return p;            
     }
     // -------------------------------------------------------------------------
-
+    /** Determine whether the map should be interactive.
+     * 
+     * @returns {boolean} - True if map is interactive, else False.
+     */
+    showInteractive(): boolean {
+        return this.interactive !== '0';
+    }
+    // -------------------------------------------------------------------------
+    /** Determine whether the map should display VC boundaries.
+     * 
+     * @returns {boolean} - True if VCs to be displayed, else False.
+     */
     showVCs(): boolean {
         return this.bg === 'vc';
     }
     // -------------------------------------------------------------------------
-
+    /** Handle a caller-supplied parameter which will be skipped.
+     * 
+     * @param {string} name - Name of parameter.
+     * @param {number|string|undefined} param - Value of parameter.
+     */
     skipParam(name: string, param: number|string|undefined): void {
         if (param !== undefined) {
             console.warn(`Parameter '${name}' is not implemented. It will be ` +
@@ -482,8 +549,6 @@ export class Params {
     // -------------------------------------------------------------------------
     
 }
-// -----------------------------------------------------------------------------
-
 
 // -----------------------------------------------------------------------------
 // End

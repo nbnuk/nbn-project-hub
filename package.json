@@ -34,14 +34,10 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.0.3",
-<<<<<<< HEAD
     "brc-atlas-bigr": "^2.4.0",
     "leaflet": "^1.9.4",
     "leaflet-easyprint": "^2.1.9",
-    "proj4": "^2.9.0"
-=======
-    "leaflet": "^1.9.4",
-    "swr": "^2.2.1"
->>>>>>> 4e72868a0504658202f85dfe38676989298ae7f5
+    "proj4": "^2.9.0",
+    "swr": "^2.2.2"
   }
 }
