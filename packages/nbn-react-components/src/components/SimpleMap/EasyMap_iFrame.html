@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>SimpleMap iFrame Demo</title>
+    <style>
+			html {
+				background-color: lightgray;
+			}		
+      h1 {
+        font-family: sans-serif;
+        font-size: 1rem;
+        text-align: center;
+      }
+      main {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+      article {
+        padding: 20px;
+				margin: 10px;  
+				border-radius: 6px;
+				background-color: white;
+      }      
+      iframe {
+	      border: 0px;
+        width: 500px;
+        height: 600px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <article>
+        <h1>Simple TVK (SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NBNSYS0000027783&h=700"
+          scrolling="no"></iframe>
+      </article>
+			      <article>
+        <h1>Simple TVK (EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NBNSYS0000027783&maponly=1&h=700"
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on Grid References (SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NHMSYS0001387317&bl=TL512637&tr=TG392674&res=2km&h=600" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on Grid References (EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NHMSYS0001387317&bl=TL512637&tr=TG392674&h=600&res=2km&maponly=1" 
+          scrolling="no"></iframe>
+      </article>			
+      <article>
+        <h1>Zoom on Northing/Eastings (SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NBNSYS0000027783&blCoord=551248,263773&trCoord=639251,367412&h=600" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on Northing/Eastings (EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NBNSYS0000027783&blCoord=551248,263773&trCoord=639251,367412&h=600&maponly=1" 
+          scrolling="no"></iframe>
+      </article>			
+      <article>
+        <h1>Zoom on Named Region (SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NBNSYS0000027783&zoom=outer-heb&h=600" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on Named Region (EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NBNSYS0000027783&zoom=outer-heb&h=600&maponly=1" 
+          scrolling="no"></iframe>
+      </article>			
+      <article>
+        <h1>Zoom on VC with VC Boundaries (SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NBNSYS0000027783&vc=39&bg=vc&h=600" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Zoom on VC with VC Boundaries (EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NBNSYS0000027783&vc=39&bg=vc&h=600&maponly=1" 
+          scrolling="no"></iframe>
+      </article>			
+      <article>
+        <h1>Three-Layer Date Ranges (SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NHMSYS0001387317&b0from=1600&b0to=1987&b1from=1988&b1to=1997&b2from=1998&b2to=2025&h=600" 
+          scrolling="no"></iframe>
+      </article>  
+      <article>
+        <h1>Three-Layer Date Ranges (EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NHMSYS0001387317&b0from=1600&b0to=1987&b1from=1988&b1to=1997&b2from=1998&b2to=2025&h=600&maponly=1" 
+          scrolling="no"></iframe>
+      </article>   	
+      <article>
+        <h1>Data Sources(SimpleMap)</h1>
+        <iframe src="http://localhost/kpm/nbn/SimpleMap_API/EasyMap?tvk=NHMSYS0001387317&ds=dr867,dr855&h=600" 
+          scrolling="no"></iframe>
+      </article>
+      <article>
+        <h1>Data Sources(EasyMap)</h1>
+        <iframe src="https://easymap.nbnatlas.org/EasyMap?tvk=NHMSYS0001387317&ds=dr867,dr855&h=600&maponly=1" 
+          scrolling="no"></iframe>
+      </article>				
+    </main>
+
+  </body>
+</html>
