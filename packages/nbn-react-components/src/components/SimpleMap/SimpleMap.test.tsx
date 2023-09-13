@@ -36,7 +36,23 @@ test('tvk - non-interactive', () => {
 });
 
 // Tests: base
-test('base', () => {
+test('base - default interactive', () => {
+  render( <SimpleMap elementId={'map'} 
+            tvk={'NBNSYS0000027783'}
+            interactive={'1'} 
+          /> );
+  const linkSimple = screen.queryByText(/simple/i);
+  const linkRoad = screen.queryByText(/road/i);
+  const linkTerrain = screen.queryByText(/terrain/i);
+  const linkSatellite = screen.queryByText(/satellite/i);
+
+  expect(linkSimple).toBeInTheDocument();
+  expect(linkRoad).toBeInTheDocument();
+  expect(linkTerrain).toBeInTheDocument();
+  expect(linkSatellite).toBeInTheDocument();
+});
+
+test('base - custom interactive', () => {
   render( <SimpleMap elementId={'map'} 
             tvk={'NBNSYS0000027783'}
             interactive={'1'} 

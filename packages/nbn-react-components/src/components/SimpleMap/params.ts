@@ -233,18 +233,19 @@ export class Params {
         }
         // base
         this.base = [];
+        const layers = ['simple', 'road', 'terrain', 'satellite'];
         const bases = this.sanitiseParam('base', this.props.base, /[^a-zA-Z,]/g).split(',');
         if (bases[0].length > 0) {
             for (const base of bases) {
-                const clean = this.sanitiseParamList('base', base, 
-                        ['simple', 'road', 'terrain', 'satellite']);
+                const clean = this.sanitiseParamList('base', base, layers);
                 if (clean.length > 0) {
                     this.base.push(clean);
                 }
             }
         }
         if (this.base.length === 0) {
-            this.base.push('simple')
+            // Use all layers by default
+            this.base.push(...layers)
         }
         // interactive   
         this.interactive = this.sanitiseParam('interactive', 
