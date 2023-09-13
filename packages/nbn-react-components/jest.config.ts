@@ -2,7 +2,7 @@ import type { Config } from "@jest/types"
 
 const config: Config.InitialOptions = {
   preset: "ts-jest",
-  verbose: true, 
+  // verbose: true, 
   setupFilesAfterEnv: ["@testing-library/jest-dom/extend-expect"],
   testEnvironment: 'jsdom',
   moduleNameMapper: {

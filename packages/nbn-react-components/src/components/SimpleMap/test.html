@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load React and ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <!-- Load the UMD build of your React component library -->
+  <script src="../../../dist/nbnReactComponents.umd.js"></script>
+ 
+  <title>Legacy Web Page with React Component</title>
+</head>
+<body>
+    <!-- Placeholder for React component -->
+    <div id="map-container"></div>
+    <!-- Render the React component -->
+    <script>
+        const h = 600;
+        const w = parseInt(h / 1.2);
+        const elem = document.getElementById('map-container');
+        elem.style.width = `${w}px`;
+        elem.style.height = `${h}px`;
+        elem.style.backgroundColor = '#E6EFFF';
+        const simpleMap = window.nbnReactComponents.SimpleMap;
+          ReactDOM.render(        
+            React.createElement(simpleMap, 
+              { elementId: 'map-container', 
+                tvk: 'NHMSYS0000344177',
+                interactive: '1',
+                base: 'junk'
+              }
+            ),
+            document.getElementById('map-container')
+          );
+        </script>
+</body>
+</html>

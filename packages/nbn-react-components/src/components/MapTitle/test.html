@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load React and ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <!-- Load the UMD build of your React component library -->
+  <script src="../../../dist/nbnReactComponents.umd.js"></script>
+ 
+  <title>Legacy Web Page with React Component</title>
+</head>
+<body>
+    <!-- Placeholder for React component -->
+    <div id="map-title"></div>
+    <div id="map-container"></div>
+    <!-- Render the React component -->
+    <script>
+        const mapTitle = window.nbnReactComponents.MapTitle;
+          ReactDOM.render(        
+            React.createElement(mapTitle, 
+              { tvk: 'NBNSYS0000027783',
+                title: 'com',
+                css: 'https://www.hbrg.org.uk/CommonItems/nbn.css'
+              }
+            ),
+            document.getElementById('map-title')
+          );      
+        const simpleMap = window.nbnReactComponents.SimpleMap;
+          ReactDOM.render(        
+            React.createElement(simpleMap, 
+              { elementId: 'map-container', 
+                tvk: 'NHMSYS0000344177',
+                w: '400',
+                h: '400',
+                interactive: '0'
+
+              }
+            ),
+            document.getElementById('map-container')
+          );
+          const h = 600;
+          const w = parseInt(h / 1.2);
+          document.getElementById("map-container").style.width = `${w}px`;
+          document.getElementById("map-container").style.height = `${h}px`;
+        </script>
+</body>
+</html>
