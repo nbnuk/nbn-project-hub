@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { IMapTitleProps, Params } from './params';
 
-
 // -----------------------------------------------------------------------------
 
-export default function MapTitle(props: IMapTitleProps) {
+export default function MapTitle(props: IMapTitleProps): JSX.Element {
    
     const [heading, setHeading] = useState('');
 
@@ -14,17 +13,19 @@ export default function MapTitle(props: IMapTitleProps) {
         .then((data) => setHeading(data))
     }, [params]);
   
-    if (params.title === '0') {
-      return (<div></div>);
-    }
+    const showTitle: boolean = params.title !== '0';
+    const showTerms: boolean = params.terms !== '0';
+    const w: number = parseInt(params.w);
 
     return (
-        <div>
-          <link type="text/css" rel="stylesheet" href={params.css}></link>        
-          <h3>{heading}</h3>
-        </div>
+      <div style={{width: w}}>
+        { showTitle ? (<h3>{heading}</h3>) : ('') }
+        { showTerms ? (<p>The National Biodiversity Network records are shown on 
+          the map below. (See <a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/" 
+            target="_blank">terms and conditions</a>)</p>) : ('') }
+      </div>
     );
-}
+  }
 
 // -----------------------------------------------------------------------------
 // End

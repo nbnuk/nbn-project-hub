@@ -19,27 +19,31 @@ export const DefaultTitle: Story = {
     },
 };
 
-export const CommonName_CustomCSS: Story = {
+export const NoTerms: Story = {
     args: {
-        tvk: 'NHMSYS0001387317',
-        title: 'com',
-        css: 'https://www.hbrg.org.uk/CommonItems/nbn.css'
+        tvk: 'NBNSYS0000027783',
+        terms: '0'
     },
 };
 
-export const ScientificName_CustomCSS: Story = {
+export const CommonName: Story = {
+    args: {
+        tvk: 'NHMSYS0001387317',
+        title: 'com',
+    },
+};
+
+export const ScientificName: Story = {
     args: {
         tvk: 'NHMSYS0001387317',
         title: 'sci',
-        css: 'https://www.hbrg.org.uk/CommonItems/nbn.css'
     },
 };
 
-export const NoCommonName_CustomCSS: Story = {
+export const NoCommonName: Story = {
     args: {
         tvk: 'NBNSYS0000027783',
         title: 'com',
-        css: 'https://www.hbrg.org.uk/CommonItems/nbn.css'
     },
 };
 

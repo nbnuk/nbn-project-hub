@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import SimpleDataResourceList from './SimpleDataResourceList';
 import { useDataResource } from '../../lib/advanced/hooks/useDataResource';
 
@@ -15,9 +15,10 @@ test('renders data when useSWR returns data', () => {
   });
 
   const { getByText } = render(<SimpleDataResourceList apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
-console.log(getByText);
+  console.log(getByText);
   expect(getByText('data resource 1')).toBeInTheDocument();
-  expect(getByText('urn: https://registry.nbnatlas.org/ws/dataResource/dr2909')).toBeInTheDocument();
+  // expect(getByText('urn: https://registry.nbnatlas.org/ws/dataResource/dr2909')).toBeInTheDocument();
+  expect(screen.getByRole('link', { name: 'data resource 1' })).toHaveAttribute('href', 'https://registry.nbnatlas.org/ws/dataResource/dr2909');
 });
 
 

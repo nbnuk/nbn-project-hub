@@ -5,14 +5,13 @@ import * as L from 'leaflet';
 import { default as proj4 } from 'proj4';
 
 import { Colour, DataPane } from './const';
+import { sanitiseParam, sanitiseParamList, sanitiseUrl } from './sanitise';
 
 import Boundaries from './assets/VC_boundaries.json';
 
 // -----------------------------------------------------------------------------
 
 export interface ISimpleMapProps {
-    /** HTML ID of map element. */
-    elementId: string;
     /** Taxon version key representing the observed species to be mapped. */
     tvk: string;
     /** Grid reference representing bottom-left corner of a bounding box. 
@@ -67,6 +66,9 @@ export interface ISimpleMapProps {
     /** Width, in pixels, of the map. If neither height nor width specified 
      * the width is 350. */
     w?: string;
+    /** External '1'  or internal '2' credits for NBN and other attributions. 
+     * Default is external. */
+    logo?: string;
     /** Doubles the resolution of the map (skipped). */
     retina?: number;
     /**  Size of the grid squares to show on the map. If not specified the 
@@ -103,13 +105,13 @@ export type TLayersGeoJSON = { [k: string]: L.GeoJSON };
 
 export class Params {
     
+    // used by northing/easting calculations
     readonly CRS_EPSG_27700 = '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs +type=crs';
     readonly CRS_EPSG_4326 = '+proj=longlat +datum=WGS84 +no_defs +type=crs';
 
     // supplied members
     private props: ISimpleMapProps;
     // derived members
-    public elementId: string;
     private tvk: string;
     private bl: string;
     private tr: string;
@@ -128,6 +130,7 @@ export class Params {
     private ds: string;
     public h: string;
     public w: string;
+    private logo: string;
     private res: string;
     private vc: string;
     private zoom: string;
@@ -150,13 +153,12 @@ export class Params {
     constructor(props: ISimpleMapProps){
         this.props = props;
         this.bounds = null;
-        this.elementId = props.elementId;
         // tvk: taxon version key (required)
         this.tvk = this.props.tvk.replace(/[^a-zA-Z0-9]/g, ''); 
         // bl, tr: OS grid reference boundary
         if (this.checkPairParams('bl', this.props.bl, 'tr', this.props.tr)) {
-            this.bl = this.sanitiseParam('bl', this.props.bl, /[^a-zA-Z0-9]/g); 
-            this.tr = this.sanitiseParam('tr', this.props.tr, /[^a-zA-Z0-9]/g); 
+            this.bl = sanitiseParam('bl', this.props.bl, /[^a-zA-Z0-9]/g); 
+            this.tr = sanitiseParam('tr', this.props.tr, /[^a-zA-Z0-9]/g); 
             const blc = this.getLatLngFromGR(this.bl);
             const trc = this.getLatLngFromGR(this.tr);
             if (blc !== null && trc !== null) {
@@ -168,8 +170,8 @@ export class Params {
         }
         // blCoord, trCoord: Northing, Easting boundary
         if (this.checkPairParams('blCoord', this.props.blCoord, 'trCoord', this.props.trCoord)) {
-            this.blCoord = this.sanitiseParam('blCoord', this.props.blCoord, /[^0-9,]/g); 
-            this.trCoord = this.sanitiseParam('trCoord', this.props.trCoord, /[^0-9,]/g); 
+            this.blCoord = sanitiseParam('blCoord', this.props.blCoord, /[^0-9,]/g); 
+            this.trCoord = sanitiseParam('trCoord', this.props.trCoord, /[^0-9,]/g); 
             const blc = this.getLatLngFromNE(this.blCoord);
             const trc = this.getLatLngFromNE(this.trCoord);
             if (blc !== null && trc !== null) {
@@ -199,9 +201,9 @@ export class Params {
         this.rangeurl2 = db[2];
         this.b2fill = this.sanitiseFill('b2fill', this.props.b2fill, '00FFFF');
         // bg
-        this.bg = this.sanitiseParamList('bg', this.props.bg, ['vc']); 
+        this.bg = sanitiseParamList('bg', this.props.bg, ['vc']); 
         // ds
-        this.ds = this.sanitiseParam('ds', this.props.ds, /[^a-zA-Z0-9,]/g);
+        this.ds = sanitiseParam('ds', this.props.ds, /[^a-zA-Z0-9,]/g);
         if (this.ds.length > 0) {
             this.druidurl = '+AND+(data_resource_uid:' + 
                     this.ds.split(',').join('+OR+data_resource_uid:') + 
@@ -210,10 +212,13 @@ export class Params {
             this.druidurl = '';
         }
         // h, w
-        this.h = this.sanitiseParam('h', this.props.h, /[^0-9]/g);
-        this.w = this.sanitiseParam('w', this.props.w, /[^0-9]/g);
+        this.h = sanitiseParam('h', this.props.h, /[^0-9]/g);
+        this.w = sanitiseParam('w', this.props.w, /[^0-9]/g);
+        // logo
+        this.logo = sanitiseParamList('logo', this.props.logo, ['0', '1', '2'],
+                                        '1'); 
         // res
-        this.res = this.sanitiseParamList('res', this.props.res, 
+        this.res = sanitiseParamList('res', this.props.res, 
                         ['50km', '10km', '2km', '1km', '100m']); 
         if (this.res !== '') {
             this.map_grid_size = `fixed_${this.res}`;
@@ -221,12 +226,12 @@ export class Params {
             this.map_grid_size = 'fixed_10km';
         }
         // vc
-        this.vc = this.sanitiseParam('vc', this.props.vc, /[^a-zA-Z0-9]/g); 
+        this.vc = sanitiseParam('vc', this.props.vc, /[^a-zA-Z0-9]/g); 
         if (this.vc !== '') {
             this.calcBoundary('vc', this.vc);
         }
         // zoom
-        this.zoom = this.sanitiseParamList('zoom', this.props.zoom, ['england',
+        this.zoom = sanitiseParamList('zoom', this.props.zoom, ['england',
             'scotland', 'wales', 'highland', 'sco-mainland', 'outer-heb', 'uk']); 
         if (this.zoom !== '') {
                 this.calcBoundary('zoom', this.zoom);
@@ -234,10 +239,10 @@ export class Params {
         // base
         this.base = [];
         const layers = ['simple', 'road', 'terrain', 'satellite'];
-        const bases = this.sanitiseParam('base', this.props.base, /[^a-zA-Z,]/g).split(',');
+        const bases = sanitiseParam('base', this.props.base, /[^a-zA-Z,]/g).split(',');
         if (bases[0].length > 0) {
             for (const base of bases) {
-                const clean = this.sanitiseParamList('base', base, layers);
+                const clean = sanitiseParamList('base', base, layers);
                 if (clean.length > 0) {
                     this.base.push(clean);
                 }
@@ -248,10 +253,10 @@ export class Params {
             this.base.push(...layers)
         }
         // interactive   
-        this.interactive = this.sanitiseParam('interactive', 
+        this.interactive = sanitiseParam('interactive', 
                                             this.props.interactive, /[^0-1]/g);
         // query
-        this.query = this.sanitiseUrl('query', this.props.query);
+        this.query = sanitiseUrl('query', this.props.query);
         // Skipped parameters
         this.skipParam('gd', this.props.gd);
         this.skipParam('b0bord', this.props.b0bord);
@@ -506,53 +511,6 @@ export class Params {
         return fill;          
     }
     // -------------------------------------------------------------------------
-    /** Sanitise a generic string as provided by a caller parameter.
-     * 
-     * @param {string} name - Name of parameter.
-     * @param {string|undefined} param - Value of parameter.
-     * @param {string} filter - Regex filter to be applied to string.
-     * @returns {string} - Sanitised string.
-     */
-    sanitiseParam(name: string, param: string|undefined, filter: RegExp): string {
-        let clean = '';
-        if (param !== undefined) {
-            clean = param.replace(filter, '');
-            if (clean !== param) {
-                console.warn(`Parameter '${name}' contains invalid characters. ` +
-                             `Using the value '${clean}' instead`);
-            }
-        }
-        return clean;
-    }
-    // -------------------------------------------------------------------------
-    /** Check whether a supplied parameter matches an entry in a given list of
-     * acceptable values.
-     * 
-     * @param {string} name - Name of parameter.
-     * @param {string|undefined} param - Value of parameter.
-     * @param {string[]} list - Array of acceptable values.
-     * @returns {string} - Matching value or empty string if no match/undefined.
-     */
-    sanitiseParamList(name: string, param: string|undefined, list: string[]): string {
-        
-        let rv = '';
-        if (param !== undefined) {
-            const clean = this.sanitiseParam(name, param, /[^a-zA-Z0-9-]/g)
-                              .toLowerCase();
-            for (let i=0; i < list.length; i++) {
-                if (clean === list[i]) {
-                    rv = list[i];
-                    break;
-                }   
-            }
-            if (rv === '') {
-                console.warn(`Parameter '${name}' has the unrecognised value ` +
-                    `of '${clean}'. Acceptable values are: ${list.join(', ')}`);
-            }
-        }
-        return rv;
-    }         
-    // -------------------------------------------------------------------------
     /** Sanitise a year string as provided by a caller parameter.
      * 
      * @param {string} name - Name of parameter.
@@ -583,6 +541,14 @@ export class Params {
         return this.interactive === '1';
     }
     // -------------------------------------------------------------------------
+    /** Determine whether the internal attribution control should be visible.
+     * 
+     * @returns {boolean} - True if internal attribution visible, else False.
+     */
+    showInternalAttrib(): boolean {
+        return this.logo == '2';
+    }
+    // -------------------------------------------------------------------------
     /** Determine whether the map should display VC boundaries.
      * 
      * @returns {boolean} - True if VCs to be displayed, else False.
@@ -602,27 +568,7 @@ export class Params {
                 `ignored.`);
         }
     }
-    // -------------------------------------------------------------------------
-    /** Check whether a supplied parameter is a valid URL.
-     * 
-     * @param {string} name - Name of parameter.
-     * @param {string} param - Value of parameter.
-     * @returns {string} URL or empty string if undefined/invalid
-     */
-    sanitiseUrl(name: string, param: string|undefined): string {
-        let url = '';
-        if (param !== undefined) {
-            url = param;
-            try {
-                new URL(url);
-            }
-            catch (err) {
-                console.warn(`Parameter '${name}' is not a valid URL: ${url}`);
-                url = '';
-            }
-        }
-        return url;
-    } 
+
     // -------------------------------------------------------------------------
     
 }

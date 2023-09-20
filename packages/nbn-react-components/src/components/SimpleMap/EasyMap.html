@@ -18,11 +18,13 @@
 </head>
 <body>
     <!-- Placeholders for React components -->
-    <div id='map-title'></div>
+    <div id='maptitle-container'></div>
     <div id='simplemap-container'></div>
+    <div id="maplink-container"></div>
+    <div id='mapdataresourcelist-container'></div>
+    
     <!-- Render the React components -->
     <script>
-      // Get the query parameters
       function getParam(urlParams, param) {
         let val = urlParams.get(param);
         if (val === null) {
@@ -30,12 +32,22 @@
         }
         return val;
       }
+
+      function isValidUrl(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch (err) {
+          return false;
+        }
+    }
 		
+      // Get the query parameters
       const search = window.location.search;
-      // Parse search string on 'query' param if present - must be last
-      const terms = search.split('&query=');
-      const urlParams =  (terms.length > 0) ? new URLSearchParams(terms[0]) : new URLSearchParams(queryString);
-      const query = (terms.length > 0) ? terms[1] : undefined;
+      // Parse search string on 'query' param, if present (must be last param)
+      const splitQuery = search.split('&query=');
+      const urlParams =  (splitQuery.length > 0) ? new URLSearchParams(splitQuery[0]) : new URLSearchParams(queryString);
+      const query = (splitQuery.length > 0) ? splitQuery[1] : undefined;
       // Continue parsing
       const tvk = getParam(urlParams, 'tvk');
       const base = getParam(urlParams, 'base');
@@ -61,16 +73,22 @@
       const ds = getParam(urlParams, 'ds');
       const gd = getParam(urlParams, 'gd');
       const interactive = getParam(urlParams, 'interactive');
+      const link = getParam(urlParams, 'link');
+      const logo = getParam(urlParams, 'logo');
+      const maponly = getParam(urlParams, 'maponly');
+      const ref = getParam(urlParams, 'ref');
       const res = getParam(urlParams, 'res');
       const retina = getParam(urlParams, 'retina');
+      const terms = getParam(urlParams, 'terms');
       const title = getParam(urlParams, 'title');
       const vc = getParam(urlParams, 'vc');
       const zoom = getParam(urlParams, 'zoom');
       let h = getParam(urlParams, 'h');
       let w = getParam(urlParams, 'w');
       
+      // Set width and height of map
       if (w && !h) {
-        h = parseInt(w * 1.15);
+        h = parseInt(w * 1.0);
       } else if (h && !w) {
         w = parseInt( h / 1.4);
       } else if (!h && !w) {
@@ -80,24 +98,35 @@
       document.getElementById('simplemap-container').style.width = `${w}px`;
       document.getElementById('simplemap-container').style.height = `${h}px`;
 
+      // Set CSS for page
+      if (isValidUrl(css)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = css;
+        document.getElementsByTagName('HEAD')[0].appendChild(link);
+      }  
+
       // Render map title component
-      const mapTitle = window.nbnReactComponents.MapTitle;
-        ReactDOM.render(        
-            React.createElement(mapTitle, 
-              { tvk: tvk,
-                title: title,
-                css: css
-              }
-            ),
-            document.getElementById('map-title')
-          );      
+      if (maponly !== '1') {
+        const mapTitle = window.nbnReactComponents.MapTitle;
+          ReactDOM.render(        
+              React.createElement(mapTitle, 
+                { tvk: tvk,
+                  title: title,
+                  terms: terms,
+                  w: w.toString()
+                }
+              ),
+              document.getElementById('maptitle-container')
+          );
+      }
       
       // Render map component
       const simpleMap = window.nbnReactComponents.SimpleMap;
         ReactDOM.render(
           React.createElement(simpleMap, 
-            { elementId: 'simplemap-container', 
-              tvk: tvk,
+            { tvk: tvk,
               base: base,
               bl: bl,
               tr: tr,
@@ -122,6 +151,7 @@
               h: h.toString(),
               w: w.toString(),
 							interactive, interactive,
+              logo, logo,
               query: query,
               retina: retina,
               res: res,
@@ -131,7 +161,41 @@
           ),
           document.getElementById('simplemap-container')
         );
-        
+      
+      if (maponly !== '1') {
+          // Render map link component
+          const mapLink = window.nbnReactComponents.MapLink;
+              ReactDOM.render(        
+                React.createElement(mapLink, 
+                  { tvk: tvk,
+                    link: link,
+                    w: w.toString()
+                  }
+                ),
+                document.getElementById('maplink-container')
+            );   
+
+          // Render map data resource list component
+          const mapDataResourceList = window.nbnReactComponents.MapDataResourceList;
+              ReactDOM.render(        
+                React.createElement(mapDataResourceList, 
+                  { tvk: tvk,
+                    ds: ds,
+                    refs: ref,
+                    w: w.toString(),
+                  }
+                ),
+                document.getElementById('mapdataresourcelist-container')
+            );            
+      }
     </script>
+    <script>
+      // Force all links to open in new tab
+      document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
+            e.target.setAttribute('target', '_blank');
+          }
+      });
+    </script>    
 </body>
 </html>

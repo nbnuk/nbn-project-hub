@@ -1,4 +1,4 @@
-<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>WmsType | @nbnuk/nbn-react-components</title><meta name="description" content="Documentation for @nbnuk/nbn-react-components"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
+<!DOCTYPE html><html class="default" lang="en"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>sanitiseParamList | @nbnuk/nbn-react-components</title><meta name="description" content="Documentation for @nbnuk/nbn-react-components"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os"</script><header class="tsd-page-toolbar">
 <div class="tsd-toolbar-contents container">
 <div class="table-cell" id="tsd-search" data-base="..">
 <div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div>
@@ -13,23 +13,46 @@
 <div class="tsd-page-title">
 <ul class="tsd-breadcrumb">
 <li><a href="../index.html">@nbnuk/nbn-react-components</a></li>
-<li><a href="../modules/SimpleMap_const.html">SimpleMap/const</a></li>
-<li><a href="SimpleMap_const.WmsType.html">WmsType</a></li></ul>
-<h1>Variable WmsType<code class="tsd-tag ts-flagConst">Const</code> </h1></div>
-<div class="tsd-signature"><span class="tsd-kind-variable">Wms<wbr/>Type</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span><br/><span>    </span><span class="tsd-kind-property">legendYear</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">point</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">singleGrid</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span>    </span><span class="tsd-kind-property">standardGrid</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span><br/><span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol"> = ...</span></div>
-<div class="tsd-type-declaration">
-<h4>Type declaration</h4>
-<ul class="tsd-parameters">
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">legend<wbr/>Year</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">point</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">single<wbr/>Grid</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li>
-<li class="tsd-parameter">
-<h5><span class="tsd-kind-property">standard<wbr/>Grid</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5></li></ul></div><aside class="tsd-sources">
+<li><a href="../modules/MapLink_sanitise.html">MapLink/sanitise</a></li>
+<li><a href="MapLink_sanitise.sanitiseParamList.html">sanitiseParamList</a></li></ul>
+<h1>Function sanitiseParamList</h1></div>
+<section class="tsd-panel">
+<ul class="tsd-signatures">
+<li class="tsd-signature tsd-anchor-link" id="sanitiseParamList"><span class="tsd-kind-call-signature">sanitise<wbr/>Param<wbr/>List</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">name</span>, <span class="tsd-kind-parameter">param</span>, <span class="tsd-kind-parameter">list</span>, <span class="tsd-kind-parameter">preset</span><span class="tsd-signature-symbol">?</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><a href="#sanitiseParamList" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="#icon-anchor"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Check whether a supplied parameter matches an entry in a given list of
+acceptable values.</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li>
+<h5><span class="tsd-kind-parameter">name</span>: <span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>Name of parameter.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">param</span>: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+<div class="tsd-comment tsd-typography"><p>Value of parameter.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">list</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
+<div class="tsd-comment tsd-typography"><p>Array of acceptable values.</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li>
+<li>
+<h5><span class="tsd-kind-parameter">preset</span>: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#39;&#39;</span></h5>
+<div class="tsd-comment tsd-typography"><p>Return value if no match/undefined</p>
+</div>
+<div class="tsd-comment tsd-typography"></div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4><ul>
+<li>Matching value or preset if no match/undefined.</li>
+</ul>
+
+<div class="tsd-comment tsd-typography"></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/nbnuk/nbn-project-hub/blob/40b8754/packages/nbn-react-components/src/components/SimpleMap/const.ts#L55">SimpleMap/const.ts:55</a></li></ul></aside></div>
+<li>Defined in MapLink/sanitise.ts:32</li></ul></aside></li></ul></section></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -57,18 +80,18 @@
 <li><a href="../modules/Map_manager.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>Map/manager</a></li>
 <li><a href="../modules/Map_queries.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>Map/queries</a></li>
 <li><a href="../modules/Map_utils.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>Map/utils</a></li>
+<li><a href="../modules/MapDataResourceList.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapDataResourceList</a></li>
+<li><a href="../modules/MapDataResourceList_sanitise.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapDataResourceList/sanitise</a></li>
+<li><a href="../modules/MapLink.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapLink</a></li>
+<li><a href="../modules/MapLink_sanitise.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapLink/sanitise</a></li>
 <li><a href="../modules/MapTitle.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapTitle</a></li>
 <li><a href="../modules/MapTitle_params.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapTitle/params</a></li>
+<li><a href="../modules/MapTitle_sanitise.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>MapTitle/sanitise</a></li>
 <li><a href="../modules/OccurrenceList.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>OccurrenceList</a></li>
 <li><a href="../modules/OccurrenceList_OccurrenceList_stories.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>OccurrenceList/OccurrenceList.stories</a></li>
 <li><a href="../modules/SimpleMap.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap</a></li>
 <li><a href="../modules/SimpleMap_brc_atlas_bigr.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap/brc-atlas-bigr</a></li>
 <li><a href="../modules/SimpleMap_const.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap/const</a></li>
-<li><a href="../modules/SimpleMap_leaflet_easyprint.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap/leaflet-easyprint</a></li>
-<li><a href="../modules/SimpleMap_manager.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap/manager</a></li>
-<li><a href="../modules/SimpleMap_params.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap/params</a></li>
-<li><a href="../modules/SimpleMap_utils.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>SimpleMap/utils</a></li>
-<li><a href="../modules/TemplateDataFetchingComponent.html"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="#icon-2"></use></svg>TemplateDataFetchingComponent</a></li>
 <li>Loading...</li></ul></nav></div></div></div>
 <div class="tsd-generator">
 <p>Generated using <a href="https://typedoc.org/" rel="noopener" target="_blank">TypeDoc</a></p></div>

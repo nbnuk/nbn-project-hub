@@ -3,14 +3,14 @@
 import * as L from 'leaflet';
 import 'leaflet-easyprint';
 
-import { DataPane, Path } from './const';
+import { DataPane, Element, Path } from './const';
 import { ISimpleMapProps, Params, TLayers , TLayersWMS, TLayersGeoJSON} from './params';
 import * as utils from './utils';
+
 
 // -----------------------------------------------------------------------------
 
 export class MapManager {
-
     // Layer arrays
     private baseMaps: TLayers;
     private overlayMaps: TLayersGeoJSON;
@@ -32,10 +32,11 @@ export class MapManager {
         this.ctrlLayer = null;
         this.initBaseMaps();  // call before map initialisation
         const interactive = this.params.showInteractive();
-        this.map = L.map(this.params.elementId, {
-            center: [54.59,-1.45],
+        this.map = L.map(Element.map_id, {
+                center: [54.59,-1.45],
             zoom: 6,
             zoomSnap: 0,
+            attributionControl: this.params.showInternalAttrib(),
             boxZoom: interactive,         // nav
             doubleClickZoom: interactive, // nav
             dragging: interactive,        // nav
@@ -44,13 +45,15 @@ export class MapManager {
             touchZoom: interactive,       // nav
             zoomControl: interactive,     // nav
             layers: [Object.values(this.baseMaps)[0]]
-            // layers: [this.baseMaps.Simple]
-        });          
+        });  
+        // Handle attributions
+        this.map.on('baselayerchange', this.baseLayerChange);
+        utils.setAttributions(Object.keys(this.baseMaps)[0]);
     }
     // -------------------------------------------------------------------------
     // add 'static' boundary line layers
 
-    addBoundaryOverlays() {
+    addBoundaryOverlays(): void {
         const name = 'VCs';
         if (this.params.showVCs() ) {
             this.addLayer(this.overlayMaps[name], name);
@@ -58,7 +61,7 @@ export class MapManager {
     }
     // -------------------------------------------------------------------------
 
-    addLayer(layer: L.GeoJSON | L.TileLayer | L.TileLayer.WMS, name: string = '') {
+    addLayer(layer: L.GeoJSON | L.TileLayer | L.TileLayer.WMS, name: string = ''): void {
         if (this.params.showInteractive()) {
             // add to layer control
             this.ctrlLayer?.addOverlay(layer, name);
@@ -69,9 +72,15 @@ export class MapManager {
         }
     }
     // -------------------------------------------------------------------------
+    // Respond to a change in base layer.
+
+    baseLayerChange(e: L.LayersControlEvent): void {
+        utils.setAttributions(e.name);
+    }
+    // -------------------------------------------------------------------------
     
     initBaseMaps(): void {
-        const nbn_attrib = '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/">powered by NBN</a> | ';
+        const nbn_attrib = '<a href="https://docs.nbnatlas.org/nbn-atlas-terms-of-use/" target="_blank">powered by NBN</a> | ';
         this.baseMaps = {};
         
         for (const base of this.params.base) {
@@ -81,31 +90,35 @@ export class MapManager {
                         'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', 
                         { maxZoom: 20,
                           attribution: nbn_attrib +
-                            '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | ' +
-                            '<a href="https://carto.com/attributions">CartoDB' });
-                                break;
+                            '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | ' +
+                            '<a href="https://carto.com/attributions" target="_blank">CartoDB'  
+                        });
+                    break;
                 case 'road':
                     this.baseMaps.Road = L.tileLayer(
                         'https://tile.openstreetmap.org/{z}/{x}/{y}.png', 
                         { maxZoom: 20,
-                          attribution: nbn_attrib +
-                          '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' });
-                                break;
+                           attribution: nbn_attrib +
+                            '<a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>' 
+                        });
+                    break;
                 case 'terrain':
                     this.baseMaps.Terrain = L.tileLayer(
                         'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', 
                         { maxZoom: 20,
                           attribution: nbn_attrib +
-                          '<a href="https://opentopomap.org">OpenTopoMap</a>' });
-                                break;
+                            '<a href="https://opentopomap.org" target="_blank">OpenTopoMap</a>' 
+                        });
+                    break;
                 case 'satellite':
                     this.baseMaps.Satellite = L.tileLayer(
                         'https://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
                         { maxZoom: 20, 
                           subdomains:['mt0','mt1','mt2','mt3'],
                           attribution: nbn_attrib + 
-                          '<a href="https://mapsplatform.google.com/">powered by Google</a>' });         
-                                break;
+                            '<a href="https://mapsplatform.google.com/" target="_blank">powered by Google</a>' 
+                        });         
+                    break;
                 default:
                     console.error(`Unknown base map type: ${base}`);
                     break;
@@ -114,7 +127,7 @@ export class MapManager {
     }
     // -------------------------------------------------------------------------
     
-    initBoundaries() {
+    initBoundaries(): void {
         const borderStyle = {
             color: '#7C7CD3',
             weight: 1,
@@ -123,7 +136,7 @@ export class MapManager {
         }; 
         const boundaryStyle = {
             color: '#7C7CD3',
-            fillColor: "white",
+            fillColor: 'white',
             weight: 1,
             opacity: 1,
             fillOpacity: 1,
@@ -164,8 +177,8 @@ export class MapManager {
     // -------------------------------------------------------------------------
     
     initMap(): void { 
-        // avoid reinitialisation error
-        const container = L.DomUtil.get(this.params.elementId);
+        // Avoid map reinitialisation error
+        const container = L.DomUtil.get(Element.map_id);
         if (container != null) {
             // @ts-ignore: HTMLElement does not have a _leaflet_id
             container._leaflet_id = null;
@@ -181,8 +194,7 @@ export class MapManager {
             this.ctrlLayer = L.control
                 .layers(this.baseMaps)
                 .addTo(this.map);    
-            
-            // this.ctrlLayer.expand();    
+
             // @ts-ignore: easyPrint function added by leaflet-easyprint module
             L.easyPrint({
                 title: 'Print map',

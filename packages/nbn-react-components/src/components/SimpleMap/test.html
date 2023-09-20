@@ -18,6 +18,7 @@
 <body>
     <!-- Placeholder for React component -->
     <div id="map-container"></div>
+
     <!-- Render the React component -->
     <script>
         const h = 600;
@@ -29,13 +30,24 @@
         const simpleMap = window.nbnReactComponents.SimpleMap;
           ReactDOM.render(        
             React.createElement(simpleMap, 
-              { elementId: 'map-container', 
-                tvk: 'NHMSYS0000344177',
+              { tvk: 'NHMSYS0000344177',
                 interactive: '1',
+                h: h.toString(),
+                w: w.toString(),
+                bg: 'vc',
+                logo: '1'
               }
             ),
             document.getElementById('map-container')
           );
-        </script>
+    </script>
+    <script>
+      // Force all links to open in new tab
+      document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
+            e.target.setAttribute('target', '_blank');
+          }
+      });
+      </script>
 </body>
 </html>

@@ -17,38 +17,49 @@
   <title>Legacy Web Page with React Component</title>
 </head>
 <body>
-    <!-- Placeholder for React component -->
+    <!-- Placeholder for React components -->
     <div id="map-title"></div>
-    <div id="map-container"></div>
+    <div id="map-container"></div> 
     <!-- Render the React component -->
     <script>
-        const mapTitle = window.nbnReactComponents.MapTitle;
+          const h = 600;
+          const w = parseInt(h / 1.2);
+
+          const mapTitle = window.nbnReactComponents.MapTitle;
           ReactDOM.render(        
             React.createElement(mapTitle, 
               { tvk: 'NBNSYS0000027783',
                 title: 'com',
-                css: 'https://www.hbrg.org.uk/CommonItems/nbn.css'
+                w: w.toString(),
+                // terms: '0'
               }
             ),
             document.getElementById('map-title')
           );      
-        const simpleMap = window.nbnReactComponents.SimpleMap;
+
+          document.getElementById("map-container").style.width = `${w}px`;
+          document.getElementById("map-container").style.height = `${h}px`;
+          const simpleMap = window.nbnReactComponents.SimpleMap;
           ReactDOM.render(        
             React.createElement(simpleMap, 
-              { elementId: 'map-container', 
-                tvk: 'NHMSYS0000344177',
-                w: '400',
-                h: '400',
+              { tvk: 'NHMSYS0000344177',
+                w: w.toString(),
+                h: h.toString(),
                 interactive: '0'
 
               }
             ),
             document.getElementById('map-container')
           );
-          const h = 600;
-          const w = parseInt(h / 1.2);
-          document.getElementById("map-container").style.width = `${w}px`;
-          document.getElementById("map-container").style.height = `${h}px`;
-        </script>
+    </script>
+    
+    <script>
+      // Force all links to open in new tab
+      document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
+            e.target.setAttribute('target', '_blank');
+          }
+      });
+      </script>        
 </body>
 </html>

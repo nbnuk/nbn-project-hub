@@ -19,7 +19,7 @@ if (L.Browser.ielt9) {
 
 // Tests: tvk
 test('tvk - interactive', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'}
             interactive={'1'} 
           /> );
@@ -28,7 +28,7 @@ test('tvk - interactive', () => {
 });
 
 test('tvk - non-interactive', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'}
           /> );
   const linkElement = screen.queryByText(/NBNSYS0000027783/i);
@@ -37,7 +37,7 @@ test('tvk - non-interactive', () => {
 
 // Tests: base
 test('base - default interactive', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'}
             interactive={'1'} 
           /> );
@@ -53,7 +53,7 @@ test('base - default interactive', () => {
 });
 
 test('base - custom interactive', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'}
             interactive={'1'} 
             base={'road,junk,terrain'}
@@ -69,9 +69,20 @@ test('base - custom interactive', () => {
   expect(linkSimple).not.toBeInTheDocument();
 });
 
+// Tests: attributions
+test('attributions - internal', () => {
+  render( <SimpleMap 
+            tvk={'NBNSYS0000027783'}
+            logo={'2'} 
+          /> );
+  const elem = screen.queryByText(/OpenStreetMap/i);
+  expect(elem).toBeInTheDocument();
+  
+});
+
 // Tests: query
 test('tvk - interactive', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'}
             interactive={'1'} 
             query={'https://records-ws.nbnatlas.org/ogc/wms/reflect?q=*:*&fq=species:%22Maniola%20jurtina%22+AND+year:[2018+TO+2023]'}
@@ -82,7 +93,7 @@ test('tvk - interactive', () => {
 
 // Tests: bl, tr
 test('bl & tr - basic', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             bl={'TL512637'}
             tr={'TG392674'}
@@ -93,7 +104,7 @@ test('bl & tr - basic', () => {
 });
 
 test('bl & tr - switched parameters', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             bl={'TG392674'}
             tr={'TL512637'}
@@ -104,7 +115,7 @@ test('bl & tr - switched parameters', () => {
 });
 
 test('bl & tr - invalid chars', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             bl={'TL-512637'}
             tr={'TG#392674'}
@@ -117,7 +128,7 @@ test('bl & tr - invalid chars', () => {
 });
 
 test('bl & tr - invalid gridrefs', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             bl={'ZL512637'}
             tr={'ZG392674'}
@@ -127,7 +138,7 @@ test('bl & tr - invalid gridrefs', () => {
 });
 
 test('bl & tr - one parameter missing', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             bl={'ZL512637'}
           /> );
@@ -137,7 +148,7 @@ test('bl & tr - one parameter missing', () => {
 
 // Tests: blCoord, trCoord
 test('blCoord & trCoord - basic', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             blCoord={'551248,263773'}
             trCoord={'639251,367412'}
@@ -148,7 +159,7 @@ test('blCoord & trCoord - basic', () => {
 });
 
 test('blCoord & trCoord - switched parameters', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             blCoord={'639251,367412'}
             trCoord={'551248,263773'}
@@ -159,7 +170,7 @@ test('blCoord & trCoord - switched parameters', () => {
 });
 
 test('blCoord & trCoord - invalid chars', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             blCoord={'551-248,263773'}
             trCoord={'639251,367+412'}
@@ -171,7 +182,7 @@ test('blCoord & trCoord - invalid chars', () => {
 });
 
 test('blCoord & trCoord - invalid Northing/Easting', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             blCoord={'9996354545345349251,367412'}
             trCoord={'9996354545345349251,167412'}
@@ -181,7 +192,7 @@ test('blCoord & trCoord - invalid Northing/Easting', () => {
 });
 
 test('blCoord & trCoord - one parameter missing', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             blCoord={'551248,263773'}
           /> );
@@ -191,7 +202,7 @@ test('blCoord & trCoord - one parameter missing', () => {
 
 // Tests: b0from, b0to, b1from, b1to, b2from, bt2to
 test('b0from, b0to, b1from, b1to, b2from, bt2to - basic', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NHMSYS0001387317'} 
             b0from={'1600'}
             b0to={'1987'}
@@ -209,25 +220,9 @@ test('b0from, b0to, b1from, b1to, b2from, bt2to - basic', () => {
   expect(linkElement3).toBeInTheDocument();
 });
 
-// Tests: bg
-/* TODO: Jest Fetch not supported...
-See: 
-https://www.leighhalliday.com/mock-fetch-jest
-https://bobbyhadz.com/blog/javascript-referenceerror-fetch-is-not-defined
-*/
-/*
-test('bg - basic', () => {
-  render( <SimpleMap elementId={'map'} 
-            tvk={'NBNSYS0000027783'} 
-            bg={'vc'}
-          /> );
-  const linkElement = screen.getByText(/VCs/i);
-  expect(linkElement).toBeInTheDocument();
-});
-*/
 // Tests: skipped parameters
 test('skipped parameters - basic', () => {
-  render( <SimpleMap elementId={'map'} 
+  render( <SimpleMap 
             tvk={'NBNSYS0000027783'} 
             gd={'10km'}
             b0bord={'FF0000'}
