@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load React and ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <!-- Load the UMD build of your React component library -->
+  <script src="../../../dist/nbnReactComponents.umd.js"></script>
+  <link rel="stylesheet" href="../SpeciesAutoComplete/sac.css"/>
+  <title>Legacy Web Page with React Component</title>
+  <style>
+    html {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+    <h2> Species List Builder Demo</h2>
+    <p>Type your search terms into the input box. Click on individual taxa in 
+      the drop-down list to add them to the right-hand side selection list. 
+      Clicking on an item in the selection list will remove it from the list.
+      Pressing the submit button will return the selected items.
+    </p>
+    <p>By default, selected items are sorted alphabetically but this can be
+      overridden if desired. Also, it is possible to abbreviate the selected 
+      list to display only scientific names. The 'Submit' button is displayed
+      only if a callback function is provided as a prop.
+    </p>
+    <!-- Placeholder for React components -->
+    <div id='specieslistbuilder-container'></div>
+    <!-- Render the React component -->
+    <script>
+        const handleSubmitClick = (speciesList) => {
+          const names = speciesList.map((e) => (e.scientificName)).join(', ');
+          alert('Selected: ' + names);
+        }
+        const speciesListBuilder = window.nbnReactComponents.SpeciesListBuilder;
+        ReactDOM.render(        
+            React.createElement(speciesListBuilder, 
+              { submit: handleSubmitClick,
+                abbreviate: false
+              }
+            ),
+            document.getElementById('specieslistbuilder-container')
+        );
+    </script>    
+</body>
+</html>

@@ -1,0 +1,28 @@
+
+.sac_div {
+    font-family: sans-serif;
+    height: 1.0rem;
+    width: 200px;
+}
+.sac_ul {
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.sac_ul li {
+    background: AliceBlue;
+    border-bottom: 1px solid Gray;
+    color: Gray;
+    margin: 0px;
+    padding: 5px 5px; 
+}
+.sac_ul li:last-child {
+    border-bottom: none;
+}
+.sac_sciname {
+    color: DarkBlue;
+    font-weight: bold;
+    font-size: 1.0rem;
+}

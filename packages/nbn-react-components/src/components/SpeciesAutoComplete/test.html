@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load React and ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <!-- Load the UMD build of your React component library -->
+  <script src="../../../dist/nbnReactComponents.umd.js"></script>
+  <link rel="stylesheet" href="sac.css"/>
+  <title>Legacy Web Page with React Component</title>
+
+  <style>
+    html {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h2> Species Auto-Complete Demo</h2>
+  <p>Type your search terms into the input box. Click on an individual taxon in 
+    the drop-down list to display its occurence data in the map.
+  </p>  
+    <!-- Placeholder for React components -->
+    <div id='speciesmap-container'></div>
+    <!-- Render the React component -->
+    <script>
+        const h = 600;
+        const w = parseInt(h / 1.2);
+
+        document.getElementById('speciesmap-container').style.width = `${w}px`;
+        document.getElementById('speciesmap-container').style.height = `${h}px`;
+        const speciesMap = window.nbnReactComponents.SpeciesMap;
+          ReactDOM.render(        
+            React.createElement(speciesMap, 
+              { tvk: 'NHMSYS0000344177',
+                w: w.toString(),
+                h: h.toString(),
+                interactive: '1'
+              }
+            ),
+            document.getElementById('speciesmap-container')
+          );
+
+    </script>
+    
+    <script>
+      // Force all links to open in new tab
+      document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
+            e.target.setAttribute('target', '_blank');
+          }
+      });
+      </script>        
+</body>
+</html>
