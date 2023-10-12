@@ -13958,11 +13958,13 @@ __metadata:
     leaflet: ^1.9.4
     leaflet-easyprint: ^2.1.9
     proj4: ^2.9.0
+    react-grid-gallery: ^1.0.0
     swr: ^2.2.1
     ts-jest: ^29.1.1
     typedoc: ^0.25.1
     typescript: ^5.1.6
     vite-plugin-dts: ^3.3.1
+    yet-another-react-lightbox: ^3.14.0
   languageName: unknown
   linkType: soft
 
@@ -16019,6 +16021,15 @@ __metadata:
   version: 6.0.11
   resolution: "react-error-overlay@npm:6.0.11"
   checksum: ce7b44c38fadba9cedd7c095cf39192e632daeccf1d0747292ed524f17dcb056d16bc197ddee5723f9dd888f0b9b19c3b486c430319e30504289b9296f2d2c42
+  languageName: node
+  linkType: hard
+
+"react-grid-gallery@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "react-grid-gallery@npm:1.0.0"
+  peerDependencies:
+    react: ">=16.14.0"
+  checksum: f6e01a433030cf538d5a8149ceee32cc4934be9f72da157a69729e5971bfb7f21898fb2f978b3b61f0ce4f91bed913d7fc7260fb796aa2b33e2328080f7356cb
   languageName: node
   linkType: hard
 
@@ -19791,6 +19802,16 @@ __metadata:
     buffer-crc32: ~0.2.3
     fd-slicer: ~1.1.0
   checksum: 7f21fe0bbad6e2cb130044a5d1d0d5a0e5bf3d8d4f8c4e6ee12163ce798fee3de7388d22a7a0907f563ac5f9d40f8699a223d3d5c1718da90b0156da6904022b
+  languageName: node
+  linkType: hard
+
+"yet-another-react-lightbox@npm:^3.14.0":
+  version: 3.14.0
+  resolution: "yet-another-react-lightbox@npm:3.14.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: dc6d8aad5aefd983fd3b0ef18a7dd7f96f93bb2ae466df2734f40f1fa8f1d075e09ae7af83e47e1b062c50348e451b8b3e2025d1547fcb223eeb7ec5c70f4f15
   languageName: node
   linkType: hard
 
