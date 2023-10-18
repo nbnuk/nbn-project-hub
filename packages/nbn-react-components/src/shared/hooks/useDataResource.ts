@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { z } from "zod";
-import { fetchFacetResults, FacetResultSchema } from '../facet-fetcher';
+import { fetchFacetResults, FacetResultSchema } from '../lib/facet-fetcher';
 
 // Define the schema for a single data resource
 export const DataResourceSchema = z.object({
