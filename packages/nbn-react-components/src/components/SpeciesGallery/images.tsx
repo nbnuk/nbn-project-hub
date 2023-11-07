@@ -3,7 +3,8 @@ import { z } from 'zod';
 import { fetcher } from '../../lib/fetcher';
 
 // -----------------------------------------------------------------------------
-// Data artefacts for image searching for a given TVK.
+// Data artefacts for image searching for a given TVK. Example API call:
+// https://records-ws.nbnatlas.org/occurrences/search.json?fq=multimedia:%22Image%22&pageSize=1000&q=lsid:NHMSYS0000504624
 
 const searchUrlBase = 'https://records-ws.nbnatlas.org/occurrences/search.json?fq=multimedia:%22Image%22&pageSize=1000&q=lsid:';
   
@@ -35,7 +36,8 @@ const SearchResultSchema = z.object({
 const searchFetcher = (url:string) => fetcher(url, SearchResultSchema);
 
 // -----------------------------------------------------------------------------
-// Data artefacts for info searching on a single image.
+// Data artefacts for info searching on a single image. Example API call:
+// https://images.nbnatlas.org/ws/image/55e20bc0-7182-4cb0-b577-9aa5d40e1a83
 
 const infoUrlBase = 'https://images.nbnatlas.org/ws/image/';
 
@@ -82,14 +84,12 @@ export async function fetchImages(tvk: string): Promise<CustomImage[]> {
   const images: CustomImage[] = [];
   // Fetch all images associated with the provided TVK.
   const searchUrl = searchUrlBase + tvk;
-  console.debug(searchUrl);
   const data = await searchFetcher(searchUrl);
   // Process the fetched image data into a format suitable for Gallery.
   for (const i in data.occurrences) {
       const datum = data.occurrences[i];
       // Fetch metadata associated with the current image.
       const infoUrl = infoUrlBase + datum.image;
-      console.debug(infoUrl);
       const info = await infoFetcher(infoUrl);
       // Create image object.
       const img: CustomImage = {
@@ -116,7 +116,6 @@ export async function fetchImages(tvk: string): Promise<CustomImage[]> {
       images.push(img);
   }
   return images;
-
 }
 // -----------------------------------------------------------------------------
 

@@ -414,7 +414,7 @@ export class Params {
         const env = `&ENV=colourmode:osgrid;gridlabels:false;opacity:0.8;` + 
                     `color:${fill};gridres:${this.map_grid_size}`;
         const queryUrl = this.getWmsQueryUrl(range) + env;
-        console.debug(queryUrl);
+        // console.debug(queryUrl);
         const tileLayer  = L.tileLayer.wms(queryUrl, {
             pane: DataPane,
             layers: 'ALA:occurrences',

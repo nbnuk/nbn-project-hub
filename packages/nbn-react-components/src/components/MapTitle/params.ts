@@ -46,7 +46,7 @@ export class Params {
     async fetchHeading(): Promise<string> {
         let heading = '';
         const url = `https://species-ws.nbnatlas.org/species/${this.tvk}`;
-        console.debug(url);
+        // console.debug(url);
         try {
             const response = await fetch(url);
             const data = await response.json();

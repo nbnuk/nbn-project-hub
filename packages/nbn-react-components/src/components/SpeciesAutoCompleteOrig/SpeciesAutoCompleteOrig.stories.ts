@@ -1,14 +1,14 @@
 import type {  StoryObj, Meta } from '@storybook/react';
 
-import SpeciesAutoComplete from './SpeciesAutoComplete';
+import { SpeciesAutoCompleteOrig } from './SpeciesAutoCompleteOrig';
 import './sac.css';
 
 const meta = {
   title: 'Select Species / Species Auto-Complete',
-  component: SpeciesAutoComplete,
+  component: SpeciesAutoCompleteOrig,
   // tags: ['autodocs'],
 
-} satisfies Meta<typeof SpeciesAutoComplete>;
+} satisfies Meta<typeof SpeciesAutoCompleteOrig>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

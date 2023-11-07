@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SpeciesAutoComplete, ISpecies } from '../SpeciesAutoComplete';
+import { SpeciesAutoCompleteOrig, ISpecies } from '../SpeciesAutoCompleteOrig';
 
 // -----------------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ export default function SpeciesListBuilder({ abbreviate, sort, submit }: ISpecie
       <table>
         <tr>
           <td style={tdStyle}>
-            <SpeciesAutoComplete setSpecies={setSpecies} />
+            <SpeciesAutoCompleteOrig setSpecies={setSpecies} />
           </td>
           <td style={tdStyle}>
             {(submit) ? (<button onClick={handleSubmitClick}>Submit</button>) : ('')}

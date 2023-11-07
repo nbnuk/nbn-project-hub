@@ -1,7 +1,7 @@
 import type {  StoryObj, Meta } from '@storybook/react';
 
 import { default as SpeciesListBuilder } from './SpeciesListBuilder';
-import '../SpeciesAutoComplete/sac.css';
+import '../SpeciesAutoCompleteOrig/sac.css';
 
 const meta = {
   title: 'Select Species / Species List Builder',

@@ -1,4 +1,3 @@
-
 import type { Meta, StoryObj } from '@storybook/react';
 import { SpeciesGallery } from './SpeciesGallery';
 import './sg.css';
@@ -14,10 +13,15 @@ export default meta;
 type Story = StoryObj<typeof meta>;
   
 // Stories
-export const RedAdmiral: Story = {
+export const Default: Story = {
     args: {
         tvk: 'NHMSYS0000504624'
     },
 };
 
-
+export const MaximumRows: Story = {
+    args: {
+        tvk: 'NHMSYS0000504624',
+        maxRows: 1
+    },
+};

@@ -1,0 +1,1 @@
+export { SpeciesTab } from './SpeciesTab';

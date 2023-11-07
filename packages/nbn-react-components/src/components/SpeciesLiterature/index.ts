@@ -1,0 +1,1 @@
+export { SpeciesLiterature } from './SpeciesLiterature';

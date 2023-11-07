@@ -1,0 +1,1 @@
+export { SpeciesDataPartners } from './SpeciesDataPartners';

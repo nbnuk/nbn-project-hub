@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import SpeciesListBuilder from './SpeciesListBuilder';
-import { ISpecies } from '../SpeciesAutoComplete';
+import { ISpecies } from '../SpeciesAutoCompleteOrig';
 import * as swr from 'swr';
 
 jest.mock('swr');

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import SpeciesAutoComplete from './SpeciesAutoComplete';
+import { SpeciesAutoCompleteOrig } from './SpeciesAutoCompleteOrig';
 import * as swr from 'swr';
 
 jest.mock('swr');
@@ -48,7 +48,7 @@ test('renders data when useSWR returns data', () => {
     isValidating: false,
   });
 
-  render(<SpeciesAutoComplete 
+  render(<SpeciesAutoCompleteOrig 
            initialSearchQuery={'tinca'}
          />);
 
@@ -66,7 +66,7 @@ test('renders error when useSWR returns error', () => {
     isValidating: false,
   });
 
-  render(<SpeciesAutoComplete />);
+  render(<SpeciesAutoCompleteOrig />);
   const elem = screen.queryByText(/Test error/i);
   expect(elem).toBeInTheDocument();
 });
@@ -79,7 +79,7 @@ test('renders loading when useSWR is validating', () => {
     isValidating: true,
   });
 
-  const { getByText } = render(<SpeciesAutoComplete />);
+  const { getByText } = render(<SpeciesAutoCompleteOrig />);
 
   expect(getByText('Loading...')).toBeInTheDocument();
 });

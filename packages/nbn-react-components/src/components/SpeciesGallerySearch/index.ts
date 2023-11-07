@@ -1,1 +1,0 @@
-export { SpeciesGallerySearch } from './SpeciesGallerySearch';

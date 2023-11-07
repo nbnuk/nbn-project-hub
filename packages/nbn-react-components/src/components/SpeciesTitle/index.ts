@@ -1,0 +1,1 @@
+export { SpeciesTitle } from './SpeciesTitle';

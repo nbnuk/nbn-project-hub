@@ -1,23 +1,25 @@
-
 import { useState } from 'react';
 
-import { SpeciesAutoComplete, ISpecies }  from '../SpeciesAutoComplete';
-import { SpeciesGallery } from '../SpeciesGallery';
+import Paper from '@mui/material/Paper';
 
-import './sgs.css';
+import { SpeciesAutoComplete, ISpecies }  from '../SpeciesAutoComplete';
+import { SpeciesPage } from './SpeciesPage';
 
 // -----------------------------------------------------------------------------
 
-export function SpeciesGallerySearch(): JSX.Element {
+export function SpeciesPageSearch(): JSX.Element {
 
     const spec: ISpecies = {tvk: '', scientificName: '', commonName: '', rank: ''};
     const [species, setSpecies] = useState(spec);
    
     return (
-        <div className='sgs_container'>
+        <>
+        <Paper elevation={0} sx={{m: 5}}>
         <SpeciesAutoComplete setSpecies={setSpecies} />
-        <SpeciesGallery tvk={species.tvk} />
-        </div>
+        {(species.tvk.length > 0) ?
+            <SpeciesPage tvk={species.tvk}/> : null}
+        </Paper>
+        </>
     );
 }
 

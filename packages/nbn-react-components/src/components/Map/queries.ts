@@ -38,7 +38,7 @@ export function getWmsLayer(species: string, year: number,
     
     colour = colour || Colour.green;
     const queryUrl = getWmsQueryUrl(species, year, wkt);
-    console.debug(queryUrl);
+    // console.debug(queryUrl);
     const env = `${wmsType};color:${colour}`;
     const tileLayer  = L.tileLayer.wms(queryUrl, {
         layers: "ALA:occurrences",
