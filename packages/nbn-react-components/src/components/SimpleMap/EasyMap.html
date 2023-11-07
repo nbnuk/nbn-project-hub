@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load React and ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Load Leaflet CSS -->    
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+  <!-- Load the UMD build of your React component library -->
+  <script src="./components/nbnReactComponents.umd.js"></script>
+ 
+  <title>Legacy Web Page with React Component</title>
+</head>
+<body>
+    <!-- Placeholder for React component -->
+    <div id="map-container"></div>
+    <!-- Render the React component -->
+    <script>
+      function getParam(urlParams, param) {
+        let val = urlParams.get(param);
+        if (val === null) {
+          val = undefined;
+        }
+        return val;
+      }
+		
+      const urlParams = new URLSearchParams(window.location.search);
+      const tvk = getParam(urlParams, 'tvk');
+      const bl = getParam(urlParams, 'bl');
+      const tr = getParam(urlParams, 'tr');
+      const blCoord = getParam(urlParams, 'blCoord');
+      const trCoord = getParam(urlParams, 'trCoord');
+      const b0from = getParam(urlParams, 'b0from');
+      const b0to = getParam(urlParams, 'b0to');
+      const b0fill = getParam(urlParams, 'b0fill');
+      const b0bord = getParam(urlParams, 'b0bord');
+      const b1from = getParam(urlParams, 'b1from');
+      const b1to = getParam(urlParams, 'b1to');
+      const b1fill = getParam(urlParams, 'b1fill');
+      const b1bord = getParam(urlParams, 'b1bord');
+      const b2from = getParam(urlParams, 'b2from');
+      const b2to = getParam(urlParams, 'b2to');
+      const b2fill = getParam(urlParams, 'b2fill');
+      const b2bord = getParam(urlParams, 'b2bord');
+      const bg = getParam(urlParams, 'bg');
+      const cachedays = getParam(urlParams, 'cachedays');
+      const ds = getParam(urlParams, 'ds');
+      const gd = getParam(urlParams, 'gd');
+      const retina = getParam(urlParams, 'retina');
+      const res = getParam(urlParams, 'res');
+      const vc = getParam(urlParams, 'vc');
+      const zoom = getParam(urlParams, 'zoom');
+      let h = getParam(urlParams, 'h');
+      let w = getParam(urlParams, 'w');
+      
+      if (w && !h) {
+        h = parseInt(w * 1.2);
+      } else if (h && !w) {
+        w = parseInt( h / 1.2);
+      } else if (!h && !w) {
+        h = 350;
+        w = 350;
+      }
+      document.getElementById("map-container").style.width = `${w}px`;
+      document.getElementById("map-container").style.height = `${h}px`;
+
+      const simpleMap = window.nbnReactComponents.SimpleMap;
+        ReactDOM.render(
+          React.createElement(simpleMap, 
+            { elementId: 'map-container', 
+              tvk: tvk,
+              bl: bl,
+              tr: tr,
+              blCoord: blCoord,
+              trCoord: trCoord,
+              b0from: b0from,
+              b0to: b0to,
+              b0fill: b0fill,
+              b0bord: b0bord,
+              b1from: b1from,
+              b1to: b1to,
+              b1fill: b1fill,
+              b1bord: b1bord,
+              b2from: b2from,
+              b2to: b2to,
+              b2fill: b2fill,
+              b2bord: b2bord,
+              bg: bg,
+              cachedays: cachedays,
+              ds: ds,
+              gd: gd,
+              h: h.toString(),
+              w: w.toString(),
+              retina: retina,
+              res: res,
+              vc: vc,
+              zoom: zoom,
+            }
+          ),
+          document.getElementById('map-container')
+        );
+        
+    </script>
+</body>
+</html>
