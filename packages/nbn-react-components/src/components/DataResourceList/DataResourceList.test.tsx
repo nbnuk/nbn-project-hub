@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react';
-import SimpleDataResourceList from './SimpleDataResourceList';
-import { useDataResource } from '../../lib/advanced/hooks/useDataResource';
+import SimpleDataResourceList from './DataResourceList';
+import { useDataResource } from '../../shared/hooks/useDataResource';
 
-jest.mock('../../lib/advanced/hooks/useDataResource');
+jest.mock('../../shared/hooks/useDataResource');
 
 const mockedUseDataResource = useDataResource as jest.Mock;
 
@@ -17,7 +17,8 @@ test('renders data when useSWR returns data', () => {
   const { getByText } = render(<SimpleDataResourceList apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
 console.log(getByText);
   expect(getByText('data resource 1')).toBeInTheDocument();
-  expect(getByText('urn: https://registry.nbnatlas.org/ws/dataResource/dr2909')).toBeInTheDocument();
+  expect(document.querySelector(`a[href='https://registry.nbnatlas.org/ws/dataResource/dr2909']`)).toBeInTheDocument();
+
 });
 
 

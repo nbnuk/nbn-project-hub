@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { fetcher } from '../fetcher'
+import { fetcher } from './fetcher'
 
 export const FieldResultSchema = z.object({
   label: z.string(),
