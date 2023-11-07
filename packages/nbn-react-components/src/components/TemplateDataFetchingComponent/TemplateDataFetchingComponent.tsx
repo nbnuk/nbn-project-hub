@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { z } from "zod";
-import { fetcher } from '../../lib/fetcher';
+import { fetcher } from '../../shared/lib/fetcher';
 import '../../index.css'
 
 /**

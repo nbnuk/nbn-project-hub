@@ -1,11 +1,11 @@
 import type {  StoryObj, Meta } from '@storybook/react';
 
-import OccurrenceList from './OccurrenceList';
+import { DataResourceList } from './DataResourceList';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
-  title: 'Occurrence/OccurrenceList',
-  component: OccurrenceList,
+  title: 'Data Resource/DataResourceList',
+  component: DataResourceList,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'centered',
@@ -16,21 +16,27 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof OccurrenceList>;
+} satisfies Meta<typeof DataResourceList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const iNaturalist: Story = {
+export const Bats: Story = {
   args: {
-    occurrenceSearchApiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=multimedia:Image&page=10',
+    apiOccurrenceSearchURL: 'https://records-ws.nbnatlas.org/occurrences/search?q=taxa:bats',
+    width: "500px"
   },
 };
-iNaturalist.storyName = 'iNaturalist Style';
+Bats.storyName = 'Data Resources containing Bats';
 
-// export const Secondary: Story = {
-//   args: {
-//     occurrenceSearchApiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=species:%22Lutra%20lutra%22',
-//   },
-// };
+export const ButterflyConservation: Story = {
+  args: {
+    apiOccurrenceSearchURL: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=data_provider_uid:dp71',
+    width: "500px"
+  },
+};
+
+ButterflyConservation.storyName = 'Butterfly Conservation Trust';
+
+

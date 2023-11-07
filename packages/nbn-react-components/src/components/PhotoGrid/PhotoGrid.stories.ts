@@ -1,11 +1,11 @@
 import type {  StoryObj, Meta } from '@storybook/react';
 
-import OccurrenceList from './OccurrenceList';
+import { PhotoGrid } from './PhotoGrid';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta = {
-  title: 'Occurrence/OccurrenceList',
-  component: OccurrenceList,
+  title: 'Occurrence/PhotoGrid',
+  component: PhotoGrid,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
     layout: 'centered',
@@ -16,21 +16,16 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof OccurrenceList>;
+} satisfies Meta<typeof PhotoGrid>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const iNaturalist: Story = {
+export const VersionA: Story = {
   args: {
-    occurrenceSearchApiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=multimedia:Image&page=10',
+    apiURL: 'https://jsonplaceholder.typicode.com/todos/'
   },
 };
-iNaturalist.storyName = 'iNaturalist Style';
 
-// export const Secondary: Story = {
-//   args: {
-//     occurrenceSearchApiUrl: 'https://records-ws.nbnatlas.org/occurrences/search?q=*:*&fq=species:%22Lutra%20lutra%22',
-//   },
-// };
+
