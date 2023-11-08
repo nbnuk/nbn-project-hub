@@ -15,7 +15,7 @@ test('renders data when useSWR returns data', () => {
   });
 
   const { getByText } = render(<SimpleDataResourceList apiOccurrenceSearchURL="https://records-ws.nbnatlas.org/occurrences/search?q=*:*"/>);
-console.log(getByText);
+  console.log(getByText);
   expect(getByText('data resource 1')).toBeInTheDocument();
   expect(document.querySelector(`a[href='https://registry.nbnatlas.org/ws/dataResource/dr2909']`)).toBeInTheDocument();
 

@@ -11,15 +11,19 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
-  <!-- Load the UMD build of your React component library -->
+  <!-- Load the UMD build of the React component library -->
   <script src="./components/nbnReactComponents.umd.js"></script>
  
-  <title>Legacy Web Page with React Component</title>
+  <title>SimpleMap API</title>
 </head>
 <body>
-    <!-- Placeholder for React component -->
-    <div id="map-container"></div>
-    <!-- Render the React component -->
+    <!-- Placeholders for React components -->
+    <div id='maptitle-container'></div>
+    <div id='simplemap-container'></div>
+    <div id="maplink-container"></div>
+    <div id='mapdataresourcelist-container'></div>
+    
+    <!-- Render the React components -->
     <script>
       function getParam(urlParams, param) {
         let val = urlParams.get(param);
@@ -28,9 +32,25 @@
         }
         return val;
       }
+
+      function isValidUrl(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch (err) {
+          return false;
+        }
+    }
 		
-      const urlParams = new URLSearchParams(window.location.search);
+      // Get the query parameters
+      const search = window.location.search;
+      // Parse search string on 'query' param, if present (must be last param)
+      const splitQuery = search.split('&query=');
+      const urlParams =  (splitQuery.length > 0) ? new URLSearchParams(splitQuery[0]) : new URLSearchParams(queryString);
+      const query = (splitQuery.length > 0) ? splitQuery[1] : undefined;
+      // Continue parsing
       const tvk = getParam(urlParams, 'tvk');
+      const base = getParam(urlParams, 'base');
       const bl = getParam(urlParams, 'bl');
       const tr = getParam(urlParams, 'tr');
       const blCoord = getParam(urlParams, 'blCoord');
@@ -49,31 +69,65 @@
       const b2bord = getParam(urlParams, 'b2bord');
       const bg = getParam(urlParams, 'bg');
       const cachedays = getParam(urlParams, 'cachedays');
+      const css = getParam(urlParams, 'css');
       const ds = getParam(urlParams, 'ds');
       const gd = getParam(urlParams, 'gd');
-      const retina = getParam(urlParams, 'retina');
+      const interactive = getParam(urlParams, 'interactive');
+      const link = getParam(urlParams, 'link');
+      const logo = getParam(urlParams, 'logo');
+      const maponly = getParam(urlParams, 'maponly');
+      const ref = getParam(urlParams, 'ref');
       const res = getParam(urlParams, 'res');
+      const retina = getParam(urlParams, 'retina');
+      const terms = getParam(urlParams, 'terms');
+      const title = getParam(urlParams, 'title');
       const vc = getParam(urlParams, 'vc');
       const zoom = getParam(urlParams, 'zoom');
       let h = getParam(urlParams, 'h');
       let w = getParam(urlParams, 'w');
       
+      // Set width and height of map
       if (w && !h) {
-        h = parseInt(w * 1.2);
+        h = parseInt(w * 1.0);
       } else if (h && !w) {
-        w = parseInt( h / 1.2);
+        w = parseInt( h / 1.4);
       } else if (!h && !w) {
         h = 350;
         w = 350;
       }
-      document.getElementById("map-container").style.width = `${w}px`;
-      document.getElementById("map-container").style.height = `${h}px`;
+      document.getElementById('simplemap-container').style.width = `${w}px`;
+      document.getElementById('simplemap-container').style.height = `${h}px`;
 
+      // Set CSS for page
+      if (isValidUrl(css)) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = css;
+        document.getElementsByTagName('HEAD')[0].appendChild(link);
+      }  
+
+      // Render map title component
+      if (maponly !== '1') {
+        const mapTitle = window.nbnReactComponents.MapTitle;
+          ReactDOM.render(        
+              React.createElement(mapTitle, 
+                { tvk: tvk,
+                  title: title,
+                  terms: terms,
+                  w: w.toString()
+                }
+              ),
+              document.getElementById('maptitle-container')
+          );
+      }
+      
+      // Render map component
       const simpleMap = window.nbnReactComponents.SimpleMap;
         ReactDOM.render(
           React.createElement(simpleMap, 
-            { elementId: 'map-container', 
-              tvk: tvk,
+            { tvk: tvk,
+              base: base,
               bl: bl,
               tr: tr,
               blCoord: blCoord,
@@ -96,15 +150,52 @@
               gd: gd,
               h: h.toString(),
               w: w.toString(),
+							interactive, interactive,
+              logo, logo,
+              query: query,
               retina: retina,
               res: res,
               vc: vc,
               zoom: zoom,
             }
           ),
-          document.getElementById('map-container')
+          document.getElementById('simplemap-container')
         );
-        
+      
+      if (maponly !== '1') {
+          // Render map link component
+          const mapLink = window.nbnReactComponents.MapLink;
+              ReactDOM.render(        
+                React.createElement(mapLink, 
+                  { tvk: tvk,
+                    link: link,
+                    w: w.toString()
+                  }
+                ),
+                document.getElementById('maplink-container')
+            );   
+
+          // Render map data resource list component
+          const mapDataResourceList = window.nbnReactComponents.MapDataResourceList;
+              ReactDOM.render(        
+                React.createElement(mapDataResourceList, 
+                  { tvk: tvk,
+                    ds: ds,
+                    refs: ref,
+                    w: w.toString(),
+                  }
+                ),
+                document.getElementById('mapdataresourcelist-container')
+            );            
+      }
     </script>
+    <script>
+      // Force all links to open in new tab
+      document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
+            e.target.setAttribute('target', '_blank');
+          }
+      });
+    </script>    
 </body>
 </html>

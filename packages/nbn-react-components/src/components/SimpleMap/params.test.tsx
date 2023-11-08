@@ -1,7 +1,6 @@
 import { Params, ISimpleMapProps } from './params';
 
 const props: ISimpleMapProps = {
-    elementId: 'map',
     tvk: 'NHMSYS0001387317'
 };
 

@@ -4,15 +4,14 @@ import * as bigr from 'brc-atlas-bigr';
 import * as L from 'leaflet';
 import { default as proj4 } from 'proj4';
 
-import { Colour } from './const';
+import { Colour, DataPane } from './const';
+import { sanitiseParam, sanitiseParamList, sanitiseUrl } from './sanitise';
 
 import Boundaries from './assets/VC_boundaries.json';
 
 // -----------------------------------------------------------------------------
 
 export interface ISimpleMapProps {
-    /** HTML ID of map element. */
-    elementId: string;
     /** Taxon version key representing the observed species to be mapped. */
     tvk: string;
     /** Grid reference representing bottom-left corner of a bounding box. 
@@ -67,6 +66,9 @@ export interface ISimpleMapProps {
     /** Width, in pixels, of the map. If neither height nor width specified 
      * the width is 350. */
     w?: string;
+    /** External '1'  or internal '2' credits for NBN and other attributions. 
+     * Default is external. */
+    logo?: string;
     /** Doubles the resolution of the map (skipped). */
     retina?: number;
     /**  Size of the grid squares to show on the map. If not specified the 
@@ -78,21 +80,38 @@ export interface ISimpleMapProps {
     /** Focuses the map upon the named area (e.g.: uk, england, scotland, wales, 
      * highland, sco-mainland, outer-heb) */
     zoom?: string;
-    /** Disables map interactive controls if set to 0. */
+    /** Disables map interactive controls if set to 0, enables is set to 1.
+     * Default is 0. */
+    /** Species which base layers to display and in which order. If 'interactive'
+     * is not set, then only first layer will be displayed. If no value supplied,
+     * all layers will be displayed.
+     */
+    base?: string;
     interactive?: string;
+    /** NBN Atlas API query addressed to the 
+     * https://records-ws.nbnatlas.org/ogc/wms/reflect endpoint. Overrides some
+     * other paramaters. Note that 'query' must appear as the final parameter in 
+     * the calling URL. */
+    query?: string;
 }
+
+// -----------------------------------------------------------------------------
+
+export type TLayers = { [k: string]: L.TileLayer | L.LayerGroup };
+export type TLayersWMS = { [k: string]: L.TileLayer.WMS };
+export type TLayersGeoJSON = { [k: string]: L.GeoJSON };
 
 // -----------------------------------------------------------------------------
 
 export class Params {
     
+    // used by northing/easting calculations
     readonly CRS_EPSG_27700 = '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.06,0.15,0.247,0.842,-20.489 +units=m +no_defs +type=crs';
     readonly CRS_EPSG_4326 = '+proj=longlat +datum=WGS84 +no_defs +type=crs';
 
     // supplied members
     private props: ISimpleMapProps;
     // derived members
-    public elementId: string;
     private tvk: string;
     private bl: string;
     private tr: string;
@@ -111,18 +130,20 @@ export class Params {
     private ds: string;
     public h: string;
     public w: string;
+    private logo: string;
     private res: string;
     private vc: string;
     private zoom: string;
     private interactive: string;
+    private query: string;
     // calculated members
+    public base: string[];
     public bounds: L.LatLngBounds | null;
     private druidurl: string;
     private map_grid_size: string
     private rangeurl0: string;
     private rangeurl1: string;
     private rangeurl2: string;
-
 
     // -------------------------------------------------------------------------
     /** Constructor.
@@ -132,13 +153,12 @@ export class Params {
     constructor(props: ISimpleMapProps){
         this.props = props;
         this.bounds = null;
-        this.elementId = props.elementId;
         // tvk: taxon version key (required)
         this.tvk = this.props.tvk.replace(/[^a-zA-Z0-9]/g, ''); 
         // bl, tr: OS grid reference boundary
         if (this.checkPairParams('bl', this.props.bl, 'tr', this.props.tr)) {
-            this.bl = this.sanitiseParam('bl', this.props.bl, /[^a-zA-Z0-9]/g); 
-            this.tr = this.sanitiseParam('tr', this.props.tr, /[^a-zA-Z0-9]/g); 
+            this.bl = sanitiseParam('bl', this.props.bl, /[^a-zA-Z0-9]/g); 
+            this.tr = sanitiseParam('tr', this.props.tr, /[^a-zA-Z0-9]/g); 
             const blc = this.getLatLngFromGR(this.bl);
             const trc = this.getLatLngFromGR(this.tr);
             if (blc !== null && trc !== null) {
@@ -150,8 +170,8 @@ export class Params {
         }
         // blCoord, trCoord: Northing, Easting boundary
         if (this.checkPairParams('blCoord', this.props.blCoord, 'trCoord', this.props.trCoord)) {
-            this.blCoord = this.sanitiseParam('blCoord', this.props.blCoord, /[^0-9,]/g); 
-            this.trCoord = this.sanitiseParam('trCoord', this.props.trCoord, /[^0-9,]/g); 
+            this.blCoord = sanitiseParam('blCoord', this.props.blCoord, /[^0-9,]/g); 
+            this.trCoord = sanitiseParam('trCoord', this.props.trCoord, /[^0-9,]/g); 
             const blc = this.getLatLngFromNE(this.blCoord);
             const trc = this.getLatLngFromNE(this.trCoord);
             if (blc !== null && trc !== null) {
@@ -181,9 +201,9 @@ export class Params {
         this.rangeurl2 = db[2];
         this.b2fill = this.sanitiseFill('b2fill', this.props.b2fill, '00FFFF');
         // bg
-        this.bg = this.sanitiseParamList('bg', this.props.bg, ['vc']); 
+        this.bg = sanitiseParamList('bg', this.props.bg, ['vc']); 
         // ds
-        this.ds = this.sanitiseParam('ds', this.props.ds, /[^a-zA-Z0-9,]/g);
+        this.ds = sanitiseParam('ds', this.props.ds, /[^a-zA-Z0-9,]/g);
         if (this.ds.length > 0) {
             this.druidurl = '+AND+(data_resource_uid:' + 
                     this.ds.split(',').join('+OR+data_resource_uid:') + 
@@ -192,29 +212,51 @@ export class Params {
             this.druidurl = '';
         }
         // h, w
-        this.h = this.sanitiseParam('h', this.props.h, /[^0-9]/g);
-        this.w = this.sanitiseParam('w', this.props.w, /[^0-9]/g);
+        this.h = sanitiseParam('h', this.props.h, /[^0-9]/g);
+        this.w = sanitiseParam('w', this.props.w, /[^0-9]/g);
+        // logo
+        this.logo = sanitiseParamList('logo', this.props.logo, ['0', '1', '2'],
+                                        '1'); 
         // res
-        this.res = this.sanitiseParamList('res', this.props.res, 
-            ['50km', '10km', '2km', '1km', '100m']); 
+        this.res = sanitiseParamList('res', this.props.res, 
+                        ['50km', '10km', '2km', '1km', '100m']); 
         if (this.res !== '') {
             this.map_grid_size = `fixed_${this.res}`;
         } else {
             this.map_grid_size = 'fixed_10km';
         }
         // vc
-        this.vc = this.sanitiseParam('vc', this.props.vc, /[^a-zA-Z0-9]/g); 
+        this.vc = sanitiseParam('vc', this.props.vc, /[^a-zA-Z0-9]/g); 
         if (this.vc !== '') {
             this.calcBoundary('vc', this.vc);
         }
         // zoom
-        this.zoom = this.sanitiseParamList('zoom', this.props.zoom, ['england',
+        this.zoom = sanitiseParamList('zoom', this.props.zoom, ['england',
             'scotland', 'wales', 'highland', 'sco-mainland', 'outer-heb', 'uk']); 
         if (this.zoom !== '') {
                 this.calcBoundary('zoom', this.zoom);
-        }     
+        }
+        // base
+        this.base = [];
+        const layers = ['simple', 'road', 'terrain', 'satellite'];
+        const bases = sanitiseParam('base', this.props.base, /[^a-zA-Z,]/g).split(',');
+        if (bases[0].length > 0) {
+            for (const base of bases) {
+                const clean = sanitiseParamList('base', base, layers);
+                if (clean.length > 0) {
+                    this.base.push(clean);
+                }
+            }
+        }
+        if (this.base.length === 0) {
+            // Use all layers by default
+            this.base.push(...layers)
+        }
         // interactive   
-        this.interactive = this.sanitiseParam('interactive', this.props.interactive, /[^0-1]/g);
+        this.interactive = sanitiseParam('interactive', 
+                                            this.props.interactive, /[^0-1]/g);
+        // query
+        this.query = sanitiseUrl('query', this.props.query);
         // Skipped parameters
         this.skipParam('gd', this.props.gd);
         this.skipParam('b0bord', this.props.b0bord);
@@ -369,32 +411,51 @@ export class Params {
     getWmsLayer(range: string = '', fill: string = Colour.yellow): L.TileLayer.WMS {
 
         // const wmsType: string = WmsType.point
-        // const env = `&ENV=${wmsType};color:${fill};gridres:${this.map_grid_size}`;
         const env = `&ENV=colourmode:osgrid;gridlabels:false;opacity:0.8;` + 
                     `color:${fill};gridres:${this.map_grid_size}`;
         const queryUrl = this.getWmsQueryUrl(range) + env;
         console.debug(queryUrl);
         const tileLayer  = L.tileLayer.wms(queryUrl, {
+            pane: DataPane,
             layers: 'ALA:occurrences',
             format: 'image/png',
-            uppercase: true,
+            uppercase: true,        
         });	 
 
         return tileLayer;      
     }
     // -------------------------------------------------------------------------
+    /** Generate a single TileLayer based upon a custom query URL.
+     * 
+     * @returns {L.TileLayer.WMS} - Generated TileLayer object.
+     */
+    getWmsLayerCustom(): L.TileLayer.WMS {
+        console.debug(this.query);
+        const tileLayer  = L.tileLayer.wms(this.query, {
+            pane: DataPane,
+            layers: 'ALA:occurrences',
+            format: 'image/png',
+            uppercase: true,        
+        });	 
+
+        return tileLayer;         
+    }
+    // -------------------------------------------------------------------------
     /** Generate an associative array of map tile layers.
      * 
-     * @returns {[k: string]: L.TileLayer.WMS} - Array of tile layers.
+     * @returns {TLayersWMS} - Array of tile layers.
      */
-    getWmsLayers(): {[k: string]: L.TileLayer.WMS} {
+    getWmsLayers(): TLayersWMS {
 
-        const wmsLayers: {[k: string]: L.TileLayer.WMS} = {};
+        const wmsLayers: TLayersWMS = {};
 
         const hasDateBands: boolean = (this.rangeurl0.length > 0) ||
                                       (this.rangeurl1.length > 0) ||
                                       (this.rangeurl2.length > 0);
-        if (hasDateBands) {
+
+        if (this.query.length > 0) {
+            wmsLayers[this.tvk] = this.getWmsLayerCustom();
+        } else if (hasDateBands) {
             // Split data into one or more date bands
             if (this.rangeurl0.length > 0) {
                 wmsLayers[this.getDateBandTitle(this.b0from, this.b0to)] = 
@@ -410,7 +471,7 @@ export class Params {
             }                        
         } else {
             // Show all data in a single layer
-            wmsLayers[this.tvk] = this.getWmsLayer();
+            wmsLayers[this.tvk] = this.getWmsLayer('', this.b0fill);
         }
         return wmsLayers;
 
@@ -450,53 +511,6 @@ export class Params {
         return fill;          
     }
     // -------------------------------------------------------------------------
-    /** Sanitise a generic string as provided by a caller parameter.
-     * 
-     * @param {string} name - Name of parameter.
-     * @param {string|undefined} param - Value of parameter.
-     * @param {string} filter - Regex filter to be applied to string.
-     * @returns {string} - Sanitised string.
-     */
-    sanitiseParam(name: string, param: string|undefined, filter: RegExp): string {
-        let clean = '';
-        if (param !== undefined) {
-            clean = param.replace(filter, '');
-            if (clean !== param) {
-                console.warn(`Parameter '${name}' contains invalid characters. ` +
-                             `Using the value '${clean}' instead`);
-            }
-        }
-        return clean;
-    }
-    // -------------------------------------------------------------------------
-    /** Check whether a supplied parameter matches an entry in a given list of
-     * acceptable values.
-     * 
-     * @param {string} name - Name of parameter.
-     * @param {string|undefined} param - Value of parameter.
-     * @param {string[]} list - Array of acceptable values.
-     * @returns {string} - Matching value or empty string if no match/undefined.
-     */
-    sanitiseParamList(name: string, param: string|undefined, list: string[]): string {
-        
-        let rv = '';
-        if (param !== undefined) {
-            const clean = this.sanitiseParam(name, param, /[^a-zA-Z0-9-]/g)
-                              .toLowerCase();
-            for (let i=0; i < list.length; i++) {
-                if (clean === list[i]) {
-                    rv = list[i];
-                    break;
-                }   
-            }
-            if (rv === '') {
-                console.warn(`Parameter '${name}' has the unrecognised value ` +
-                    `of '${clean}'. Acceptable values are: ${list.join(', ')}`);
-            }
-        }
-        return rv;
-    }         
-    // -------------------------------------------------------------------------
     /** Sanitise a year string as provided by a caller parameter.
      * 
      * @param {string} name - Name of parameter.
@@ -524,7 +538,15 @@ export class Params {
      * @returns {boolean} - True if map is interactive, else False.
      */
     showInteractive(): boolean {
-        return this.interactive !== '0';
+        return this.interactive === '1';
+    }
+    // -------------------------------------------------------------------------
+    /** Determine whether the internal attribution control should be visible.
+     * 
+     * @returns {boolean} - True if internal attribution visible, else False.
+     */
+    showInternalAttrib(): boolean {
+        return this.logo == '2';
     }
     // -------------------------------------------------------------------------
     /** Determine whether the map should display VC boundaries.

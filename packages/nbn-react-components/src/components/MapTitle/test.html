@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Load React and ReactDOM from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <!-- Load the UMD build of your React component library -->
+  <script src="../../../dist/nbnReactComponents.umd.js"></script>
+ 
+  <title>Legacy Web Page with React Component</title>
+</head>
+<body>
+    <!-- Placeholder for React components -->
+    <div id="map-title"></div>
+    <div id="map-container"></div> 
+    <!-- Render the React component -->
+    <script>
+          const h = 600;
+          const w = parseInt(h / 1.2);
+
+          const mapTitle = window.nbnReactComponents.MapTitle;
+          ReactDOM.render(        
+            React.createElement(mapTitle, 
+              { tvk: 'NBNSYS0000027783',
+                title: 'com',
+                w: w.toString(),
+                // terms: '0'
+              }
+            ),
+            document.getElementById('map-title')
+          );      
+
+          document.getElementById("map-container").style.width = `${w}px`;
+          document.getElementById("map-container").style.height = `${h}px`;
+          const simpleMap = window.nbnReactComponents.SimpleMap;
+          ReactDOM.render(        
+            React.createElement(simpleMap, 
+              { tvk: 'NHMSYS0000344177',
+                w: w.toString(),
+                h: h.toString(),
+                interactive: '0'
+
+              }
+            ),
+            document.getElementById('map-container')
+          );
+    </script>
+    
+    <script>
+      // Force all links to open in new tab
+      document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && !e.target.hasAttribute('target')) {
+            e.target.setAttribute('target', '_blank');
+          }
+      });
+      </script>        
+</body>
+</html>
