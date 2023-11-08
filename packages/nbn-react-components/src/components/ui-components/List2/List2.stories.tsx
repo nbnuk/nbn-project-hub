@@ -28,7 +28,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const renderItem=(item, index) => <><div><a href="#" className="text-blue-500">{item} link</a></div><div>Records: {index}</div></>
+const renderItem=(item: string, index: number) => <><div><a href="#" className="text-blue-500">{item} link</a></div><div>Records: {index}</div></>
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {

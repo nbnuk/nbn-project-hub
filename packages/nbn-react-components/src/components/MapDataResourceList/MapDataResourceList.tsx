@@ -1,5 +1,5 @@
 
-import { useDataResource } from '../../lib/advanced/hooks/useDataResource';
+import { useDataResource } from '../../shared/hooks/useDataResource';
 import { sanitiseParam, sanitiseParamList } from './sanitise';
 
 // -------------------------------------------------------------------------

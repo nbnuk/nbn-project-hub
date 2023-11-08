@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import MapDataResourceList from './MapDataResourceList';
-import { useDataResource } from '../../lib/advanced/hooks/useDataResource';
+import { useDataResource } from '../../shared/hooks/useDataResource';
 
-jest.mock('../../lib/advanced/hooks/useDataResource');
+jest.mock('../../shared/hooks/useDataResource');
 
 const mockedUseDataResource = useDataResource as jest.Mock;
 mockedUseDataResource.mockReturnValue({
