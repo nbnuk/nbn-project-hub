@@ -2920,6 +2920,7 @@ __metadata:
     "@storybook/react": ^7.1.0
     "@storybook/react-vite": ^7.1.0
     "@storybook/testing-library": ^0.2.0
+    "@tailwindcss/forms": ^0.5.6
     "@testing-library/jest-dom": ^5.17.0
     "@testing-library/react": ^14.0.0
     "@types/jest": ^29.5.3
@@ -2937,6 +2938,7 @@ __metadata:
     jest: ^29.6.2
     jest-environment-jsdom: ^29.6.2
     postcss: ^8.4.28
+    react-grid-gallery: ^1.0.0
     storybook: ^7.1.0
     tailwindcss: ^3.3.3
     ts-jest: ^29.1.1
@@ -4974,6 +4976,17 @@ __metadata:
     "@svgr/plugin-svgo": ^5.5.0
     loader-utils: ^2.0.0
   checksum: 540391bd63791625d26d6b5e0dd3c716ef51176bfba53bf0979a1ac4781afd2672f4bef2d76cf3d9cdc8e9ee61bda6863ed405a237b10406633ede4cd524f1cc
+  languageName: node
+  linkType: hard
+
+"@tailwindcss/forms@npm:^0.5.6":
+  version: 0.5.6
+  resolution: "@tailwindcss/forms@npm:0.5.6"
+  dependencies:
+    mini-svg-data-uri: ^1.2.3
+  peerDependencies:
+    tailwindcss: ">=3.0.0 || >= 3.0.0-alpha.1"
+  checksum: 2bbbe3ffd1f1c80cf610780e94520863f6265f1b30cd3235a54391e0a02a35f16ae3a3132f7a5eb9367a14c27f53a96828538616dca5bd9ca3b7ecad804e9a2d
   languageName: node
   linkType: hard
 
@@ -13700,6 +13713,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mini-svg-data-uri@npm:^1.2.3":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 997f1fbd8d59a70f03761e18626d335197a3479cb9d1ff75678e4b64b864d32a0b8fc18115eabde035e5299b8b4a354a78e57dd6ac10f9d604162a6170898d09
+  languageName: node
+  linkType: hard
+
 "minimalistic-assert@npm:^1.0.0":
   version: 1.0.1
   resolution: "minimalistic-assert@npm:1.0.1"
@@ -13958,7 +13980,7 @@ __metadata:
     leaflet: ^1.9.4
     leaflet-easyprint: ^2.1.9
     proj4: ^2.9.0
-    swr: ^2.2.1
+    swr: ^2.2.2
     ts-jest: ^29.1.1
     typedoc: ^0.25.1
     typescript: ^5.1.6
@@ -16022,6 +16044,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-grid-gallery@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "react-grid-gallery@npm:1.0.0"
+  peerDependencies:
+    react: ">=16.14.0"
+  checksum: f6e01a433030cf538d5a8149ceee32cc4934be9f72da157a69729e5971bfb7f21898fb2f978b3b61f0ce4f91bed913d7fc7260fb796aa2b33e2328080f7356cb
+  languageName: node
+  linkType: hard
+
 "react-inspector@npm:^6.0.0":
   version: 6.0.2
   resolution: "react-inspector@npm:6.0.2"
@@ -17065,14 +17096,14 @@ __metadata:
   linkType: hard
 
 "shiki@npm:^0.14.1":
-  version: 0.14.4
-  resolution: "shiki@npm:0.14.4"
+  version: 0.14.3
+  resolution: "shiki@npm:0.14.3"
   dependencies:
     ansi-sequence-parser: ^1.1.0
     jsonc-parser: ^3.2.0
     vscode-oniguruma: ^1.7.0
     vscode-textmate: ^8.0.0
-  checksum: 1173f6fa9531690a8cd4bf1d8e28c9eb9295af38a4c150cba6546e95f6e32bc96c7dd98826e39e688f1ca9d36b683a9a02ef77d51ce6495900b3a46ada64f828
+  checksum: a4dd98e3b2a5dd8be207448f111ffb9ad2ed6c530f215714d8b61cbf91ec3edbabb09109b8ec58a26678aacd24e8161d5a9bc0c1fa1b4f64b27ceb180cbd0c89
   languageName: node
   linkType: hard
 
@@ -17729,15 +17760,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "swr@npm:2.2.1"
+"swr@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "swr@npm:2.2.2"
   dependencies:
     client-only: ^0.0.1
     use-sync-external-store: ^1.2.0
   peerDependencies:
     react: ^16.11.0 || ^17.0.0 || ^18.0.0
-  checksum: 62ff1b8132966fc977df192cf4452bab94c73dbea304a1438745f27041917154dad32448d8a65fb40d5e3de0b1751ef3fd57b1d71ba450e031517f009d0fc052
+  checksum: afb3d4824f7631bc3a045483f4e4beb5ca9bfa82b64690b3d1133cdf0666ad8e4a9a879657fac5b34dbf19ea9a1503cf92c9bde972f3d40cefe434c73bd9627a
   languageName: node
   linkType: hard
 

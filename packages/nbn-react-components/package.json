@@ -72,7 +72,9 @@
   },
   "prepack": "json -f package.json -I -e \"delete this.devDependencies;\"",
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.6",
     "date-fns": "^2.30.0",
+    "react-grid-gallery": "^1.0.0",
     "zod": "^3.22.2"
   }
 }
