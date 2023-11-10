@@ -3,7 +3,7 @@ import type {  StoryObj, Meta } from '@storybook/react';
 import { SearchInput } from './SearchInput';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta = {
+const meta: Meta<typeof SearchInput> = {
   title: 'Form/SearchInput',
   component: SearchInput,
   decorators: [
@@ -24,12 +24,12 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof SearchInput>;
+}
 
 
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof SearchInput>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {

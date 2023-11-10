@@ -2,15 +2,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { default as MapTitle } from './MapTitle';
 
-const meta = {
+const meta: Meta<typeof MapTitle> = {
     title: 'Map Family / Map Title',
     component: MapTitle,
     // tags: ['autodocs'],
 
-  } satisfies Meta<typeof MapTitle>;
+  }
   
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof MapTitle>;
   
 // Stories
 export const DefaultTitle: Story = {

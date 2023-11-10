@@ -3,7 +3,7 @@ import type {  StoryObj, Meta } from '@storybook/react';
 import { TemplateDataFetchingComponent } from './TemplateDataFetchingComponent';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta = {
+const meta : Meta<typeof TemplateDataFetchingComponent>= {
   title: 'Example/TemplateDataFetchingComponent',
   component: TemplateDataFetchingComponent,
   parameters: {
@@ -16,10 +16,10 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof TemplateDataFetchingComponent>;
+}
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof TemplateDataFetchingComponent>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {

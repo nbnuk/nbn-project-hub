@@ -3,7 +3,7 @@ import List1 from './List1';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta = {
+const meta: Meta<typeof List1> = {
   title: 'UI components/Lists/List1',
   component: List1,
   decorators: [
@@ -27,10 +27,10 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof List1>;
+}
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof List1>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Primary: Story = {

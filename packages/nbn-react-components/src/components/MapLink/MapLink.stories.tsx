@@ -2,15 +2,15 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { default as MapLink } from './MapLink';
 
-const meta = {
+const meta: Meta<typeof MapLink>= {
     title: 'Map Family / Map Link',
     component: MapLink,
     // tags: ['autodocs'],
 
-  } satisfies Meta<typeof MapLink>;
+  }
   
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof MapLink>;
   
 // Stories
 export const DefaultLink: Story = {

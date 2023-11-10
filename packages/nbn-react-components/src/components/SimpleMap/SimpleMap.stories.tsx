@@ -4,15 +4,15 @@ import './assets/leaflet.css';
 import type { Meta, StoryObj } from '@storybook/react';
 import { default as SimpleMap } from './SimpleMap';
 
-const meta = {
+const meta: Meta<typeof SimpleMap>= {
     title: 'Map Family / SimpleMap',
     component: SimpleMap,
     // tags: ['autodocs'],
 
-  } satisfies Meta<typeof SimpleMap>;
+  } 
   
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof SimpleMap>;
   
 // Stories
 export const Internal_Attributions: Story = {

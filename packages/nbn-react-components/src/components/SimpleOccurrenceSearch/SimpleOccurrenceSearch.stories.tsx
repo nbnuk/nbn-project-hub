@@ -3,7 +3,7 @@ import type {  StoryObj, Meta } from '@storybook/react';
 import { SimpleOccurrenceSearch } from './SimpleOccurrenceSearch';
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta = {
+const meta: Meta<typeof SimpleOccurrenceSearch>= {
   title: 'Occurrence/SimpleOccurrenceSearch',
   component: SimpleOccurrenceSearch,
   decorators: [
@@ -24,12 +24,12 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof SimpleOccurrenceSearch>;
+}
 
 
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof SimpleOccurrenceSearch>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Everything: Story = {

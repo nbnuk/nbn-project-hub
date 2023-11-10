@@ -3,7 +3,7 @@ import List2 from './List2';
 
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta = {
+const meta: Meta<typeof List2>= {
   title: 'UI components/Lists/List2',
   component: List2,
   decorators: [
@@ -23,10 +23,10 @@ const meta = {
   argTypes: {
     // backgroundColor: { control: 'color' },
   },
-} satisfies Meta<typeof List2>;
+}
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof List2>;
 
 const renderItem=(item: string, index: number) => <><div><a href="#" className="text-blue-500">{item} link</a></div><div>Records: {index}</div></>
 
