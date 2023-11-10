@@ -15,7 +15,8 @@
     "storybook:maps": "yarn workspace @nbnuk/nbn-maps storybook",
     "build:maps": "yarn workspace @nbnuk/nbn-maps build",
     "test": "jest",
-    "docs:nbn-react-components": "yarn workspace @nbnuk/nbn-react-components docs"
+    "docs:nbn-react-components": "yarn workspace @nbnuk/nbn-react-components docs",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.17.0",
