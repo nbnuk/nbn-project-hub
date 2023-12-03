@@ -1,5 +1,5 @@
 
-import { useDataResource } from '../../shared/hooks/useDataResource';
+import { useDataResource } from '../../shared/hooks/nbn-atlas-api/useDataResource';
 import { sanitiseParam, sanitiseParamList } from './sanitise';
 
 // -------------------------------------------------------------------------

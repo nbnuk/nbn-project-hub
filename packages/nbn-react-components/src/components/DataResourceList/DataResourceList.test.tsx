@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import SimpleDataResourceList from './DataResourceList';
-import { useDataResource } from '../../shared/hooks/useDataResource';
+import { useDataResource } from '../../shared/hooks/nbn-atlas-api/useDataResource';
 
 jest.mock('../../shared/hooks/useDataResource');
 

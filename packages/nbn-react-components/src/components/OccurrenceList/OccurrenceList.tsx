@@ -1,4 +1,4 @@
-import { useOccurrenceSearch, Occurrence } from '../../shared/hooks/useOccurrenceSearch';
+import { useOccurrenceSearch, Occurrence } from '../../shared/hooks/nbn-atlas-api/useOccurrenceSearch';
 import '../../index.css'
 import { NBNDate } from '../ui-components';
 
