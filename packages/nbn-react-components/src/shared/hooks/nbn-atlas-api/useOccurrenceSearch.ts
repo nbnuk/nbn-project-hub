@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 import { z } from "zod";
-import { fetcher } from '../lib/fetcher';
+import { fetcher } from '../../lib/fetcher';
 
 export const OccurrenceSchema = z.object({
   uuid: z.string(),

@@ -1,4 +1,4 @@
-import { useDataResource, DataResource } from '../../shared/hooks/useDataResource';
+import { useDataResource, DataResource } from '../../shared/hooks/nbn-atlas-api/useDataResource';
 import { validateOccurrenceSearchApiUrl } from '../../shared/lib/apiUrl';
 import '../../index.css'
 import {List1} from '../ui-components';
