@@ -8,7 +8,7 @@ const meta: Meta<typeof SearchInput> = {
   component: SearchInput,
   decorators: [
     (Story) => (
-      <div style={{ width: '500px' }}>
+      <div className="w-[500px]" >
         <Story />
       </div>
     ),

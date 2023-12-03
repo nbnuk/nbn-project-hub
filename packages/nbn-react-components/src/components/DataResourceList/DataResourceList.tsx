@@ -1,7 +1,8 @@
-import { useDataResource } from '../../shared/hooks/useDataResource';
+import { useDataResource, DataResource } from '../../shared/hooks/useDataResource';
 import { validateOccurrenceSearchApiUrl } from '../../shared/lib/apiUrl';
 import '../../index.css'
 import {List1} from '../ui-components';
+import { List, ListItem, ListItemSuffix,  Chip, Card } from "@material-tailwind/react";
 
 
 export interface DataResourceListProps { 
@@ -28,15 +29,26 @@ export const DataResourceList = ({ apiOccurrenceSearchURL, width = 'auto' }: Dat
   // Render the data resources
   return (<>
    
+   <Card className="w-96">
+      <List>
 
-<div className="container mx-auto p-4 bg-white" style={{width}}>
-  {dataResources && <List1 items={dataResources}
-  renderItem={(dataResource, index) => <><div><a href={dataResource.urn} className="text-blue-500">{dataResource.name}</a></div>
-  <div>Records: {dataResource.count}</div></>}
-  />}
-</div>
-
-
+      {dataResources?.map((dataResource: DataResource) => (
+        <a href={dataResource.urn} className="text-initial">
+          <ListItem>{dataResource.name}
+          <ListItemSuffix className="pl-2">
+            <Chip
+              value={dataResource.count}
+              variant="ghost"
+              size="sm"
+              className="rounded-full"
+              color="blue"
+            />
+          </ListItemSuffix>
+          </ListItem>
+        </a>
+))}
+      </List>
+    </Card>
 
     </>
 );

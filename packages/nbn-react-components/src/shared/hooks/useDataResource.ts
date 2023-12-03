@@ -15,7 +15,7 @@ export const DataResourceSchema = z.object({
 export type DataResource = z.infer<typeof DataResourceSchema>;
 
 // Define the hook
-export const useDataResource = (apiUrl: string) => {
+export const useDataResource = (apiUrl: string): { dataResources: DataResource[] | undefined, error: any, isValidating: boolean } => {
   // Add &facets=data_resource_uid&flimit=-1&pageSize=0 to the API URL
   const url = new URL(apiUrl);
   const params = url.searchParams;
@@ -30,14 +30,15 @@ export const useDataResource = (apiUrl: string) => {
   // Transform the facet results into data resources
   const dataResources = facetResults?.[0]?.fieldResult.map(fieldResult => {
     const uid = fieldResult.i18nCode.split('.').pop();
-    return (
-    {
-    name: fieldResult.label,
-    uid,
-    count: fieldResult.count,
-    fq: fieldResult.fq,
-    urn: `https://registry.nbnatlas.org/ws/dataResource/${uid}`
-  })});
+
+    return DataResourceSchema.parse({ 
+      name: fieldResult.label,
+      uid,
+      count: fieldResult.count,
+      fq: fieldResult.fq,
+      urn: `https://registry.nbnatlas.org/ws/dataResource/${uid}`
+    });
+  });
 
   return { dataResources, error, isValidating };
 };

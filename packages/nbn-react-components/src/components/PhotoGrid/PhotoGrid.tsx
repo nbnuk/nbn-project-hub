@@ -1,18 +1,15 @@
-import {useEffect} from 'react'
-import useSWR from 'swr';
-import { z } from "zod";
-import { fetcher } from '../../shared/lib/fetcher';
 import '../../index.css'
 import './grid-styles.css'
 import { occurrences } from "./test-data";
 import { Gallery } from "react-grid-gallery";
-import { useOccurrenceSearch } from '../../shared/hooks/useOccurrenceSearch';
-import { Occurrence } from '../../shared/types';
 import { NBNDate } from '../ui-components';
-import OccurrenceList from '../OccurrenceList';
 
 
-
+/**
+ * 
+ * !!!!!!!!!! Ths is just displaying images defined in a test data file i.e it does not use the api !!!!!!
+ * 
+ **/
 
 
 // Define the props for the component

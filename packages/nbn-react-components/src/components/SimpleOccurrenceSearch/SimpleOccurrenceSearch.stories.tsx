@@ -8,7 +8,8 @@ const meta: Meta<typeof SimpleOccurrenceSearch>= {
   component: SimpleOccurrenceSearch,
   decorators: [
     (Story) => (
-      <div style={{ width: '800px' }} className="mx-auto">
+      <div className="w-[800px] mx-auto">
+        <p>Tip: search for "otter". Many otter records don't have images, but some do </p>
         <Story />
       </div>
     ),
