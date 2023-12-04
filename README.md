@@ -7,7 +7,7 @@ React component library project board: https://github.com/orgs/nbnuk/projects/5
 
 Note: the NBN Atlas Python project is looking for suggestions https://github.com/orgs/nbnuk/projects/6
 
-:exclamation::exclamation:Check out the **Wiki** for useful instructions e.g. how to use the React components in a legacy website https://github.com/nbnuk/nbn-project-hub/wiki
+:point_right: Check out the **Wiki** for useful instructions e.g. how to use the React components in a legacy website https://github.com/nbnuk/nbn-project-hub/wiki
 
 ## How to get started and contribute
 See [CONTRIBUTING](/CONTRIBUTING.md)
