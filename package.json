@@ -34,11 +34,14 @@
     "vite-plugin-dts": "^3.3.1"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.18",
     "@vitejs/plugin-react": "^4.0.3",
     "brc-atlas-bigr": "^2.4.0",
+    "chart.js": "^4.4.1",
     "leaflet": "^1.9.4",
     "leaflet-easyprint": "^2.1.9",
     "proj4": "^2.9.0",
-    "swr": "^2.2.2"
+    "swr": "^2.2.2",
+    "yet-another-react-lightbox": "^3.15.6"
   }
 }

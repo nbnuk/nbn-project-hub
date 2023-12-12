@@ -2231,6 +2231,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@heroicons/react@npm:^2.0.18":
+  version: 2.0.18
+  resolution: "@heroicons/react@npm:2.0.18"
+  peerDependencies:
+    react: ">= 16"
+  checksum: 597e8668818623d568a302e343ef06b69f62ce297c14b88c2ebbfed0c0f00cd85ec44fae33ec8a249931b4e7dcf145743ae3198095a9f4682108de5155f5f4c3
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.10":
   version: 0.11.10
   resolution: "@humanwhocodes/config-array@npm:0.11.10"
@@ -2854,6 +2863,13 @@ __metadata:
   version: 3.4.0
   resolution: "@juggle/resize-observer@npm:3.4.0"
   checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
+  languageName: node
+  linkType: hard
+
+"@kurkle/color@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@kurkle/color@npm:0.3.2"
+  checksum: 79e97b31f8f6efb28c69d373f94b0c7480226fe8ec95221f518ac998e156444a496727ce47de6d728eb5c3369288e794cba82cae34253deb0d472d3bfe080e49
   languageName: node
   linkType: hard
 
@@ -7807,6 +7823,15 @@ __metadata:
   version: 2.0.1
   resolution: "char-regex@npm:2.0.1"
   checksum: 8524c03fd7e58381dccf33babe885fe62731ae20755528b19c39945b8203479184f35247210dc9eeeef279cdbdd6511cd3182e0e1db8e4549bf2586470b7c204
+  languageName: node
+  linkType: hard
+
+"chart.js@npm:^4.4.1":
+  version: 4.4.1
+  resolution: "chart.js@npm:4.4.1"
+  dependencies:
+    "@kurkle/color": ^0.3.0
+  checksum: 8c108f137824ea0e3d79914708b409298c12ed7d16da99a40ca3cab51466ef7b0068ad82ac0addeb288b938fe0621d3e5a6a913b60e72a729aa42aa96705fcad
   languageName: node
   linkType: hard
 
@@ -14253,6 +14278,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "nbn-project-hub@workspace:."
   dependencies:
+    "@heroicons/react": ^2.0.18
     "@testing-library/jest-dom": ^5.17.0
     "@testing-library/react": ^14.0.0
     "@types/geojson": ^7946.0.10
@@ -14261,6 +14287,7 @@ __metadata:
     "@types/proj4": ^2.5.2
     "@vitejs/plugin-react": ^4.0.3
     brc-atlas-bigr: ^2.4.0
+    chart.js: ^4.4.1
     jest: ^29.6.2
     jest-fetch-mock: ^3.0.3
     json: ^11.0.0
@@ -14272,6 +14299,7 @@ __metadata:
     typedoc: ^0.25.1
     typescript: ^5.1.6
     vite-plugin-dts: ^3.3.1
+    yet-another-react-lightbox: ^3.15.6
   languageName: unknown
   linkType: soft
 
@@ -20196,6 +20224,16 @@ __metadata:
     buffer-crc32: ~0.2.3
     fd-slicer: ~1.1.0
   checksum: 7f21fe0bbad6e2cb130044a5d1d0d5a0e5bf3d8d4f8c4e6ee12163ce798fee3de7388d22a7a0907f563ac5f9d40f8699a223d3d5c1718da90b0156da6904022b
+  languageName: node
+  linkType: hard
+
+"yet-another-react-lightbox@npm:^3.15.6":
+  version: 3.15.6
+  resolution: "yet-another-react-lightbox@npm:3.15.6"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 0b256086144d3279da7226b69841d74133c95ec9265b0c2b737cbc6327d655ff830d805f5e219187b24752116a2c153de479bc293aebd5fb8b4599ad3a9e6e13
   languageName: node
   linkType: hard
 

@@ -1,0 +1,53 @@
+By Watsonian Vice County
+https://records-ws.nbnatlas.org/chart.json?q=lsid:NHMSYS0000080188&x=cl256&qc=&xmissing=false
+                {
+                    "label": "Anglesey",
+                    "i18nCode": "cl256.Anglesey",
+                    "count": 398,
+                    "fq": "cl256:\"Anglesey\""
+                },
+								
+By data partner								
+https://records-ws.nbnatlas.org/chart.json?q=lsid:NHMSYS0000080188&x=data_provider_uid&qc=&xmissing=false
+                {
+                    "label": "Royal Society for the Protection of Birds",
+                    "i18nCode": "data_provider_uid.dp0",
+                    "count": 2,
+                    "fq": "data_provider_uid:\"dp0\""
+                },
+								
+By dataset								
+https://records-ws.nbnatlas.org/chart.json?q=lsid:NHMSYS0000080188&x=data_resource_uid&qc=
+                {
+                    "label": "Distribution of Mammals in Greater Manchester",
+                    "i18nCode": "data_resource_uid.dr1147",
+                    "count": 235,
+                    "fq": "data_resource_uid:\"dr1147\""
+                },
+								
+By decade								
+https://records-ws.nbnatlas.org/chart.json?q=lsid:NHMSYS0000080188&x=decade&qc=&xmissing=false
+                {
+                    "label": "1850-1859",
+                    "i18nCode": "occurrence_year.1850-01-01T00:00:00Z",
+                    "count": 1,
+                    "fq": "occurrence_year:[1850-01-01T00:00:00Z TO 1859-12-31T11:59:59Z]"
+                },
+								
+By month								
+https://records-ws.nbnatlas.org/chart.json?q=lsid:NHMSYS0000080188&x=month&qc=&xmissing=false
+                {
+                    "label": "January",
+                    "i18nCode": "month.01",
+                    "count": 14517,
+                    "fq": "month:\"01\""
+                },
+								
+Since 1990								
+https://records-ws.nbnatlas.org/chart.json?q=lsid:NHMSYS0000080188&x=year&qc=&fq=year:[1990%20TO%20*]
+                {
+                    "label": "1990",
+                    "i18nCode": "year.1990",
+                    "count": 333,
+                    "fq": "year:\"1990\""
+                },
