@@ -1,7 +1,8 @@
 import React, { ChangeEvent, KeyboardEvent, useMemo, useState } from 'react';
 
 import { IconButton, Input } from '@material-tailwind/react';
-import { XMarkIcon } from '@heroicons/react/24/solid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 import { useAutoComplete } from '../../shared/hooks/nbn-atlas-api/useAutoComplete';
 
@@ -65,7 +66,7 @@ export function SpeciesAutoComplete({ initialSearchQuery, setSpecies }: ISpecies
           className='!absolute right-1 top-1'
           variant='text' size='sm' placeholder=''
           onClick={handleButtonClick} >
-          <XMarkIcon className='h-6 w-6' />
+            <FontAwesomeIcon icon={faXmark} />
         </IconButton>
         {((error) ? (`Error fetching data: ${error.message}`) : 
             (
