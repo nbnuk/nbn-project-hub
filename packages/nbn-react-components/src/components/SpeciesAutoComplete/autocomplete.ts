@@ -1,4 +1,4 @@
-import { SpeciesOption } from '../../shared/hooks/nbn-atlas-api/useAutoComplete';
+import { SpeciesOption } from '../../shared/hooks/nbn-atlas-api/useSpeciesAutoComplete';
 
 // -----------------------------------------------------------------------------
 

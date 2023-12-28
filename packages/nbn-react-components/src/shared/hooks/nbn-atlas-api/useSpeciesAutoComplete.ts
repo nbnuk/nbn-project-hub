@@ -30,7 +30,7 @@ export type SpeciesOptionList = z.TypeOf<typeof SpeciesOptionListSchema>;
 
 const autoCompleteFetcher = (url:string) => fetcher(url, SpeciesOptionListSchema);
 
-export function useAutoComplete(searchQuery: string):  { data: SpeciesOptionList | undefined, error: any, isLoading: boolean } {
+export function useSpeciesAutoComplete(searchQuery: string):  { data: SpeciesOptionList | undefined, error: any, isLoading: boolean } {
     
     const searchUrl = BASE_URL + searchQuery;
     

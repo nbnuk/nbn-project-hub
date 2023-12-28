@@ -4,7 +4,7 @@ import { IconButton, Input } from '@material-tailwind/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
-import { useAutoComplete } from '../../shared/hooks/nbn-atlas-api/useAutoComplete';
+import { useSpeciesAutoComplete } from '../../shared/hooks/nbn-atlas-api/useSpeciesAutoComplete';
 
 import { ISpecies, transformData } from './autocomplete';
 
@@ -23,7 +23,7 @@ export function SpeciesAutoComplete({ initialSearchQuery, setSpecies }: ISpecies
   
     const [searchQuery, setSearchQuery] = useState<string>(initialSearchQuery || '');
   
-    const { data, error } = useAutoComplete(searchQuery)
+    const { data, error } = useSpeciesAutoComplete(searchQuery)
     const dedupe = useMemo(() => transformData(data?.autoCompleteList), 
                             [data?.autoCompleteList]);
 
