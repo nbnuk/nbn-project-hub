@@ -10,7 +10,7 @@ import { ISpecies, transformData } from './autocomplete';
 
 // -----------------------------------------------------------------------------
 
-interface ISpeciesAutoComplete {
+interface SpeciesAutoCompleteProps {
     /** Optional seed for search term to pre-populate search box. */
     initialSearchQuery?: string;
     /** Optional callback function which will be called when a list item is
@@ -19,7 +19,7 @@ interface ISpeciesAutoComplete {
   }
 // ---------------------------
   
-export function SpeciesAutoComplete({ initialSearchQuery, setSpecies }: ISpeciesAutoComplete): React.JSX.Element {
+export function SpeciesAutoComplete({ initialSearchQuery, setSpecies }: SpeciesAutoCompleteProps) {
   
     const [searchQuery, setSearchQuery] = useState<string>(initialSearchQuery || '');
   
@@ -88,6 +88,3 @@ export function SpeciesAutoComplete({ initialSearchQuery, setSpecies }: ISpecies
       </div>
     );
 }
-// -----------------------------------------------------------------------------
-// End
-// -----------------------------------------------------------------------------
