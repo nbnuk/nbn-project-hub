@@ -5,60 +5,43 @@ import { fetcher } from '../../lib/fetcher';
 
 // -----------------------------------------------------------------------------
 
-const baseUrl = 'https://species-ws.nbnatlas.org/search/auto?idxType=TAXON&limit=50&q=';
+const BASE_URL = 'https://species-ws.nbnatlas.org/search/auto?idxType=TAXON&limit=50&q=';
 
-const getAutoCompleteUrl = (searchQuery: string): string => 
-        (baseUrl + searchQuery);
 
-const autoCompleteFetcher = (url:string) => fetcher(url, DataObjectSchema);
 
 // -----------------------------------------------------------------------------
 // Define data artefacts associated with API call. Example:
 // https://species-ws.nbnatlas.org/search/auto?idxType=TAXON&limit=50&q=red
   
-const DataItemSchema = z.object({
+export const SpeciesOptionSchema = z.object({
     guid: z.string(),
     commonName: z.string().nullish(),
     name: z.string(),
     rankString: z.string()
 });
   
-export type TDataItemSchema = z.TypeOf<typeof DataItemSchema>;
+export type SpeciesOption = z.TypeOf<typeof SpeciesOptionSchema>;
   
-const DataObjectSchema = z.object({
-    autoCompleteList: z.array(DataItemSchema)
+export const SpeciesOptionListSchema = z.object({
+    autoCompleteList: z.array(SpeciesOptionSchema)
 });
 
-type TDataObjectSchema = z.TypeOf<typeof DataObjectSchema>;
+export type SpeciesOptionList = z.TypeOf<typeof SpeciesOptionListSchema>;
 
-// -----------------------------------------------------------------------------
-// Define custom hook.
+const autoCompleteFetcher = (url:string) => fetcher(url, SpeciesOptionListSchema);
 
-interface IuseAutoComplete {
-    data: TDataObjectSchema | undefined;
-    error: Error | undefined;
-    isLoading: boolean | undefined;
-}   
-// -------------------
-
-export function useAutoComplete(searchQuery: string): IuseAutoComplete {
+export function useAutoComplete(searchQuery: string):  { data: SpeciesOptionList | undefined, error: any, isLoading: boolean } {
     
-    const searchUrl = getAutoCompleteUrl(searchQuery);
-    // Ensure that the minimum length criterion is met before searching.
-    const minLenOk: boolean = searchQuery.length > 1;
-    const { data, error, isLoading } = 
-        useSWR(minLenOk ? searchUrl : null, autoCompleteFetcher, 
-                { revalidateOnFocus: false });
+    const searchUrl = BASE_URL + searchQuery;
+    
+    const { data, error, isLoading } =  useSWR( searchUrl, autoCompleteFetcher, { revalidateOnFocus: false });
 
-    const response: IuseAutoComplete = { 
+   return { 
         data: data, 
         error: error, 
         isLoading: isLoading
     };
 
-    return response;
+   
 }
-// -----------------------------------------------------------------------------
-// End
-// -----------------------------------------------------------------------------
 

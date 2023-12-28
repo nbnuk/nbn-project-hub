@@ -1,4 +1,4 @@
-import { TDataItemSchema } from '../../shared/hooks/nbn-atlas-api/useAutoComplete';
+import { SpeciesOption } from '../../shared/hooks/nbn-atlas-api/useAutoComplete';
 
 // -----------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ interface IAssocArray {
 [key: string]: ISpecies;
 }
 
-export function transformData(items: TDataItemSchema[]|undefined): IAssocArray {
+export function transformData(items: SpeciesOption[]|undefined): IAssocArray {
 
     const data: IAssocArray = {};
     if (!items) {
