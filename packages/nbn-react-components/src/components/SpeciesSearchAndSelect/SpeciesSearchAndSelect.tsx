@@ -39,6 +39,19 @@ const SpeciesSearchAndSelect = ({ onChange}: SpeciesSearchAndSelectProps )=>{
 
 export default SpeciesSearchAndSelect;
 
+const buildDisplayName = (commonName:string|undefined, scientificName:string|undefined) => { 
+    if (commonName){
+            if (scientificName){
+                return  `${commonName} (${scientificName})`
+            }
+            else {
+                return commonName
+            }
+    }
+    else
+        return scientificName?scientificName:""
+}
+
 
 const fetchSimpleSpeciesSearchResult = async (inputValue: string): Promise<Array<{ label: string; value: SimpleSpeciesSearch }>> => {
     if (!inputValue) {
@@ -49,7 +62,7 @@ const fetchSimpleSpeciesSearchResult = async (inputValue: string): Promise<Array
         const data = await simpleSpeciesSearchFetcher(buildSearchUrl(inputValue));
 
         return data.searchResults.results.map(species => ({
-            label: species.commonName+" ("+species.scientificName+")",
+            label: buildDisplayName(species.commonName,species.scientificName),
             value: species
         }));
     } catch (error) {
