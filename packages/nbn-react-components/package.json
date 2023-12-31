@@ -35,7 +35,7 @@
     "docs": "npx typedoc --out docs src/components/**/*.ts",
     "chromatic": "npx chromatic --project-token=chpt_faa48f23404bf10"
   },
-  "peerDepe       ndencies": {
+  "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
