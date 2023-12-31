@@ -4,7 +4,7 @@ import SpeciesSearchAndSelect from './SpeciesSearchAndSelect';
 
 
 const meta: Meta<typeof SpeciesSearchAndSelect>  = {
-    title: 'Species / Species Search and Select',
+    title: 'Species / SpeciesSearchAndSelect',
     component: SpeciesSearchAndSelect,
     tags: ['species'],
 

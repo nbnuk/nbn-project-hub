@@ -4,7 +4,7 @@ import SpeciesInputWithAutoComplete from './SpeciesInputWithAutoComplete';
 
 
 const meta: Meta<typeof SpeciesInputWithAutoComplete>  = {
-    title: 'Species / Species Input with Auto-Complete',
+    title: 'Species / SpeciesInputWithAutoComplete',
     component: SpeciesInputWithAutoComplete,
     tags: ['species'],
 
