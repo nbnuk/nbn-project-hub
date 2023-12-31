@@ -31,7 +31,7 @@ const SpeciesInputWithAutoComplete = ({ onChange}: SpeciesInputWithAutoCompleteP
     return (
         <AsyncCreatableSelect
             cacheOptions
-            placeholder={"Search for species..."}
+            placeholder={"Enter species..."}
             loadOptions={fetchSpeciesAutoCompleteOptions}
             onChange={handleChange}
             createOptionPosition="first"
