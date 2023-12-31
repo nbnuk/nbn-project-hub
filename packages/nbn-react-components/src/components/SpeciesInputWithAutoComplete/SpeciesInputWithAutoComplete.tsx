@@ -1,8 +1,7 @@
 import { SingleValue } from 'react-select';
 import AsyncCreatableSelect from 'react-select/async-creatable';
 
-import { SpeciesAutoCompleteOptionListSchema, SpeciesAutoCompleteOption, removeDuplicates, SPECIES_AUTOCOMPLETE_BASE_URL } from '../../shared/hooks/nbn-atlas-api/useSpeciesAutoComplete' 
-import { fetcher } from '../../shared/lib/fetcher';
+import { SpeciesAutoCompleteOption, removeDuplicates, speciesAutoCompleteFetcher, buildUrl } from '../../shared/hooks/nbn-atlas-api/useSpeciesAutoComplete' 
 
 interface SpeciesInputWithAutoCompleteProps {
     onChange?: (species: {name:string, guid:string|null}|null) => void;
@@ -27,7 +26,7 @@ const SpeciesInputWithAutoComplete = ({ onChange}: SpeciesInputWithAutoCompleteP
             
     };
 
-    const formatCreateLabel = (inputValue:string) => `Search for... ${inputValue}`;
+    const formatCreateLabel = (inputValue:string) => `${inputValue}`;
 
     return (
         <AsyncCreatableSelect
@@ -49,9 +48,9 @@ const fetchSpeciesAutoCompleteOptions = async (inputValue: string): Promise<Arra
     if (!inputValue) {
         return [];
     }
-
+    
     try {
-        const data = await fetcher(`${SPECIES_AUTOCOMPLETE_BASE_URL}${inputValue}`, SpeciesAutoCompleteOptionListSchema);
+        const data = await speciesAutoCompleteFetcher(buildUrl(inputValue));
 
         data.autoCompleteList = removeDuplicates(data.autoCompleteList);
 
