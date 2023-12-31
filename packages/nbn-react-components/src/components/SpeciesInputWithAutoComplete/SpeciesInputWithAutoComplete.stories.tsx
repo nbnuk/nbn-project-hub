@@ -6,6 +6,16 @@ import SpeciesInputWithAutoComplete from './SpeciesInputWithAutoComplete';
 const meta: Meta<typeof SpeciesInputWithAutoComplete>  = {
     title: 'Species / SpeciesInputWithAutoComplete',
     component: SpeciesInputWithAutoComplete,
+    decorators: [
+      (Story) => (
+        <div className="w-[500px]" >
+          <Story />
+        </div>
+      ),
+    ],
+    parameters: {
+      layout: 'centered',
+    },
     tags: ['species'],
 
   };
