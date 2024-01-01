@@ -6,8 +6,6 @@ import { fetcher } from '../../lib/fetcher';
 
 // -----------------------------------------------------------------------------
 
-export const SPECIES_AUTOCOMPLETE_BASE_URL = 'https://species-ws.nbnatlas.org/search/auto?idxType=TAXON&limit=20&q=';
-
 
 
 // -----------------------------------------------------------------------------
@@ -30,7 +28,7 @@ export const SpeciesAutoCompleteOptionListSchema = z.object({
 
 export type SpeciesAutoCompleteOptionList = z.TypeOf<typeof SpeciesAutoCompleteOptionListSchema>;
 
-const autoCompleteFetcher = (url:string) => fetcher(url, SpeciesAutoCompleteOptionListSchema);
+export const speciesAutoCompleteFetcher = (url:string) => fetcher(url, SpeciesAutoCompleteOptionListSchema);
 
 export const removeDuplicates = (data: SpeciesAutoCompleteOption[]): SpeciesAutoCompleteOption[] => {
     const guids = new Set<string>();
@@ -43,11 +41,13 @@ export const removeDuplicates = (data: SpeciesAutoCompleteOption[]): SpeciesAuto
     });
 };
 
-export function useSpeciesAutoComplete(searchQuery: string):  { data: SpeciesAutoCompleteOptionList | undefined, error: any, isLoading: boolean } {
+export const buildUrl = (speciesSearchTerm:string) => (`https://species-ws.nbnatlas.org/search/auto?idxType=TAXON&limit=20&q=${encodeURIComponent(speciesSearchTerm)}`)
+
+
+export function useSpeciesAutoComplete(searchTerm: string):  { data: SpeciesAutoCompleteOptionList | undefined, error: any, isLoading: boolean } {
     
-    const searchUrl = SPECIES_AUTOCOMPLETE_BASE_URL + searchQuery;
-    
-    const { data, error, isLoading } =  useSWR( searchUrl, autoCompleteFetcher, { revalidateOnFocus: false });
+     
+    const { data, error, isLoading } =  useSWR( buildUrl(searchTerm), speciesAutoCompleteFetcher, { revalidateOnFocus: false });
     
     if (data){
         data.autoCompleteList = removeDuplicates(data.autoCompleteList)

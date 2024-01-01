@@ -1,11 +1,11 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
-import SpeciesInputWithAutoComplete from './SpeciesInputWithAutoComplete';
+import SpeciesSearchAndSelect from './SpeciesSearchAndSelect';
 
 
-const meta: Meta<typeof SpeciesInputWithAutoComplete>  = {
-    title: 'Species / SpeciesInputWithAutoComplete',
-    component: SpeciesInputWithAutoComplete,
+const meta: Meta<typeof SpeciesSearchAndSelect>  = {
+    title: 'Species / SpeciesSearchAndSelect',
+    component: SpeciesSearchAndSelect,
     decorators: [
       (Story) => (
         <div className="w-[500px]" >
@@ -28,9 +28,4 @@ export const Default: Story = {
     args: {
     },
 };
-  
-// export const SeededSearch: Story = {
-//     args: {
-//       initialSearchQuery: 'tinca'
-//     },
-// };
+ 
