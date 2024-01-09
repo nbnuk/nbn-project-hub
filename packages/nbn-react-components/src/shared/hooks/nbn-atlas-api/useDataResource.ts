@@ -15,7 +15,12 @@ export const DataResourceSchema = z.object({
 export type DataResource = z.infer<typeof DataResourceSchema>;
 
 // Define the hook
-export const useDataResource = (apiUrl: string): { dataResources: DataResource[] | undefined, error: any, isValidating: boolean } => {
+// KPM: added isLoading to the returned object
+export const useDataResource = (apiUrl: string): 
+  { dataResources: DataResource[] | undefined, 
+    error: any, 
+    isValidating: boolean,
+    isLoading: boolean } => {
   // Add &facets=data_resource_uid&flimit=-1&pageSize=0 to the API URL
   const url = new URL(apiUrl);
   const params = url.searchParams;
@@ -25,7 +30,7 @@ export const useDataResource = (apiUrl: string): { dataResources: DataResource[]
   const transformedApiUrl = url.toString();
 
   // Fetch, cache, and revalidate the facet results from the API using useSWR
-  const { data: facetResults, error, isValidating } = useSWR(transformedApiUrl, fetchFacetResults, { revalidateOnFocus: false });
+  const { data: facetResults, error, isValidating, isLoading } = useSWR(transformedApiUrl, fetchFacetResults, { revalidateOnFocus: false });
 
   // Transform the facet results into data resources
   const dataResources = facetResults?.[0]?.fieldResult.map(fieldResult => {
@@ -40,5 +45,5 @@ export const useDataResource = (apiUrl: string): { dataResources: DataResource[]
     });
   });
 
-  return { dataResources, error, isValidating };
+  return { dataResources, error, isValidating, isLoading };
 };
