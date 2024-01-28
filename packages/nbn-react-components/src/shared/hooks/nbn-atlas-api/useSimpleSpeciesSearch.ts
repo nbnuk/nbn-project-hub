@@ -22,7 +22,7 @@ export type SimpleSpeciesSearchResult = z.TypeOf<typeof SimpleSpeciesSearchResul
 
 export const simpleSpeciesSearchFetcher = (url: string) => fetcher(url, SimpleSpeciesSearchResultSchema);
 
-export const buildSearchUrl = (speciesSearchTerm:string) => ("https://species-ws.nbnatlas.org/search?fq=idxtype:TAXON&q="+encodeURIComponent(speciesSearchTerm))
+export const buildSearchUrl = (speciesSearchTerm:string) => ("https://species-ws.nbnatlas.org/search?fq=idxtype:TAXON&fq="+encodeURIComponent(`scientific_name:${speciesSearchTerm} OR synonym: ${speciesSearchTerm} OR commonName:${speciesSearchTerm}`))
 
 // Define the hook
 export const useSimpleSpeciesSearch = (speciesSearchTerm: string):  { simpleSpeciesSearchResult: SimpleSpeciesSearchResult | undefined, error: any, isValidating: boolean } => {

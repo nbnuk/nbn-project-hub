@@ -1,0 +1,1 @@
+Good resource for finding BBOX, Northing/Easting etc; https://gridreferencefinder.com/

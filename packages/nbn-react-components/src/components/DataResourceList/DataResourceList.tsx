@@ -1,8 +1,7 @@
 import { useDataResource, DataResource } from '../../shared/hooks/nbn-atlas-api/useDataResource';
 import { validateOccurrenceSearchApiUrl } from '../../shared/lib/apiUrl';
 import '../../index.css'
-import {List1} from '../ui-components';
-import { List, ListItem, ListItemSuffix,  Chip, Card } from "@material-tailwind/react";
+import { List, ListItem, ListItemIcon,ListItemText,  Chip, Card } from "@mui/material";
 
 
 export interface DataResourceListProps { 
@@ -29,21 +28,21 @@ export const DataResourceList = ({ apiOccurrenceSearchURL, width = 'auto' }: Dat
   // Render the data resources
   return (<>
    
-   <Card className="w-96">
+   <Card className="tw-w-96">
       <List>
 
       {dataResources?.map((dataResource: DataResource) => (
         <a href={dataResource.urn} className="text-initial">
-          <ListItem>{dataResource.name}
-          <ListItemSuffix className="pl-2">
+          <ListItem>
+          <ListItemText primary={dataResource.name} />
+          <ListItemIcon className="tw-justify-end tw-pl-2">
             <Chip
-              value={dataResource.count}
-              variant="ghost"
-              size="sm"
-              className="rounded-full"
-              color="blue"
+              label={dataResource.count}
+              size="small"
+              className="tw-rounded-full"
+              color="primary"
             />
-          </ListItemSuffix>
+          </ListItemIcon>
           </ListItem>
         </a>
 ))}

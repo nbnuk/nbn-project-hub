@@ -8,7 +8,7 @@ const meta: Meta<typeof SpeciesSearchAndSelect>  = {
     component: SpeciesSearchAndSelect,
     decorators: [
       (Story) => (
-        <div className="w-[500px]" >
+        <div className="w-[800px]">
           <Story />
         </div>
       ),
