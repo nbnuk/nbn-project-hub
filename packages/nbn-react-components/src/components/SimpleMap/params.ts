@@ -21,10 +21,10 @@ export interface ISimpleMapProps {
      * Use with bl parameter. */
     tr?: string;
     /** Northing,Easting pair representing bottom-left corner of a bounding box. 
-     * Use with trCoord parameter. */
+     * Use with trCoord parameter. To find Northing/Easting etc https://gridreferencefinder.com */
     blCoord?: string;
     /** Northing,Easting pair representing top-right corner of a bounding box. 
-     * Use with blCoord parameter. */
+     * Use with blCoord parameter. To find Northing/Easting etc https://gridreferencefinder.com */
     trCoord?: string;
     /** Start year for the lower date layer (inclusive). */
     b0from?: string;

@@ -1,14 +1,16 @@
 
+import '../../SimpleMap/assets/leaflet.css';
+
 import type { Meta, StoryObj } from '@storybook/react';
-import SpeciesSearchAndSelect from './SpeciesSearchAndSelect';
+import SpeciesSelectAndMap from './SpeciesSelectAndMap';
 
 
-const meta: Meta<typeof SpeciesSearchAndSelect>  = {
-    title: 'Species / SpeciesSearchAndSelect',
-    component: SpeciesSearchAndSelect,
+const meta: Meta<typeof SpeciesSelectAndMap>  = {
+    title: 'Species / SpeciesSelectAndMap',
+    component: SpeciesSelectAndMap,
     decorators: [
       (Story) => (
-        <div className="w-[800px]">
+        <div className="w-[500px]" >
           <Story />
         </div>
       ),

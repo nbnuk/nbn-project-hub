@@ -19,7 +19,7 @@ export const SimpleOccurrenceSearch = ({withImagesOnly = false}) => {
   };
 
   // Render the data resources
-  return (<div className="container mx-auto space-y-5"> 
+  return (<div className="tw-container tw-mx-auto tw-space-y-5"> 
   <SearchInput onSearch={handleSearch}/>
 
   {query && <OccurrenceList occurrenceSearchApiUrl={query} />}

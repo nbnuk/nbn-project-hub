@@ -33,8 +33,8 @@ export const Zoom_GridRef: Story = {
 export const Zoom_NorthingEasting: Story = {
     args: {
         tvk: 'NBNSYS0000027783',
-        blCoord: '551248,263773',
-        trCoord: '639251,367412',        
+        blCoord: '202796,688948', 
+        trCoord: '441352,906742',       
     },    
 };
 

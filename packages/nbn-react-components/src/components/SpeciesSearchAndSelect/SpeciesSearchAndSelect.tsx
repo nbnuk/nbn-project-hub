@@ -1,4 +1,5 @@
 import { SingleValue } from 'react-select';
+import Select from 'react-select';
 import AsyncSelect from 'react-select/async';
 
 import { SimpleSpeciesSearch, simpleSpeciesSearchFetcher, buildSearchUrl } from '../../shared/hooks/nbn-atlas-api/useSimpleSpeciesSearch' 
@@ -27,6 +28,20 @@ const SpeciesSearchAndSelect = ({ onChange}: SpeciesSearchAndSelectProps )=>{
   
     return (
         <AsyncSelect
+            // classNamePrefix="react-select"
+            styles={{
+                container: (baseStyles, state) => ({
+                    ...baseStyles,                  
+                    width:'500px',
+                  }),
+                  input: (baseStyles, state) => ({
+                    ...baseStyles,
+                    outlineStyle: 'none',
+                    outline: 'none',
+                    paddingTop:'10px',
+                    paddingBottom:'10px'
+                  }),
+              }}
             cacheOptions
             placeholder={"Search for species..."}
             loadOptions={fetchSimpleSpeciesSearchResult}

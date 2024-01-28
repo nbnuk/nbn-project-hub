@@ -1,11 +1,11 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
-import SpeciesInputWithAutoComplete from './SpeciesInputWithAutoComplete';
+import SpeciesAutoComplete from './SpeciesAutoComplete';
 
 
-const meta: Meta<typeof SpeciesInputWithAutoComplete>  = {
-    title: 'Species / SpeciesInputWithAutoComplete',
-    component: SpeciesInputWithAutoComplete,
+const meta: Meta<typeof SpeciesAutoComplete>  = {
+    title: 'Species / SpeciesAutoComplete',
+    component: SpeciesAutoComplete,
     decorators: [
       (Story) => (
         <div className="w-[500px]" >
