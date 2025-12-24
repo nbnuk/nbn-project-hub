@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import MapDataResourceList from './MapDataResourceList';
 import { useDataResource } from '../../shared/hooks/nbn-atlas-api/useDataResource';
 
-jest.mock('../../shared/hooks/useDataResource');
+jest.mock('../../shared/hooks/nbn-atlas-api/useDataResource');
 
 const mockedUseDataResource = useDataResource as jest.Mock;
 mockedUseDataResource.mockReturnValue({

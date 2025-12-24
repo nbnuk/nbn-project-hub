@@ -1,29 +1,35 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2022",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
     ],
-    "rootDir": "src",
-    "outDir": "dist",
-    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
-    "composite": true
+    "types": [
+      "vite/client",
+      "vitest/globals"
+    ],
+    "noEmit": true,
+    "useDefineForClassFields": true
   },
   "include": [
     "src"
   ],
-  "references": [{ "path": "../../packages/nbn-react-components" }]
+  "references": [
+    {
+      "path": "../../packages/nbn-react-components"
+    }
+  ]
 }

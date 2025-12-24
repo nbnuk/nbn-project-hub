@@ -1,6 +1,7 @@
 
 import { useDataResource } from '../../shared/hooks/nbn-atlas-api/useDataResource';
 import { sanitiseParam, sanitiseParamList } from './sanitise';
+import * as React from "react";
 
 // -------------------------------------------------------------------------
 
@@ -18,7 +19,7 @@ export interface IMapDataResourceList {
 
 // -----------------------------------------------------------------------------
 
-export default function MapDataResourceList({tvk, ds, refs, w}: IMapDataResourceList): JSX.Element {
+export default function MapDataResourceList({tvk, ds, refs, w}: IMapDataResourceList): React.ReactElement {
    
     const url = `http://records-ws.nbnatlas.org/occurrences/search?q=lsid:${tvk}&fq=-occurrence_status:absent&facets=data_resource_uid&flimit=-1&pageSize=0`;
     const { dataResources, error, isValidating } = useDataResource(url);

@@ -1,5 +1,6 @@
 
 import { sanitiseParam, sanitiseParamList } from './sanitise';
+import * as React from "react";
 
 // -------------------------------------------------------------------------
 
@@ -14,7 +15,7 @@ export interface IMapLinkProps {
 
 // -----------------------------------------------------------------------------
 
-export default function MapLink({tvk, link, w}: IMapLinkProps): JSX.Element {
+export default function MapLink({tvk, link, w}: IMapLinkProps): React.ReactElement {
    
     const san_link = sanitiseParamList('link', link, ['0', '1'], '1');
   

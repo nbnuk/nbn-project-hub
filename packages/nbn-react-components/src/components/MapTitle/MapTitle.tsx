@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { IMapTitleProps, Params } from './params';
+import * as React from "react";
 
 // -----------------------------------------------------------------------------
 
-export default function MapTitle(props: IMapTitleProps): JSX.Element {
+export default function MapTitle(props: IMapTitleProps): React.ReactElement {
    
     const [heading, setHeading] = useState('');
 

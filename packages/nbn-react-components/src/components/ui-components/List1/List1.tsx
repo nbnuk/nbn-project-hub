@@ -1,10 +1,11 @@
 import '../../../index.css'
+import * as React from "react";
 
 
 export interface List1Props {
   width?: string;
   items: any[];
-  renderItem?: (item: any, index: number) => JSX.Element; // Function to render each item
+  renderItem?: (item: any, index: number) => React.ReactElement; // Function to render each item
 }
 
 export const List1 = ({
